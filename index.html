@@ -1,0 +1,12 @@
+<img src="https://api.dicebear.com/9.x/big-smile/svg?seed=Aditi" alt="Avatar">
+{% load static %}
+
+<h2>Welcome, {{ user.username }}</h2>
+<img src="https://api.dicebear.com/9.x/big-smile/svg?seed={{ user.username }}" alt="User Avatar" width="150">
+{% if mood == "Happy" %}
+  <img src="https://api.dicebear.com/9.x/big-smile/svg?seed={{ user.username }}" alt="Happy Avatar">
+{% elif mood == "Sad" %}
+  <img src="https://api.dicebear.com/9.x/fun-emoji/svg?seed={{ user.username }}" alt="Sad Avatar">
+{% else %}
+  <img src="https://api.dicebear.com/9.x/identicon/svg?seed={{ user.username }}" alt="Neutral Avatar">
+{% endif %}
