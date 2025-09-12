@@ -8,6 +8,9 @@
 
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <!-- Font Awesome CDN -->
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Great+Vibes&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Imperial+Script&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Libertinus+Serif+Display&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital@0;1&family=Playwrite+ES+Deco+Guides&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Rubik+Vinyl&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap">;
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Great+Vibes&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Imperial+Script&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital@0;1&family=Playwrite+ES+Deco+Guides&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Rubik+Vinyl&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
@@ -49,9 +52,13 @@
   <!-- Icons Right -->
   <div class="nav-icons">
     <i class="fas fa-search"></i>
-    <i class="fas fa-user"></i>
-    
+    <a href="register.html"><i class="fas fa-user"></i>
+    </a>
   </div>
+</div>
+<div class="search-overlay" id="searchOverlay">
+  <span class="close-btn" id="closeSearch">&times;</span>
+  <input type="text" placeholder="Type to search...">
 </div>
 
 
@@ -59,7 +66,7 @@
     <div class="hero">
       <div class="hero-text">
         <h1>Soulix </h1>
-        <p> </p>
+        <p>You dont have to struggle in sillence!! </p>
         
     
         
@@ -69,6 +76,7 @@
 </div>
 
       </div>
+      
 
       <div class="hero-img">
         <img src="trans23.png" alt="Soulix ">
@@ -76,20 +84,92 @@
     </div>
     <section id="home" class="hero">
   <div class="hero-overlay"></div> <!-- overlay for text readability -->
-
+<!-- Floating food items for effect -->
+    <div class="floating-food food1">
+    </div>
+    <div class="floating-food food2"></div>
+    <div class="floating-food food3"></div>
+    <div class="floating-food food4"></div>
+    <div class="floating-food food4"></div>
+    <div class="floating-food food5"></div>
+    <div class="floating-food food6"></div>
+    <div class="floating-food food7"></div>
+    <div class="floating-food food8"></div>
+    <div class="floating-food food9"></div>
+    <div class="floating-food food10"></div>
   
 
   
+<script>
+  const searchIcon = document.querySelector(".fa-search");
+  const searchOverlay = document.getElementById("searchOverlay");
+  const closeSearch = document.getElementById("closeSearch");
 
-    <!-- What's in the Box -->
-    <div class="box">
-  
-      <div class="box-icons">
-        <img src="https://img.icons8.com/ios-filled/50/ffffff/headphones.png" alt="Headphones">
-        <img src="https://img.icons8.com/ios-filled/50/ffffff/virtual-reality.png" alt="Case">
-        <img src="https://img.icons8.com/ios-filled/50/ffffff/usb-c-cable.png" alt="Cable">
-      </div>
+  searchIcon.addEventListener("click", () => {
+    searchOverlay.classList.add("active");
+  });
+
+  closeSearch.addEventListener("click", () => {
+    searchOverlay.classList.remove("active");
+  });
+
+  // Optional: Close with ESC key
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      searchOverlay.classList.remove("active");
+    }
+  });
+</script>
+ <!-- Chatbot Icon (your robot image) -->
+  <div class="chatbot-icon" onclick="toggleChat()">
+    <img src="chat bot.png" alt="Chatbot Icon">
+  </div>
+
+  <!-- Chatbot Window -->
+  <div class="chatbot-window" id="chatWindow">
+    <div class="chatbot-header">Support Chat</div>
+    <div class="chatbot-messages" id="chatMessages">
+      <p><b>Bot:</b> Hello! How can I help you today?</p>
+    </div>
+    <div class="chatbot-input">
+      <input type="text" id="userInput" placeholder="Type a message...">
+      <button onclick="sendMessage()">Send</button>
     </div>
   </div>
+
+  <script>
+    function toggleChat() {
+      let chatWindow = document.getElementById("chatWindow");
+      chatWindow.style.display = (chatWindow.style.display === "flex") ? "none" : "flex";
+    }
+
+    function sendMessage() {
+      let input = document.getElementById("userInput");
+      let messages = document.getElementById("chatMessages");
+
+      if (input.value.trim() !== "") {
+        // User message
+        let userMsg = document.createElement("p");
+        userMsg.innerHTML = "<b>You:</b> " + input.value;
+        messages.appendChild(userMsg);
+
+        // Bot reply
+        let botMsg = document.createElement("p");
+        botMsg.innerHTML = "<b>Bot:</b> This is a sample reply.";
+        messages.appendChild(botMsg);
+
+        messages.scrollTop = messages.scrollHeight;
+        input.value = "";
+      }
+    }
+  </script>
+
+    <!-- Bottom Center Icons -->
+<div class="bottom-icons">
+  <img src="https://img.icons8.com/ios-filled/50/ffffff/headphones.png" alt="Headphones">
+  <img src="https://img.icons8.com/ios-filled/50/ffffff/virtual-reality.png" alt="VR">
+  
+</div>
+
 </body>
 </html>

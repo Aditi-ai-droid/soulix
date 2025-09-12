@@ -41,10 +41,60 @@ body {
 
 .logo {
   justify-self: start;
+
 }
 
 .logo img {
-  height: 150px; /* adjust logo size */
+  height: 150px;
+  /*adjustlogosize*/filter: drop-shadow(0px 0px 40px rgba(36, 88, 1, 0.6));
+  /*redglow*/:;
+  -webkit-filter: drop-shadow(0px 40px 40px rgba(8, 8, 8, 0.6));
+}
+/* Fullscreen search overlay */
+.search-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(103, 102, 102, 0.95);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s ease;
+}
+
+.search-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.search-overlay input {
+  width: 50%;
+  max-width: 550px;
+  padding: 10px;
+  font-size: 24px;
+  border: none;
+  border-radius: 8px;
+  outline: none;
+  font-family: "Roboto", sans-serif;
+}
+
+.search-overlay .close-btn {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  font-size: 35px;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.search-overlay .close-btn:hover {
+  color: #ff4444;
 }
 
 .menu {
@@ -101,16 +151,20 @@ body {
     color: #0e0e0e;
     text-align: left;
      font-family: "Great Vibes", cursive;
-    text-shadow: 3px 3px 2px rgba(69, 73, 74, 0.3);
+    text-shadow: 3px 3px 2px rgba(1, 2, 2, 0.3);
   font-size: 90px;
   margin-bottom: 25px;
 }
 @import url('https://api.fontshare.com/v2/css?f[]=clash-display@700&display=swap');
 
 .hero-text p {
-  font-family: 'Clash Display', sans-serif;
+  font-family: "Merriweather", serif;
+
+  font-weight: 800;
+  font-style: italic;
   color: #0d0d0d;
-  font-size: 16px;
+  font-size: 30px;
+  text-shadow: 0px 5px 5px #f3bda6;
   line-height: 1.5;
   margin-bottom: 25px;
   opacity: 0.9;
@@ -172,24 +226,30 @@ body {
 }
 
 
-.box {
-  margin-top: -80px;   /* upar kheench lo */
-  text-align: right;
-}
-
-.box-icons {
+.bottom-icons {
+  position: fixed;
+  bottom: 20px;              /* distance from bottom */
+  left: 50%;                 /* move to center */
+  transform: translateX(-50%);
   display: flex;
-  justify-content: flex-end;
-  gap: 25px;
-  transform: translateY(0); /* neeche kheenchne wala effect hata do */
+  justify-content: center;
+  gap: 40px;                 /* spacing between icons */
+  z-index: 1000;
 }
 
-.box-icons img {
-  width: 30px;
-  height: 30px;
+.bottom-icons img {
+  width: 40px;
+  height: 40px;
   opacity: 0.9;
+  cursor: pointer;
+  filter: brightness(0) saturate(100%); /* black color */
+  transition: all 0.3s ease;
 }
 
+.bottom-icons img:hover {
+  filter: brightness(0) invert(1); /* turn white on hover */
+  transform: scale(1.2);           /* zoom effect */
+}
 
  .carousel-box {
     position: absolute;
@@ -213,5 +273,134 @@ body {
     -ms-border-radius: 10px;
     -o-border-radius: 10px;
 }
+/* Floating food items */
+.floating-food {
+    position: absolute;
+    width: 100px; /* Adjust size if necessary */
+    height: 100px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.8;
+}
 
+/* Position and animate each floating item */
+
+
+.food1 {
+    background-image: url('brain\ img.png');
+    /*Updatewithactualpath*/top: 42%;
+    left: 20%;
+    filter: drop-shadow(0px 0px 40px rgba(249, 4, 4, 0.6));
+    /*redglow*/
+    -webkit-filter: drop-shadow(0px 0px 40px rgba(189, 1, 1, 0.6));
+}
+
+
+.food3 {
+    background-image: url('cauliflower\ 1.png'); /* Update with actual path */
+    bottom: 20%; left: 15%;
+    animation: float 6s ease-in-out infinite alternate;
+}
+
+.food4 {
+    background-image: url('apple.png'); /* Update with actual path */
+    bottom: 10%; right: 20%;
+    animation: float 9s ease-in-out infinite alternate;
+}
+.food5 {
+    background-image: url('tomato\ 1.png'); /* Update with actual path */
+    top: 34%; left: 15%;
+    animation: float 8s ease-in-out infinite alternate;
+}
+.food6 {
+    background-image: url('ava1.png'); /* Update with actual path */
+    top: 33%; left: 25%;
+    animation: float 8s ease-in-out infinite alternate;
+}
+.food7{
+    background-image: url('orange.png'); /* Update with actual path */
+    top: 10%; left: 30%;
+    animation: float 8s ease-in-out infinite alternate;
+}
+.food8{
+    background-image: url('lemon.png'); /* Update with actual path */
+    top: 10%; left: 38%;
+    animation: float 8s ease-in-out infinite alternate;
+}
+/* Animation for floating effect */
+@keyframes float {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(20px, -20px); }
+}
+/* Floating Chat Icon */
+.chatbot-icon {
+  position: fixed;
+  bottom: 10px;     /* Keep it close to the bottom */
+  right: 20px;      /* Stick to bottom-right corner */
+  cursor: pointer;
+  z-index: 2000;    /* On top of everything */
+}
+
+.chatbot-icon img {
+  width: 65px;      /* Balanced size */
+  height: 65px;
+  border-radius: 50%;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease-in-out;
+}
+
+.chatbot-icon img:hover {
+  transform: scale(1.1);
+}
+
+/* Chatbot Window */
+.chatbot-window {
+  position: fixed;
+  bottom: 90px;     /* Opens just above the icon */
+  right: 20px;
+  width: 300px;
+  height: 400px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  display: none;    /* Hidden until clicked */
+  flex-direction: column;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+  z-index: 2000;
+}
+
+.chatbot-header {
+  background: #4CAF50;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  border-radius: 10px 10px 0 0;
+}
+
+.chatbot-messages {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  font-size: 14px;
+}
+
+.chatbot-input {
+  display: flex;
+  border-top: 1px solid #ccc;
+}
+
+.chatbot-input input {
+  flex: 1;
+  border: none;
+  padding: 10px;
+  font-size: 14px;
+}
+
+.chatbot-input button {
+  background: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+}
 
