@@ -1,353 +1,199 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
-    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'> 
-    <link rel="stylesheet" href="style.css"> 
-    <style>
-        /* Inline style to ensure it overrides any external CSS */
-        .login-form { display: none; opacity: 0; transition: opacity 0.3s ease; }
-        .register-form { display: block; opacity: 1; transition: opacity 0.3s ease; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Frosted Glass Login/Signup</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-    <div class="form-container">
-        <div class="col col-1">
-            <div class="image-layer">
-                <img src="girl.png" class="form-image-main" alt="Food Reduction Network Image">
-            </div>
-            <p class="featured-words">You are just a few minutes away to join us <span></span></p>
-        </div>
-        <div class="col col-2">
-            <div class="btn-box">
-                <button class="btn btn-1" id="login">Sign In</button>
-                <button class="btn btn-2" id="register">Sign Up</button>
-            </div>
-
-            <!-- Login form -->
-            <div class="login-form form">
-                <div class="form-title"><span>Sign In</span></div>
-                <div class="form-inputs">
-                    <div class="input-box">
-                        <input type="text" class="input-field" placeholder="Username" required>
-                        <i class="bx bx-user icon"></i>
-                    </div>
-                    <div class="input-box">
-                        <input type="password" class="input-field" placeholder="Password" required>
-                        <i class="bx bx-lock-alt icon"></i>
-                    </div>
-                    <div class="input-box">
-                        <button class="input-submit"><span>Sign In</span><i class="bx bx-right-arrow-alt"></i></button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Register form -->
-            <div class="register-form form">
-                <div class="form-title"><span>Create Account</span></div>
-                <div class="form-inputs">
-                    <div class="input-box">
-                        <input type="text" class="input-field" placeholder="Username" required>
-                        <i class="bx bx-user icon"></i>
-                    </div>
-                    <div class="input-box">
-                        <input type="email" class="input-field" placeholder="Email" required>
-                        <i class="bx bx-envelope icon"></i>
-                    </div>
-                    <div class="input-box">
-                        <button class="input-submit"><span>Sign Up</span><i class="bx bx-right-arrow-alt"></i></button>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <div class="container">
+    <div class="image-section">
+      <img src="your-image.png" alt="Illustration" />
     </div>
-    <script src="main.js"></script>
-    <!-- Inline JavaScript to ensure it executes without dependency issues -->
-     <script>
-    const signInButtons = document.querySelectorAll(".input-submit");
-    signInButtons.forEach(button => {
-        button.addEventListener("click", () => {
-            window.location.href = "index.html"; // Replace with the actual homepage URL
-        });
+    <div class="form-section">
+      <div class="form-toggle">
+        <button id="loginBtn" class="active">Login</button>
+        <button id="signupBtn">Create Account</button>
+      </div>
+
+      <form id="loginForm" class="form active">
+        <h2>Login</h2>
+        <input type="email" placeholder="Email" required />
+        <input type="password" placeholder="Password" required />
+        <button type="submit">Login</button>
+      </form>
+
+      <form id="signupForm" class="form">
+        <h2>Create Account</h2>
+        <input type="text" placeholder="Full Name" required />
+        <input type="email" placeholder="Email" required />
+        <input type="password" placeholder="Password" required />
+        <input type="password" placeholder="Confirm Password" required />
+        <button type="submit">Sign Up</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const loginBtn = document.getElementById('loginBtn');
+    const signupBtn = document.getElementById('signupBtn');
+    const loginForm = document.getElementById('loginForm');
+    const signupForm = document.getElementById('signupForm');
+
+    loginBtn.addEventListener('click', () => {
+      loginBtn.classList.add('active');
+      signupBtn.classList.remove('active');
+      loginForm.classList.add('active');
+      signupForm.classList.remove('active');
     });
-</script>
-<script>const activeForm = sessionStorage.getItem("activeForm") || "register";
-    if (activeForm === "login") {
-        loginBtn.click();
-    }
-    
-    loginBtn.addEventListener("click", function () {
-        sessionStorage.setItem("activeForm", "login");
+
+    signupBtn.addEventListener('click', () => {
+      signupBtn.classList.add('active');
+      loginBtn.classList.remove('active');
+      signupForm.classList.add('active');
+      loginForm.classList.remove('active');
     });
-    
-    registerBtn.addEventListener("click", function () {
-        sessionStorage.setItem("activeForm", "register");
-    });
-    </script>
+  </script>
+  <style>
+    /* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: url('background.jpg') no-repeat center center/cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  display: flex;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  width: 900px;
+  max-width: 90vw;
+  height: 500px;
+  overflow: hidden;
+}
+
+/* Left Image Section */
+.image-section {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.image-section img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: drop-shadow(0 0 15px rgba(0,0,0,0.2));
+}
+
+/* Right Form Section */
+.form-section {
+  flex: 1;
+  padding: 40px 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #fff;
+}
+
+/* Toggle Buttons */
+.form-toggle {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.form-toggle button {
+  background: transparent;
+  border: none;
+  color: #ddd;
+  font-size: 18px;
+  padding: 10px 30px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.form-toggle button.active {
+  border-bottom: 2px solid #fff;
+  color: #fff;
+  font-weight: 700;
+}
+
+/* Forms */
+form {
+  display: none;
+  flex-direction: column;
+}
+
+form.active {
+  display: flex;
+}
+
+form h2 {
+  font-weight: 700;
+  margin-bottom: 25px;
+  font-size: 32px;
+  color: #fff;
+  text-align: center;
+}
+
+/* Inputs */
+input {
+  padding: 12px 15px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  transition: background 0.3s ease;
+}
+
+input::placeholder {
+  color: #eee;
+}
+
+input:focus {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Buttons */
+button[type="submit"] {
+  padding: 15px;
+  background: linear-gradient(135deg, #6b73ff, #000dff);
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background: linear-gradient(135deg, #000dff, #6b73ff);
+}
+
+  </style>
 </body>
 </html>
-
-
-    <style>
-        /*sign up*/
-/* POPPINS FONT */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
-
-/* ===== BASE ===== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
-
-/* ===== Body ===== */
-body {
-    
-    background: url(mid.jpg);
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 0 30px;
-}
-
-/* ===== Form Container ===== */
-.form-container {
-    display: flex;
-    width: 900px;
-    height: 550px;
-    border: 3px solid rgba(189, 192, 192, 0.3);
-    backdrop-filter: blur(3px);
-}
-
-/* ===== First Column ===== */
-.col-1 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 55%;
-    background: rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(10px);
-    border-radius: 0 30% 20% 0;
-}
-
-.image-layer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    filter: drop-shadow(40px 50px 50px rgba(189, 1, 1, 0.6));
-   /* red glow */:;
-  -webkit-filter: drop-shadow(0px 40px 40px rgba(241, 66, 66, 0.916));
-}
-
-.form-image-main {
-    width: 400px;
-    animation: scale-up 3s ease-in-out alternate infinite;
-    -webkit-animation: scale-up 3s ease-in-out alternate infinite;
-}
-
-.form-image {
-    width: 400px;
-    max-width: 100%;
-}
-
-/*==== Form Image Animation ====*/
-@keyframes scale-up {
-    0% {
-        transform: scale(1);
-    }
-    100% {
-        transform: scale(1.1);
-    }
-}
-
-/* ===== Featured Words ===== */
-.featured-words {
-    text-align: center;
-    color: #e0f7e0;
-    width: 300px;
-    margin-top: 20px;
-}
-
-.featured-words span {
-    font-weight: 600;
-    color: #21264D;
-}
-
-/* ===== Second Column ===== */
-.col-2 {
-    position: relative;
-    width: 45%;
-    padding: 20px;
-    overflow: hidden;
-}
-
-.btn-box {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-.btn:focus, .input-field:focus {
-    outline: 2px solid #e0f7e0; /* Highlight focus state */
-    outline-offset: 2px;
-}
-
-.btn {
-    font-weight: 500;
-    padding: 5px 30px;
-    border: none;
-    border-radius: 30px;
-    background: rgba(255, 255, 255, 0.2);
-    color: #e0f7e0;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.btn-1 {
-    background: #21264D;
-}
-
-.btn:hover {
-    opacity: 0.85;
-}
-
-/* ===== Form Styles ===== */
-
-
-/* General form container styling */
-.form {
-    width: 100%;
-    transition: opacity 0.3s ease-in-out;
-     /* Smooth opacity change */;
-    -webkit-transition: opacity 0.3s ease-in-out;
-    -moz-transition: opacity 0.3s ease-in-out;
-    -ms-transition: opacity 0.3s ease-in-out;
-    -o-transition: opacity 0.3s ease-in-out;
-}
-
-.form-title {
-    margin: 40px 0;
-    color: #fff;
-    font-size: 28px;
-    font-weight: 600;
-}
-
-.form-inputs {
-    width: 100%;
-}
-
-.input-box {
-    position: relative;
-    margin-bottom: 20px;
-}
-
-.input-field {
-    width: 100%;
-    height: 55px;
-    padding: 0 15px;
-    color: #fff;
-    background: rgba(255, 255, 255, 0.2);
-    border: none;
-    border-radius: 10px;
-    outline: none;
-    backdrop-filter: blur(20px);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-
-::placeholder {
-    color: #cccccc; /* Adjust to a more visible color */
-}
-
-
-.input-box .icon {
-    position: absolute;
-    top: 50%;
-    right: 15px;
-    transform: translateY(-50%);
-    color: #fff;
-}
-
-.forgot-pass {
-    display: flex;
-    justify-content: flex-end;
-    gap: 5px;
-}
-
-.forgot-pass a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 14px;
-}
-
-.forgot-pass a:hover {
-    text-decoration: underline;
-}
-
-.input-submit {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    width: 100%;
-    height: 55px;
-    padding: 0 15px;
-    color: #fff;
-    background: #21264D;
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.input-submit:hover {
-    gap: 15px;
-}
-
-
-.social-login {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.social-login i {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 40px;
-    width: 40px;
-    color: #fff;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    transition: 0.3s;
-}
-
-.social-login i:hover {
-    transform: scale(1.1);
-}
-/*=======Responsive======*/
-@media(max-width: 892px) {
-    .col-2 {
-        margin: auto;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-}
-
-
-    </style>

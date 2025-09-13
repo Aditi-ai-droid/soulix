@@ -66,7 +66,7 @@
     <div class="hero">
       <div class="hero-text">
         <h1>Soulix </h1>
-        <p>You dont have to struggle in sillence!! </p>
+        <p>You dont have to struggle in sillence! </p>
         
     
         
@@ -84,6 +84,26 @@
     </div>
     <section id="home" class="hero">
   <div class="hero-overlay"></div> <!-- overlay for text readability -->
+
+  <div class="stats-section">
+  <div class="stat stats-card">
+    <h2>200+</h2>
+    <p>Activities</p>
+  </div>
+  <div class="stat stats-card">
+    <h2>5K+</h2>
+    <p>Teens Helped</p>
+  </div>
+  <div class="stat stats-card">
+    <h2>120+</h2>
+    <p>Experts</p>
+  </div>
+  <div class="stat stats-card">
+    <h2>24/7</h2>
+    <p>Support</p>
+  </div>
+</div>
+
 <!-- Floating food items for effect -->
     <div class="floating-food food1">
     </div>
@@ -120,22 +140,16 @@
     }
   });
 </script>
- <!-- Chatbot Icon (your robot image) -->
-  <div class="chatbot-icon" onclick="toggleChat()">
-    <img src="chat bot.png" alt="Chatbot Icon">
-  </div>
 
   <!-- Chatbot Window -->
-  <div class="chatbot-window" id="chatWindow">
-    <div class="chatbot-header">Support Chat</div>
-    <div class="chatbot-messages" id="chatMessages">
-      <p><b>Bot:</b> Hello! How can I help you today?</p>
-    </div>
-    <div class="chatbot-input">
-      <input type="text" id="userInput" placeholder="Type a message...">
-      <button onclick="sendMessage()">Send</button>
-    </div>
+  <!-- ✅ Chatbot with tooltip -->
+<div class="chatbot-wrapper" onclick="toggleChat()">
+  <div class="chatbot-icon">
+    <img src="chat bot.png" alt="Chatbot Icon">
+    <span class="chatbot-tooltip">Need Help? Chat with us!</span>
   </div>
+</div>
+
 
   <script>
     function toggleChat() {
@@ -167,6 +181,7 @@
     <!-- Bottom Center Icons -->
 <div class="bottom-icons">
   <img src="https://img.icons8.com/ios-filled/50/ffffff/headphones.png" alt="Headphones">
+  
   <img src="https://img.icons8.com/ios-filled/50/ffffff/virtual-reality.png" alt="VR">
   
 </div>
