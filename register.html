@@ -3,197 +3,232 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Frosted Glass Login/Signup</title>
-  <link rel="stylesheet" href="styles.css" />
+  <title>Serenity Space</title>
+
 </head>
 <body>
+
   <div class="container">
-    <div class="image-section">
-      <img src="your-image.png" alt="Illustration" />
-    </div>
-    <div class="form-section">
-      <div class="form-toggle">
-        <button id="loginBtn" class="active">Login</button>
-        <button id="signupBtn">Create Account</button>
+
+    <!-- Welcome Screen -->
+    <div id="welcomeScreen" class="welcome-screen">
+      <img src="meditation girl.png" alt="Welcome Illustration" class="top-image" />
+      <h2>Welcome to <span class="highlight">Serenity Space</span></h2>
+      <p>Learn to relax with our sessions.<br>Meditate to reveal your inner self.</p>
+      <div class="btn-group">
+        <button id="showSignup">Sign Up</button>
+        <button id="showLogin">Log In</button>
       </div>
-
-      <form id="loginForm" class="form active">
-        <h2>Login</h2>
-        <input type="email" placeholder="Email" required />
-        <input type="password" placeholder="Password" required />
-        <button type="submit">Login</button>
-      </form>
-
-      <form id="signupForm" class="form">
-        <h2>Create Account</h2>
-        <input type="text" placeholder="Full Name" required />
-        <input type="email" placeholder="Email" required />
-        <input type="password" placeholder="Password" required />
-        <input type="password" placeholder="Confirm Password" required />
-        <button type="submit">Sign Up</button>
-      </form>
     </div>
+
+    <!-- Signup Form -->
+    <form id="signupForm">
+      <img src="meditation2.png" alt="Create Account Illustration" class="top-image" />
+      <h2>Create Account</h2>
+      <input type="text" placeholder="Full Name" required />
+      <input type="email" placeholder="Email" required />
+      <input type="password" placeholder="Password" required />
+      <input type="password" placeholder="Confirm Password" required />
+      <button type="submit">Sign Up</button>
+      <div class="switch-link">
+        Already have an account? <a id="toLoginFromSignup">Log In</a>
+      </div>
+    </form>
+
+    <!-- Login Form -->
+    <form id="loginForm">
+      <img src="welcome back login.png" alt="Welcome Back Illustration" class="top-image" />
+      <h2>Welcome back!</h2>
+      <input type="email" placeholder="Email" required />
+      <input type="password" placeholder="Password" required />
+      <button type="submit">Log In</button>
+      <div class="switch-link">
+        Don't have an account yet? <a id="toSignupFromLogin">Sign Up</a>
+      </div>
+    </form>
+
   </div>
 
   <script>
-    const loginBtn = document.getElementById('loginBtn');
-    const signupBtn = document.getElementById('signupBtn');
-    const loginForm = document.getElementById('loginForm');
+    const welcomeScreen = document.getElementById('welcomeScreen');
     const signupForm = document.getElementById('signupForm');
+    const loginForm = document.getElementById('loginForm');
 
-    loginBtn.addEventListener('click', () => {
-      loginBtn.classList.add('active');
-      signupBtn.classList.remove('active');
+    const showSignupBtn = document.getElementById('showSignup');
+    const showLoginBtn = document.getElementById('showLogin');
+
+    const toLoginFromSignup = document.getElementById('toLoginFromSignup');
+    const toSignupFromLogin = document.getElementById('toSignupFromLogin');
+
+    // Show Signup form
+    showSignupBtn.addEventListener('click', () => {
+      welcomeScreen.style.display = 'none';
+      signupForm.classList.add('active');
+      loginForm.classList.remove('active');
+    });
+
+    // Show Login form
+    showLoginBtn.addEventListener('click', () => {
+      welcomeScreen.style.display = 'none';
       loginForm.classList.add('active');
       signupForm.classList.remove('active');
     });
 
-    signupBtn.addEventListener('click', () => {
-      signupBtn.classList.add('active');
-      loginBtn.classList.remove('active');
-      signupForm.classList.add('active');
-      loginForm.classList.remove('active');
+    // Switch to login from signup
+    toLoginFromSignup.addEventListener('click', () => {
+      signupForm.classList.remove('active');
+      loginForm.classList.add('active');
     });
+
+    // Switch to signup from login
+    toSignupFromLogin.addEventListener('click', () => {
+      loginForm.classList.remove('active');
+      signupForm.classList.add('active');
+    });
+
+    // Optional: On page load, show welcome screen and hide forms
+    window.onload = () => {
+      welcomeScreen.style.display = 'block';
+      signupForm.classList.remove('active');
+      loginForm.classList.remove('active');
+    };
   </script>
   <style>
     /* Reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+    body, html {
+      height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: url('b3.jpg') no-repeat center center/cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #222;
+    }
 
-body, html {
-  height: 100%;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: url('background.jpg') no-repeat center center/cover;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.container {
-  display: flex;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  width: 900px;
-  max-width: 90vw;
-  height: 500px;
-  overflow: hidden;
-}
-
-/* Left Image Section */
-.image-section {
-  flex: 1;
-  background: rgba(255, 255, 255, 0.1);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-}
-
-.image-section img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: drop-shadow(0 0 15px rgba(0,0,0,0.2));
-}
-
-/* Right Form Section */
-.form-section {
-  flex: 1;
-  padding: 40px 50px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  color: #fff;
-}
-
-/* Toggle Buttons */
-.form-toggle {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 30px;
-}
-
-.form-toggle button {
-  background: transparent;
-  border: none;
-  color: #ddd;
-  font-size: 18px;
-  padding: 10px 30px;
-  cursor: pointer;
-  border-bottom: 2px solid transparent;
-  transition: all 0.3s ease;
-}
-
-.form-toggle button.active {
-  border-bottom: 2px solid #fff;
-  color: #fff;
-  font-weight: 700;
-}
-
-/* Forms */
-form {
-  display: none;
-  flex-direction: column;
-}
-
-form.active {
-  display: flex;
-}
-
-form h2 {
-  font-weight: 700;
-  margin-bottom: 25px;
-  font-size: 32px;
-  color: #fff;
+    .container {
+  width: 400px;
+  background: rgba(197, 213, 183, 0.4); /* transparency thoda kam karke zyada blur dikhaye */
+  border-radius: 25px;
+  padding: 30px 25px 40px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(30px);      /* blur thoda zyada */
+  -webkit-backdrop-filter: blur(15px);
   text-align: center;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.3);  /* halka border to define edges */
 }
 
-/* Inputs */
-input {
-  padding: 12px 15px;
-  margin-bottom: 20px;
-  border-radius: 8px;
-  border: none;
-  outline: none;
-  font-size: 16px;
-  font-weight: 500;
-  background: rgba(255, 255, 255, 0.15);
-  color: #fff;
-  transition: background 0.3s ease;
-}
 
-input::placeholder {
-  color: #eee;
-}
+    /* Top Image */
+    .top-image {
+      width: 140px;
+      height: auto;
+      margin: 0 auto 20px auto;
+      border-radius: 20px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
 
-input:focus {
-  background: rgba(255, 255, 255, 0.3);
-}
+    /* Headings */
+    h2 {
+      font-weight: 700;
+      margin-bottom: 12px;
+      font-size: 24px;
+      color: #1a3a00;
+    }
+    .highlight {
+      color: #3e6b00;
+      font-weight: 900;
+    }
+    p {
+      font-size: 14px;
+      margin-bottom: 25px;
+      color: #324d00;
+    }
 
-/* Buttons */
-button[type="submit"] {
-  padding: 15px;
-  background: linear-gradient(135deg, #6b73ff, #000dff);
-  border: none;
-  border-radius: 10px;
-  color: #fff;
-  font-weight: 700;
-  font-size: 18px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
+    /* Buttons */
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+    button {
+      cursor: pointer;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 16px;
+      color: #fff;
+      background: linear-gradient(135deg, #3e6b00, #6ba700);
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background: linear-gradient(135deg, #6ba700, #3e6b00);
+    }
 
-button[type="submit"]:hover {
-  background: linear-gradient(135deg, #000dff, #6b73ff);
-}
+    /* Forms */
+    form {
+      display: none;
+      flex-direction: column;
+      text-align: left;
+    }
+    form.active {
+      display: flex;
+    }
 
+    /* Inputs */
+    input {
+      padding: 20px 30px;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 10px black;
+      border-radius: 8px;
+      border: none;
+      font-size: 15px;
+      font-weight: 500;
+      background: rgba(238, 235, 235, 0.7);
+      outline: none;
+      color: #222;
+      backdrop-filter: blur(5px);
+      transition: background 0.3s ease;
+    }
+    input::placeholder {
+      color: #666;
+    }
+    input:focus {
+      background: #fff;
+      box-shadow: 0 0 6px #6ba700;
+    }
+
+    /* Submit Buttons */
+    button[type="submit"] {
+      background: linear-gradient(135deg, #4c8c00, #87c300);
+      color: #fff;
+      font-weight: 700;
+      font-size: 18px;
+      margin-top: 5px;
+      transition: background 0.3s ease;
+    }
+    button[type="submit"]:hover {
+      background: linear-gradient(135deg, #87c300, #4c8c00);
+    }
+
+    /* Link Text */
+    .switch-link {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+      color: #3e6b00;
+    }
+    .switch-link a {
+      color: #1a3a00;
+      cursor: pointer;
+      text-decoration: underline;
+      font-weight: 600;
+    }
   </style>
 </body>
 </html>
