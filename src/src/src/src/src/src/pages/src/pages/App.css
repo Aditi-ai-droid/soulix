@@ -1,0 +1,81 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #121212;
+  color: #fff;
+}
+
+.app-layout {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 220px;
+  background: #1e1e1e;
+  padding: 20px;
+  box-shadow: inset 4px 4px 8px #0a0a0a, inset -4px -4px 8px #2e2e2e;
+}
+
+.sidebar .logo {
+  color: #ffa500;
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.sidebar nav a {
+  display: block;
+  padding: 10px;
+  margin: 8px 0;
+  color: #aaa;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.sidebar nav a.active,
+.sidebar nav a:hover {
+  color: #ffa500;
+  background: #292929;
+}
+
+.main-content {
+  flex: 1;
+  padding: 30px;
+  overflow-y: auto;
+}
+
+.cards {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.card {
+  flex: 1;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.neumorphism {
+  background: #1f1f1f;
+  box-shadow:
+    8px 8px 16px #0f0f0f,
+    -8px -8px 16px #2f2f2f;
+}
+
+.charts {
+  display: flex;
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.chart {
+  flex: 1;
+  padding: 20px;
+  border-radius: 12px;
+  background: #1f1f1f;
+}

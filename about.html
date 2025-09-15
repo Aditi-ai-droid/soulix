@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soulix - About Us Interactive Premium</title>
+  <style>
+    /* Reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    body { background: #f4e2d3; color: #333; overflow-x: hidden; }
+    section { padding: 120px 50px; position: relative; overflow: hidden; }
+
+    /* SVG Brush Wave Background */
+    .brush-wave {
+      position: absolute;
+      width: 120%;
+      left: -10%;
+      top: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Pastel Background Shapes */
+    .bg-shape {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.25;
+      z-index: 1;
+      transition: transform 0.3s ease-out;
+    }
+    .shape1 { width: 250px; height: 250px; background: #f7b0c2; top: -80px; left: -60px; }
+    .shape2 { width: 180px; height: 180px; background: #a3e6ef; bottom: -60px; right: -40px; }
+    .shape3 { width: 150px; height: 150px; background: #e9d488; top: 30%; right: -75px; }
+
+    /* Container */
+    .about-container { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; max-width: 1200px; margin: 0 auto; position: relative; z-index: 2; gap: 50px; }
+
+    /* Text */
+    .about-text { flex: 1; min-width: 300px; opacity: 0; transform: translateY(50px); transition: all 0.8s ease-out; }
+    .about-text.active { opacity: 1; transform: translateY(0); }
+    .about-text h2 { font-size: 42px; margin-bottom: 25px; background: linear-gradient(90deg, #ffb3c6, #c1f0f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .about-text h2::after { content: ''; display: block; width: 70px; height: 4px; background: #ffb3c6; margin-top: 12px; border-radius: 2px; }
+    .about-text p { font-size: 18px; color: #555; margin-bottom: 20px; line-height: 1.8; transition: transform 0.3s, color 0.3s; cursor: default; }
+    .about-text p:hover { transform: translateX(10px); color: #ff7f91; }
+
+    /* Button */
+    .btn-contact { display: inline-block; padding: 14px 35px; background: #c1f0f6; color: #333; border-radius: 30px; font-weight: 600; text-decoration: none; transition: 0.3s; box-shadow: 0 8px 20px rgba(0,0,0,0.05); animation: floatBtn 2s ease-in-out infinite alternate; }
+    .btn-contact:hover { background: #fff2c2; transform: translateY(-5px) scale(1.05); box-shadow: 0 12px 25px rgba(0,0,0,0.1); color: #ff6f61; }
+
+    @keyframes floatBtn { 0% { transform: translateY(0); } 100% { transform: translateY(-5px); } }
+
+    /* Image */
+    .about-image { flex: 1; min-width: 300px; position: relative; opacity: 0; transform: translateY(50px); transition: all 0.8s ease-out; }
+    .about-image.active { opacity: 1; transform: translateY(0); }
+    .about-image img { width: 100%; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.05); transform: scale(0.95); transition: transform 0.5s, box-shadow 0.5s; cursor: pointer; }
+    .about-image img:hover { transform: scale(1.05) rotate(-1deg); box-shadow: 0 25px 60px rgba(0,0,0,0.1); }
+
+    /* Sparkle effect */
+    .sparkle { position: absolute; width: 6px; height: 6px; background: #fff; border-radius: 50%; opacity: 0; pointer-events: none; animation: sparkleAnim 1s linear forwards; }
+    @keyframes sparkleAnim { 0% { opacity: 1; transform: translate(0,0) scale(1); } 100% { opacity: 0; transform: translate(var(--x), var(--y)) scale(0); } }
+
+    /* Responsive */
+    @media (max-width: 900px) { .about-container { flex-direction: column-reverse; text-align: center; } .about-text h2::after { margin: 10px auto 0 auto; } .about-image img { max-width: 80%; margin: 0 auto; } .btn-contact { margin-top: 15px; } }
+
+  </style>
+</head>
+<body>
+
+  <section id="about">
+    <!-- SVG Brush Wave -->
+    <svg class="brush-wave" viewBox="0 0 1440 320"><path fill="#c1f0f6" fill-opacity="0.3" d="M0,64L80,69.3C160,75,320,85,480,117.3C640,149,800,203,960,202.7C1120,203,1280,149,1360,122.7L1440,96L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"></path></svg>
+
+    <!-- Pastel Background Shapes -->
+    <div class="bg-shape shape1"></div>
+    <div class="bg-shape shape2"></div>
+    <div class="bg-shape shape3"></div>
+
+    <div class="about-container">
+      <div class="about-text">
+        <h2>About Soulix</h2>
+        <p>Soulix is a hub for creativity, personal growth, and sustainable living. We merge technology with human-centric design to craft experiences that inspire, educate, and empower.</p>
+        <p>Our mission is to foster collaboration, innovation, and positive social impact, connecting communities worldwide with meaningful solutions.</p>
+        <a href="#contact" class="btn-contact">Get in Touch</a>
+      </div>
+
+      <div class="about-image">
+        <img src="pic3.jpg" alt="Soulix Concept Image">
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Scroll animations
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => { if(entry.isIntersecting){ entry.target.classList.add('active'); } });
+    }, { threshold: 0.2 });
+    document.querySelectorAll('.about-text, .about-image').forEach(el => { observer.observe(el); });
+
+    // Mouse parallax for shapes
+    document.addEventListener('mousemove', e => {
+      const shapes = document.querySelectorAll('.bg-shape');
+      shapes.forEach((shape, index) => {
+        const speed = (index + 1) * 0.03;
+        const x = (window.innerWidth / 2 - e.clientX) * speed;
+        const y = (window.innerHeight / 2 - e.clientY) * speed;
+        shape.style.transform = `translate(${x}px, ${y}px)`;
+      });
+    });
+
+    // Sparkle particles on image hover
+    const img = document.querySelector('.about-image img');
+    img.addEventListener('mousemove', e => {
+      for(let i=0; i<2; i++){
+        const sparkle = document.createElement('div');
+        sparkle.classList.add('sparkle');
+        sparkle.style.left = e.offsetX + 'px';
+        sparkle.style.top = e.offsetY + 'px';
+        sparkle.style.setProperty('--x', (Math.random()*100-50)+'px');
+        sparkle.style.setProperty('--y', (Math.random()*-100)+'px');
+        img.parentElement.appendChild(sparkle);
+        setTimeout(()=>sparkle.remove(), 1000);
+      }
+    });
+
+  </script>
+
+</body>
+</html>

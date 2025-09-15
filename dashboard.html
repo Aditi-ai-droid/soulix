@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dark Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="dashboard-container">
+    <aside class="sidebar">
+      <h2>☀ Dashboard</h2>
+      <nav>
+        <a href="#">Home</a>
+        <a href="#">Analytics</a>
+        <a href="#">Reports</a>
+        <a href="#">Settings</a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <h1>Welcome Back!</h1>
+      </header>
+
+      <section class="cards">
+        <div class="card">Users<br><strong>1,025</strong></div>
+        <div class="card">Conversion<br><strong>19.8%</strong></div>
+        <div class="card">Active<br><strong>832</strong></div>
+      </section>
+
+      <section class="charts">
+        <div class="chart-box">
+          <canvas id="barChart"></canvas>
+        </div>
+        <div class="chart-box">
+          <canvas id="pieChart"></canvas>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+  <style>
+    /* Reset + Base Styling */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #1e1e1e, #121212);
+  color: #eee;
+  overflow-x: hidden;
+}
+
+/* Layout */
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 220px;
+  background: rgba(30, 30, 30, 0.85);
+  backdrop-filter: blur(10px);
+  padding: 30px 20px;
+  box-shadow: 0 0 20px rgba(255, 165, 0, 0.4);
+  position: fixed;
+  height: 100%;
+  border-right: 1px solid rgba(255, 165, 0, 0.3);
+}
+
+.sidebar h2 {
+  color: #f5b041;
+  font-weight: 700;
+  font-size: 28px;
+  margin-bottom: 40px;
+  text-shadow: 0 0 10px #f5b041;
+}
+
+.sidebar nav a {
+  display: block;
+  color: #ccc;
+  margin: 22px 0;
+  text-decoration: none;
+  font-size: 17px;
+  transition: 0.3s ease;
+  padding-left: 5px;
+  border-radius: 5px;
+}
+
+.sidebar nav a:hover, .sidebar nav a.active {
+  color: #fff;
+  background: rgba(245, 176, 65, 0.3);
+  box-shadow: 0 0 15px #f5b041;
+  transform: translateX(8px);
+  font-weight: 600;
+}
+
+/* Main content */
+.main-content {
+  margin-left: 220px;
+  padding: 40px 50px;
+  flex-grow: 1;
+}
+
+/* Header */
+.topbar {
+  margin-bottom: 40px;
+}
+
+.topbar h1 {
+  font-size: 36px;
+  color: #fff;
+  text-shadow: 0 0 15px #f5b041;
+  font-weight: 800;
+}
+
+/* Cards container */
+.cards {
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+/* Individual Card */
+.card {
+  flex: 1;
+  min-width: 180px;
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(12px);
+  border-radius: 15px;
+  padding: 25px 30px;
+  color: #f0d7a1;
+  box-shadow:
+    0 0 15px rgba(245, 176, 65, 0.4),
+    inset 0 0 10px rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(245, 176, 65, 0.2);
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.card:hover {
+  box-shadow:
+    0 0 25px rgba(245, 176, 65, 0.8),
+    inset 0 0 15px rgba(255, 255, 255, 0.15);
+  transform: translateY(-5px);
+  color: #fff;
+}
+
+.card strong {
+  font-size: 28px;
+  color: #f5b041;
+  text-shadow: 0 0 10px #f5b041;
+  display: block;
+  margin-top: 8px;
+}
+
+/* Charts container */
+.charts {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+/* Chart Boxes */
+.chart-box {
+  flex: 1;
+  min-width: 320px;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(15px);
+  padding: 30px;
+  border-radius: 18px;
+  box-shadow:
+    0 0 20px rgba(245, 176, 65, 0.35),
+    inset 0 0 12px rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(245, 176, 65, 0.25);
+  color: #f0d7a1;
+}
+
+/* Chart legends */
+.chart-legend {
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 0 0 8px #f5b041;
+  margin-bottom: 15px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .dashboard-container {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    box-shadow: none;
+    border-right: none;
+    padding: 20px 30px;
+  }
+  .main-content {
+    margin-left: 0;
+    padding: 20px 30px;
+  }
+  .cards, .charts {
+    flex-direction: column;
+  }
+  .card, .chart-box {
+    min-width: 100%;
+  }
+}
+
+  </style>
+</body>
+</html>
