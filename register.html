@@ -4,232 +4,117 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Serenity Space</title>
-
+  <style>
+    /* Styles same as tumhara existing code */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body, html { height: 100%; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: url('b3.jpg') no-repeat center center/cover; display: flex; justify-content: center; align-items: center; color: #222; }
+    .container { width: 400px; background: rgba(197, 213, 183, 0.4); border-radius: 25px; padding: 30px 25px 40px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); backdrop-filter: blur(30px); text-align: center; position: relative; border: 1px solid rgba(255,255,255,0.3); }
+    .top-image { width: 140px; height: auto; margin: 0 auto 20px auto; border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+    h2 { font-weight: 700; margin-bottom: 12px; font-size: 24px; color: #1a3a00; }
+    .highlight { color: #3e6b00; font-weight: 900; }
+    p { font-size: 14px; margin-bottom: 25px; color: #324d00; }
+    .btn-group { display: flex; justify-content: center; gap: 15px; margin-bottom: 25px; }
+    button { cursor: pointer; padding: 12px 25px; border: none; border-radius: 12px; font-weight: 600; font-size: 16px; color: #fff; background: linear-gradient(135deg, #3e6b00, #6ba700); transition: background 0.3s ease; }
+    button:hover { background: linear-gradient(135deg, #6ba700, #3e6b00); }
+    form { display: none; flex-direction: column; text-align: left; }
+    form.active { display: flex; }
+    input { padding: 20px 30px; margin-bottom: 20px; border-radius: 8px; border: none; font-size: 15px; font-weight: 500; background: rgba(238,235,235,0.7); outline: none; color: #222; backdrop-filter: blur(5px); transition: background 0.3s ease; }
+    input::placeholder { color: #666; }
+    input:focus { background: #fff; box-shadow: 0 0 6px #6ba700; }
+    button[type="submit"] { background: linear-gradient(135deg, #4c8c00, #87c300); color: #fff; font-weight: 700; font-size: 18px; margin-top: 5px; transition: background 0.3s ease; }
+    button[type="submit"]:hover { background: linear-gradient(135deg, #87c300, #4c8c00); }
+    .switch-link { text-align: center; margin-top: 15px; font-size: 14px; color: #3e6b00; }
+    .switch-link a { color: #1a3a00; cursor: pointer; text-decoration: underline; font-weight: 600; }
+  </style>
 </head>
 <body>
-
-  <div class="container">
-
-    <!-- Welcome Screen -->
-    <div id="welcomeScreen" class="welcome-screen">
-      <img src="meditation girl.png" alt="Welcome Illustration" class="top-image" />
-      <h2>Welcome to the <span class="highlight">space between your thoughts</span></h2>
-      <p>This is your time to pause.
-Breathe in calm, breathe out stress.</p>
-      <div class="btn-group">
-        <button id="showSignup">Sign Up</button>
-        <button id="showLogin">Log In</button>
-      </div>
+<div class="container">
+  <!-- Welcome Screen -->
+  <div id="welcomeScreen">
+    <img src="meditation girl.png" class="top-image" />
+    <h2>Welcome to the <span class="highlight">space between your thoughts</span></h2>
+    <p>This is your time to pause. Breathe in calm, breathe out stress.</p>
+    <div class="btn-group">
+      <button id="showSignup">Sign Up</button>
+      <button id="showLogin">Log In</button>
     </div>
-
-    <!-- Signup Form -->
-    <form id="signupForm">
-      <img src="meditation2.png" alt="Create Account Illustration" class="top-image" />
-      <h2>Create Account</h2>
-      <input type="text" placeholder="Full Name" required />
-      <input type="email" placeholder="Email" required />
-      <input type="password" placeholder="Password" required />
-      <input type="password" placeholder="Confirm Password" required />
-      <button type="submit">Sign Up</button>
-      <div class="switch-link">
-        Already have an account? <a id="toLoginFromSignup">Log In</a>
-      </div>
-    </form>
-
-    <!-- Login Form -->
-    <form id="loginForm">
-      <img src="welcome back login.png" alt="Welcome Back Illustration" class="top-image" />
-      <h2>Welcome back!</h2>
-      <input type="email" placeholder="Email" required />
-      <input type="password" placeholder="Password" required />
-      <button type="submit">Log In</button>
-      <div class="switch-link">
-        Don't have an account yet? <a id="toSignupFromLogin">Sign Up</a>
-      </div>
-    </form>
-
   </div>
 
-  <script>
-    const welcomeScreen = document.getElementById('welcomeScreen');
-    const signupForm = document.getElementById('signupForm');
-    const loginForm = document.getElementById('loginForm');
+  <!-- Signup Form -->
+  <form id="signupForm">
+    <img src="meditation2.png" class="top-image" />
+    <h2>Create Account</h2>
+    <input type="text" name="name" placeholder="Full Name" required />
+    <input type="email" name="email" placeholder="Email" required />
+    <input type="password" name="password" placeholder="Password" required />
+    <input type="password" name="confirmPassword" placeholder="Confirm Password" required />
+    <button type="submit">Sign Up</button>
+    <div class="switch-link">
+      Already have an account? <a id="toLoginFromSignup">Log In</a>
+    </div>
+  </form>
 
-    const showSignupBtn = document.getElementById('showSignup');
-    const showLoginBtn = document.getElementById('showLogin');
+  <!-- Login Form -->
+  <form id="loginForm">
+    <img src="welcome back login.png" class="top-image" />
+    <h2>Welcome back!</h2>
+    <input type="email" name="email" placeholder="Email" required />
+    <input type="password" name="password" placeholder="Password" required />
+    <button type="submit">Log In</button>
+    <div class="switch-link">
+      Don't have an account yet? <a id="toSignupFromLogin">Sign Up</a>
+    </div>
+  </form>
+</div>
 
-    const toLoginFromSignup = document.getElementById('toLoginFromSignup');
-    const toSignupFromLogin = document.getElementById('toSignupFromLogin');
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const welcomeScreen = document.getElementById('welcomeScreen');
+  const signupForm = document.getElementById('signupForm');
+  const loginForm = document.getElementById('loginForm');
+  const showSignupBtn = document.getElementById('showSignup');
+  const showLoginBtn = document.getElementById('showLogin');
+  const toLoginFromSignup = document.getElementById('toLoginFromSignup');
+  const toSignupFromLogin = document.getElementById('toSignupFromLogin');
 
-    // Show Signup form
-    showSignupBtn.addEventListener('click', () => {
-      welcomeScreen.style.display = 'none';
-      signupForm.classList.add('active');
-      loginForm.classList.remove('active');
-    });
+  // Show Signup / Login
+  showSignupBtn.addEventListener('click', () => { welcomeScreen.style.display='none'; signupForm.classList.add('active'); loginForm.classList.remove('active'); });
+  showLoginBtn.addEventListener('click', () => { welcomeScreen.style.display='none'; loginForm.classList.add('active'); signupForm.classList.remove('active'); });
+  toLoginFromSignup.addEventListener('click', () => { signupForm.classList.remove('active'); loginForm.classList.add('active'); });
+  toSignupFromLogin.addEventListener('click', () => { loginForm.classList.remove('active'); signupForm.classList.add('active'); });
 
-    // Show Login form
-    showLoginBtn.addEventListener('click', () => {
-      welcomeScreen.style.display = 'none';
-      loginForm.classList.add('active');
-      signupForm.classList.remove('active');
-    });
+  // On load
+  welcomeScreen.style.display='block';
+  signupForm.classList.remove('active');
+  loginForm.classList.remove('active');
 
-    // Switch to login from signup
-    toLoginFromSignup.addEventListener('click', () => {
-      signupForm.classList.remove('active');
-      loginForm.classList.add('active');
-    });
-
-    // Switch to signup from login
-    toSignupFromLogin.addEventListener('click', () => {
-      loginForm.classList.remove('active');
-      signupForm.classList.add('active');
-    });
-
-    // Optional: On page load, show welcome screen and hide forms
-    window.onload = () => {
-      welcomeScreen.style.display = 'block';
-      signupForm.classList.remove('active');
-      loginForm.classList.remove('active');
+  // Signup submit
+  signupForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (signupForm.password.value !== signupForm.confirmPassword.value) {
+      alert("Passwords do not match!");
+      return;
+    }
+    const formData = {
+      name: signupForm.name.value,
+      email: signupForm.email.value,
+      password: signupForm.password.value
     };
-  </script>
-  <style>
-    /* Reset */
-    * {
-      margin: 0; padding: 0; box-sizing: border-box;
-    }
-    body, html {
-      height: 100%;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: url('b3.jpg') no-repeat center center/cover;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: #222;
-    }
-
-    .container {
-  width: 400px;
-  background: rgba(197, 213, 183, 0.4); /* transparency thoda kam karke zyada blur dikhaye */
-  border-radius: 25px;
-  padding: 30px 25px 40px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(30px);      /* blur thoda zyada */
-  -webkit-backdrop-filter: blur(15px);
-  text-align: center;
-  position: relative;
-  border: 1px solid rgba(255, 255, 255, 0.3);  /* halka border to define edges */
-}
-
-
-    /* Top Image */
-    .top-image {
-      width: 140px;
-      height: auto;
-      margin: 0 auto 20px auto;
-      border-radius: 20px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    }
-
-    /* Headings */
-    h2 {
-      font-weight: 700;
-      margin-bottom: 12px;
-      font-size: 24px;
-      color: #1a3a00;
-    }
-    .highlight {
-      color: #3e6b00;
-      font-weight: 900;
-    }
-    p {
-      font-size: 14px;
-      margin-bottom: 25px;
-      color: #324d00;
-    }
-
-    /* Buttons */
-    .btn-group {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin-bottom: 25px;
-    }
-    button {
-      cursor: pointer;
-      padding: 12px 25px;
-      border: none;
-      border-radius: 12px;
-      font-weight: 600;
-      font-size: 16px;
-      color: #fff;
-      background: linear-gradient(135deg, #3e6b00, #6ba700);
-      transition: background 0.3s ease;
-    }
-    button:hover {
-      background: linear-gradient(135deg, #6ba700, #3e6b00);
-    }
-
-    /* Forms */
-    form {
-      display: none;
-      flex-direction: column;
-      text-align: left;
-    }
-    form.active {
-      display: flex;
-    }
-
-    /* Inputs */
-    input {
-      padding: 20px 30px;
-      margin-bottom: 20px;
-      box-shadow: 0 10px 10px black;
-      border-radius: 8px;
-      border: none;
-      font-size: 15px;
-      font-weight: 500;
-      background: rgba(238, 235, 235, 0.7);
-      outline: none;
-      color: #222;
-      backdrop-filter: blur(5px);
-      transition: background 0.3s ease;
-    }
-    input::placeholder {
-      color: #666;
-    }
-    input:focus {
-      background: #fff;
-      box-shadow: 0 0 6px #6ba700;
-    }
-
-    /* Submit Buttons */
-    button[type="submit"] {
-      background: linear-gradient(135deg, #4c8c00, #87c300);
-      color: #fff;
-      font-weight: 700;
-      font-size: 18px;
-      margin-top: 5px;
-      transition: background 0.3s ease;
-    }
-    button[type="submit"]:hover {
-      background: linear-gradient(135deg, #87c300, #4c8c00);
-    }
-
-    /* Link Text */
-    .switch-link {
-      text-align: center;
-      margin-top: 15px;
-      font-size: 14px;
-      color: #3e6b00;
-    }
-    .switch-link a {
-      color: #1a3a00;
-      cursor: pointer;
-      text-decoration: underline;
-      font-weight: 600;
-    }
-  </style>
+    try {
+      const res = await fetch("http://127.0.0.1:5000/signup", {
+        method:"POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify(formData)
+      });
+      const data = await res.json();
+      if(res.ok){
+        alert("Signup Successful!");
+        localStorage.setItem("userId", data.user._id);
+        window.location.href="avatar.html";
+      } else { alert("Error: " + data.message); }
+    } catch(err) { alert("Server error"); console.error(err); }
+  });
+});
+</script>
 </body>
 </html>
