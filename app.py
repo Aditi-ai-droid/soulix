@@ -71,3 +71,26 @@ def generate_avatar():
 
 if __name__ == "__main__":
     app.run(debug=True)
+@app.route('/')
+def dashboard():
+    return render_template('index.html')
+
+@app.route('/api/dashboard-data')
+def get_data():
+    # Fetch from MongoDB - example data
+    users_count = db.users.count_documents({})
+    # Add more queries as needed
+    return jsonify({
+        'metric1': '10,25/3',  # Replace with real data
+        'metric2': '19%/3',
+        'activities': 200,
+        'teens_helped': 5000,
+        'experts': 120,
+        'support': '24/7',
+        # Chart data examples
+        'barChartData': [10, 20, 30, 25, 15, 10],  # For bars
+        'lineChartData': [5, 15, 10, 25, 20, 30]  # For line graph
+    })
+
+if __name__ == '__main__':
+    app.run(debug=True)

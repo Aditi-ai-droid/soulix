@@ -286,7 +286,7 @@ body {
 
 
 .food1 {
-    background-image: url('brain\ img.png');
+    background-image: url('image/brain\ img.png');
     /*Updatewithactualpath*/top: 42%;
     left: 20%;
     filter: drop-shadow(0px 0px 50px rgba(10, 9, 9, 0.6));
@@ -478,5 +478,47 @@ body {
   .stat {
     width: 90%;
     margin: 0 auto;
+  }
+}
+/* 🌿 Meditation Cards */
+.med-card {
+  flex: 1 1 250px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 25px;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.med-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.med-card h3 {
+  margin-top: 15px;
+  font-size: 1.4rem;
+  color: #2e4057;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.med-card p {
+  color: #666;
+  font-size: 1rem;
+  margin-top: 10px;
+  line-height: 1.5;
+}
+
+/* 🌟 Meditation Icons */
+.med-icon {
+  font-size: 40px;
+  color: #4caf50;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .med-card {
+    flex: 1 1 100%;
   }
 }

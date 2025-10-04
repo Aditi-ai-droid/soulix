@@ -1,222 +1,208 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Dark Dashboard</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soulix Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  <!-- For charts -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>  <!-- For map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 </head>
 <body>
-  <div class="dashboard-container">
-    <aside class="sidebar">
-      <h2>☀ Dashboard</h2>
-      <nav>
-        <a href="#">Home</a>
-        <a href="#">Analytics</a>
-        <a href="#">Reports</a>
-        <a href="#">Settings</a>
-      </nav>
-    </aside>
-
-    <main class="main-content">
-      <header class="topbar">
-        <h1>Welcome Back!</h1>
-      </header>
-
-      <section class="cards">
-        <div class="card">Users<br><strong>1,025</strong></div>
-        <div class="card">Conversion<br><strong>19.8%</strong></div>
-        <div class="card">Active<br><strong>832</strong></div>
-      </section>
-
-      <section class="charts">
-        <div class="chart-box">
-          <canvas id="barChart"></canvas>
-        </div>
-        <div class="chart-box">
-          <canvas id="pieChart"></canvas>
-        </div>
-      </section>
-    </main>
-  </div>
-
-  <script src="script.js"></script>
-  <style>
-    /* Reset + Base Styling */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    <div class="dashboard">
+        <header class="header">
+            <div class="logo">
+                <img src="assets/logo.png" alt="Soulix Logo">  <!-- Add your logo -->
+                <h1>Soulix Dashboard</h1>
+            </div>
+            <nav>
+                <input type="text" placeholder="Search..." class="search">
+                <button>Settings</button>
+                <button>Profile</button>
+            </nav>
+        </header>
+        <aside class="sidebar">
+            <!-- Side menu icons -->
+            <ul>
+                <li>🏠 Home</li>
+                <li>📊 Analytics</li>
+                <li>👥 Users</li>
+                <li>⚙️ Settings</li>
+            </ul>
+        </aside>
+        <main class="main-grid">
+            <!-- Panel 1: Circular Metric -->
+            <div class="panel circular-metric">
+                <div class="circle" id="metric1">10,25/3</div>
+                <p>Key Metric</p>
+            </div>
+            <!-- Panel 2: Bar Chart -->
+            <div class="panel bar-chart">
+                <canvas id="barChart"></canvas>
+            </div>
+            <!-- Panel 3: World Map -->
+            <div class="panel map">
+                <div id="map"></div>
+            </div>
+            <!-- Panel 4: Line Graph -->
+            <div class="panel line-graph">
+                <canvas id="lineChart"></canvas>
+            </div>
+            <!-- Panel 5: Table/List -->
+            <div class="panel list">
+                <ul>
+                    <li>Item 1: Value</li>
+                    <li>Item 2: Value</li>
+                    <!-- Dynamically populate -->
+                </ul>
+            </div>
+            <!-- Panel 6: Circular Progress -->
+            <div class="panel progress">
+                <div class="circle" id="progress">3,33,29</div>
+                <p>Progress</p>
+            </div>
+            <!-- Add more panels as per image -->
+        </main>
+    </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+    fetch('/api/dashboard-data')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('keyMetric').textContent = data.keyMetric;
+            document.getElementById('progress').textContent = data.progress;
+            const list = document.querySelector('.list ul');
+            list.innerHTML = data.listItems.map(item => `<li>${item}</li>`).join('');
+        })
+        .catch(error => console.error('Error fetching data:', error));
+});
+    </script>
+    <style>
+      body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #1a1a1a;
+    color: #fff;
 }
 
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #1e1e1e, #121212);
-  color: #eee;
-  overflow-x: hidden;
+.dashboard {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    height: 100vh;
 }
 
-/* Layout */
-.dashboard-container {
-  display: flex;
-  min-height: 100vh;
+header {
+    grid-column: span 2;
+    background: #2a2a2a;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #333;
 }
 
-/* Sidebar */
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    margin-right: 10px;
+}
+
+.logo h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+.search {
+    background: #333;
+    border: none;
+    padding: 5px 10px;
+    color: #fff;
+    margin-right: 10px;
+}
+
+button {
+    background: #333;
+    border: none;
+    color: #fff;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
 .sidebar {
-  width: 220px;
-  background: rgba(30, 30, 30, 0.85);
-  backdrop-filter: blur(10px);
-  padding: 30px 20px;
-  box-shadow: 0 0 20px rgba(255, 165, 0, 0.4);
-  position: fixed;
-  height: 100%;
-  border-right: 1px solid rgba(255, 165, 0, 0.3);
+    background: #1a1a1a;
+    padding: 20px 10px;
+    border-right: 1px solid #333;
 }
 
-.sidebar h2 {
-  color: #f5b041;
-  font-weight: 700;
-  font-size: 28px;
-  margin-bottom: 40px;
-  text-shadow: 0 0 10px #f5b041;
+.sidebar ul {
+    list-style: none;
+    padding: 0;
 }
 
-.sidebar nav a {
-  display: block;
-  color: #ccc;
-  margin: 22px 0;
-  text-decoration: none;
-  font-size: 17px;
-  transition: 0.3s ease;
-  padding-left: 5px;
-  border-radius: 5px;
+.sidebar li {
+    padding: 10px;
+    cursor: pointer;
 }
 
-.sidebar nav a:hover, .sidebar nav a.active {
-  color: #fff;
-  background: rgba(245, 176, 65, 0.3);
-  box-shadow: 0 0 15px #f5b041;
-  transform: translateX(8px);
-  font-weight: 600;
+.sidebar li:hover {
+    background: #333;
 }
 
-/* Main content */
 .main-content {
-  margin-left: 220px;
-  padding: 40px 50px;
-  flex-grow: 1;
+    padding: 20px;
 }
 
-/* Header */
-.topbar {
-  margin-bottom: 40px;
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    height: calc(100vh - 70px); /* Adjust based on header height */
 }
 
-.topbar h1 {
-  font-size: 36px;
-  color: #fff;
-  text-shadow: 0 0 15px #f5b041;
-  font-weight: 800;
-}
-
-/* Cards container */
-.cards {
-  display: flex;
-  gap: 25px;
-  flex-wrap: wrap;
-  margin-bottom: 40px;
-}
-
-/* Individual Card */
-.card {
-  flex: 1;
-  min-width: 180px;
-  background: rgba(255, 255, 255, 0.07);
-  backdrop-filter: blur(12px);
-  border-radius: 15px;
-  padding: 25px 30px;
-  color: #f0d7a1;
-  box-shadow:
-    0 0 15px rgba(245, 176, 65, 0.4),
-    inset 0 0 10px rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(245, 176, 65, 0.2);
-  transition: all 0.3s ease;
-  font-weight: 600;
-}
-
-.card:hover {
-  box-shadow:
-    0 0 25px rgba(245, 176, 65, 0.8),
-    inset 0 0 15px rgba(255, 255, 255, 0.15);
-  transform: translateY(-5px);
-  color: #fff;
-}
-
-.card strong {
-  font-size: 28px;
-  color: #f5b041;
-  text-shadow: 0 0 10px #f5b041;
-  display: block;
-  margin-top: 8px;
-}
-
-/* Charts container */
-.charts {
-  display: flex;
-  gap: 30px;
-  flex-wrap: wrap;
-}
-
-/* Chart Boxes */
-.chart-box {
-  flex: 1;
-  min-width: 320px;
-  background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(15px);
-  padding: 30px;
-  border-radius: 18px;
-  box-shadow:
-    0 0 20px rgba(245, 176, 65, 0.35),
-    inset 0 0 12px rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(245, 176, 65, 0.25);
-  color: #f0d7a1;
-}
-
-/* Chart legends */
-.chart-legend {
-  font-weight: 600;
-  color: #fff;
-  text-shadow: 0 0 8px #f5b041;
-  margin-bottom: 15px;
-}
-
-/* Responsive */
-@media (max-width: 900px) {
-  .dashboard-container {
+.panel {
+    background: #2a2a2a;
+    border: 1px solid #333;
+    padding: 20px;
+    text-align: center;
+    display: flex;
     flex-direction: column;
-  }
-  .sidebar {
-    width: 100%;
-    height: auto;
-    position: relative;
-    box-shadow: none;
-    border-right: none;
-    padding: 20px 30px;
-  }
-  .main-content {
-    margin-left: 0;
-    padding: 20px 30px;
-  }
-  .cards, .charts {
-    flex-direction: column;
-  }
-  .card, .chart-box {
-    min-width: 100%;
-  }
+    justify-content: center;
+    align-items: center;
 }
 
-  </style>
+.circle {
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, #ffd700, #d4af37);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #000;
+    box-shadow: 0 0 20px #ffd700;
+    margin-bottom: 10px;
+}
+
+.placeholder {
+    background: #333;
+}
+
+.list ul {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+}
+    </style>
 </body>
 </html>

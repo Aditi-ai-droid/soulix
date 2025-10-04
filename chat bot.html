@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,127 +27,9 @@
 
 </head>
 <body>
-  <div class="container">
-    <!-- Navigation -->
-<div class="nav">
-  <!-- Logo Left -->
-  <div class="logo">
-    <img src="image/soulix logo.png" alt="Soulix Logo">
-  </div>
-
-  <!-- Menu Center -->
-<div class="menu">
-  <a href="index.html">
-    <i class="fa-solid fa-house"></i> Home
-  </a>
-  <a href="about.html">
-    <i class="fa-solid fa-circle-info"></i> About Us
-  </a>
-  <a href="contact.html">
-    <i class="fa-solid fa-envelope"></i> Contact
-  </a>
-  <a href="service.html">
-    <i class="fa-solid fa-gear"></i> Service
-  </a>
-  <a href="#">
-  <i class="fa-solid fa-bolt"></i>Blog
-  </a>
-  <a href="dashboard.html">
-  <i class="fa-solid fa-chart-line"></i> Dashboard
-</a>
-</div>
-
-
-  <!-- Icons Right -->
-  <div class="nav-icons">
-    <i class="fas fa-search"></i>
-    <a href="register.html"><i class="fas fa-user"></i>
-    </a>
-  </div>
-</div>
-<div class="search-overlay" id="searchOverlay">
-  <span class="close-btn" id="closeSearch">&times;</span>
-  <input type="text" placeholder="Type to search...">
-</div>
-
-
-    <!-- ✅ HERO SECTION -->
-<section id="home" class="hero">
-  <div class="hero-text">
-    <h1>Soulix</h1>
-    <p>You don't have to struggle in silence!</p>
-    <div class="button">
-      <a href="join us.html"><i class="fa fa-play"></i> Join Us</a>
-      <a href="see more.html"><i class="fa fa-plus"></i> See More</a>
-    </div>
-  </div>
-
-  <div class="hero-img">
-    <img src="image/home page.png" alt="Soulix">
-  </div>
-
-  <!-- ✅ Stats Section (inside hero) -->
-  <div class="stats-section">
-    <div class="stat stats-card">
-      <h2>200+</h2><p>Activities</p>
-    </div>
-    <div class="stat stats-card">
-      <h2>5K+</h2><p>Teens Helped</p>
-    </div>
-    <div class="stat stats-card">
-      <h2>120+</h2><p>Experts</p>
-    </div>
-    <div class="stat stats-card">
-      <h2>24/7</h2><p>Support</p>
-    </div>
-  </div>
-</section>
-
-
-<!-- Font Awesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
-<!-- Floating food items for effect -->
-    <div class="floating-food food1">
-    </div>
-    <div class="floating-food food2"></div>
-    <div class="floating-food food3"></div>
-    <div class="floating-food food4"></div>
-    <div class="floating-food food4"></div>
-    <div class="floating-food food5"></div>
-    <div class="floating-food food6"></div>
-    <div class="floating-food food7"></div>
-    <div class="floating-food food8"></div>
-    <div class="floating-food food9"></div>
-    <div class="floating-food food10"></div>
-  
-
-  
-<script>
-  const searchIcon = document.querySelector(".fa-search");
-  const searchOverlay = document.getElementById("searchOverlay");
-  const closeSearch = document.getElementById("closeSearch");
-
-  searchIcon.addEventListener("click", () => {
-    searchOverlay.classList.add("active");
-  });
-
-  closeSearch.addEventListener("click", () => {
-    searchOverlay.classList.remove("active");
-  });
-
-  // Optional: Close with ESC key
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") {
-      searchOverlay.classList.remove("active");
-    }
-  });
-</script>
-<!-- Chatbot Window -->
-  <!-- ✅ Chatbot with tooltip -->
 <div class="chatbot-wrapper" onclick="toggleChat()">
   <div class="chatbot-icon">
-    <img src="image/chat bot.png" alt="Chatbot Icon">
+    <img src="chat bot.png" alt="Chatbot Icon">
     <span class="chatbot-tooltip">Need Help? Chat with us!</span>
   </div>
 </div>
@@ -178,15 +61,7 @@
       }
     }
   </script>
-
- <!-- ✅ Hero Section -->
-<section id="home">
-  <!-- Your logo, text, image, buttons -->
-</section> <!-- Make sure this tag ends properly -->
-
-
-
-  
-
 </body>
 </html>
+
+ 
