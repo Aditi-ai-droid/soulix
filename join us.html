@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Join Us — Teen Mental Health</title>
+
+<!-- Font Awesome for icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+
+<style>
+  body {
+    margin: 0;
+    font-family: "Segoe UI", sans-serif;
+    background: url("A.jpg") no-repeat center center/cover;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .container {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 1100px;
+    width: 100%;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    color: #fff;
+  }
+
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #3b5f6b;
+    text-align:center;
+  }
+
+  p {
+    margin-bottom: 30px;
+    font-size: 1rem;
+    color: #2d5b4d;
+    text-align:center;
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+
+  .card {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: left;
+    transition: transform 0.3s, background 0.3s;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  .card h3 {
+    margin: 0 0 10px;
+    font-size: 1.2rem;
+    color: #fff;
+  }
+
+  .card p {
+    font-size: 0.9rem;
+    color: #ddd;
+    margin-bottom: 10px;
+  }
+
+  .card ul {
+    padding-left: 20px;
+    margin: 0 0 15px 0;
+    font-size: 0.9rem;
+    color: #eee;
+  }
+
+  .card ul li {
+    margin-bottom: 5px;
+  }
+
+  /* Soft blue buttons for cards */
+  .card .card-btn {
+    margin-top: auto;
+    display: inline-block;
+    background: linear-gradient(135deg, #5bb48d, #7d8d95);
+    padding: 10px 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    transition: background 0.3s, transform 0.3s;
+    text-align:center;
+    cursor:pointer;
+  }
+
+  .card .card-btn:hover {
+    background: linear-gradient(135deg, hsl(202, 49%, 73%), #478a6e);
+    transform: scale(1.05);
+  }
+
+  /* Main CTA button soft blue */
+  .main-btn {
+    display: inline-block;
+    background: linear-gradient(135deg,#5794ae,#95a9b4);
+    padding: 14px 28px;
+    border-radius: 30px;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+  }
+
+  .main-btn:hover {
+    transform: scale(1.05);
+    background: linear-gradient(135deg,#7c94a2,#81c9f8);
+  }
+
+  /* Modal styles */
+  .modal {
+    display: none;
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: rgba(0,0,0,0.4);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .modal-content {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    padding: 35px 30px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    color: #fff;
+  }
+
+  .close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+  }
+
+  input, textarea, select {
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border-radius:8px;
+    border:1px solid rgba(255,255,255,0.5);
+    background: rgba(255,255,255,0.6);
+    color: #76a299;
+    font-size:14px;
+  }
+
+  input::placeholder, textarea::placeholder {
+    color: #556677;
+  }
+
+  /* Modal submit button soft blue */
+  button.submit {
+    background: linear-gradient(135deg,#66a88d,#8bbcd4);
+    color: #fff;
+    border:none;
+    padding:14px;
+    width:100%;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:bold;
+    font-size:1rem;
+    transition: all 0.3s ease;
+  }
+
+  button.submit:hover {
+    transform: scale(1.03);
+    background: linear-gradient(135deg,#7e99a9,#383f44);
+  }
+
+  #successMsg {
+    display: none;
+    text-align: center;
+    margin-top: 10px;
+    color: #56c89e;
+  }
+
+  @media(max-width: 900px) {
+    .card-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media(max-width: 600px) {
+    .card-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Join Us — Support Teen Mental Health</h1>
+  <p>
+    Help teens feel heard. Mentor, create awareness content, or organize safe spaces and workshops. 
+    Your small time can make a big difference.
+  </p>
+
+  <div class="card-grid">
+    <div class="card">
+      <h3>👥 Mentor Teens</h3>
+      <p>One-on-one guidance & peer support.</p>
+      <ul>
+        <li>Weekly check-ins (1–2 hrs/week)</li>
+        <li>Listening & encouraging teens</li>
+        <li>Helping set goals & track progress</li>
+      </ul>
+      <span class="card-btn" onclick="openModal('Mentor Teens')">Join as a Mentor</span>
+    </div>
+
+    <div class="card">
+      <h3>📣 Create Awareness</h3>
+      <p>Spread mental health knowledge.</p>
+      <ul>
+        <li>Social media posts</li>
+        <li>Short educational videos</li>
+        <li>Resource guides for teens & parents</li>
+      </ul>
+      <span class="card-btn" onclick="openModal('Create Awareness')">Start Creating</span>
+    </div>
+
+    <div class="card">
+      <h3>📅 Organize Activities</h3>
+      <p>Plan events & workshops.</p>
+      <ul>
+        <li>Group workshops</li>
+        <li>Online meetups</li>
+        <li>Awareness events for teens</li>
+      </ul>
+      <span class="card-btn" onclick="openModal('Organize Activities')">Plan an Event</span>
+    </div>
+
+    <div class="card">
+      <h3>🤝 Community Support</h3>
+      <p>Help connect and moderate.</p>
+      <ul>
+        <li>Moderation & resource collection</li>
+        <li>Connect families to help</li>
+        <li>Support teen community programs</li>
+      </ul>
+      <span class="card-btn" onclick="openModal('Community Support')">Help the Community</span>
+    </div>
+  </div>
+
+  <div style="text-align:center; margin-top: 30px;">
+    <span class="main-btn" onclick="openModal('Volunteer')">Sign Up to Volunteer</span>
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="signupModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h2 id="modalTitle">Sign Up</h2>
+    <p id="modalDesc">Fill the form below to join as a volunteer.</p>
+    <form id="volunteerForm">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="tel" name="phone" placeholder="Phone Number">
+      <textarea name="reason" placeholder="Why do you want to volunteer?" rows="4" required></textarea>
+      <select name="availability" required>
+        <option value="">Select Availability</option>
+        <option value="Weekdays">Weekdays</option>
+        <option value="Weekends">Weekends</option>
+        <option value="Flexible">Flexible</option>
+      </select>
+      <input type="text" name="role" id="roleField" readonly style="background:#f0f0f0;">
+      <button type="submit" class="submit">Submit</button>
+    </form>
+    <p id="successMsg">Thank you! Your response has been recorded.</p>
+  </div>
+</div>
+
+<script>
+function openModal(role){
+  document.getElementById('signupModal').style.display = 'flex';
+  document.getElementById('modalTitle').innerText = role==='Volunteer' ? 'Sign Up to Volunteer' : 'Sign Up for ' + role;
+  document.getElementById('roleField').value = role;
+}
+
+function closeModal(){
+  document.getElementById('signupModal').style.display = 'none';
+  document.getElementById('volunteerForm').reset();
+  document.getElementById('successMsg').style.display = 'none';
+}
+
+document.getElementById('volunteerForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  document.getElementById('successMsg').style.display = 'block';
+  setTimeout(closeModal, 2000);
+});
+
+window.onclick = function(event){
+  if(event.target == document.getElementById('signupModal')){
+    closeModal();
+  }
+}
+</script>
+
+</body>
+</html>
