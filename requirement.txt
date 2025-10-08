@@ -1,4 +1,5 @@
-flask
-pymongo
-flask-cors
-werkzeug
+flask==3.0.0
+flask-cors==4.0.0
+pymongo==4.6.0
+python-dotenv==1.0.0
+werkzeug==3.0.1
