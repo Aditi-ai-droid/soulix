@@ -1,223 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Serenity Space</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
-body,html{height:100%;font-family:'Segoe UI',sans-serif;display:flex;justify-content:center;align-items:center;background:url('image/b3.jpg') no-repeat center/cover;color:#222;}
-.container{width:400px;background:rgba(197,213,183,0.4);border-radius:25px;padding:30px;box-shadow:0 20px 40px rgba(0,0,0,0.4);backdrop-filter:blur(30px);text-align:center;border:1px solid rgba(255,255,255,0.3);position:relative;}
-.top-image{width:140px;margin:0 auto 20px;border-radius:20px;box-shadow:0 5px 15px rgba(0,0,0,0.1);}
-h2{font-weight:700;margin-bottom:12px;font-size:24px;color:#1a3a00;}
-.highlight{color:#3e6b00;font-weight:900;}
-p{font-size:14px;margin-bottom:25px;color:#324d00;}
-.btn-group{display:flex;justify-content:center;gap:15px;margin-bottom:25px;}
-button{cursor:pointer;padding:12px 25px;border:none;border-radius:12px;font-weight:600;font-size:16px;color:#fff;background:linear-gradient(135deg,#3e6b00,#6ba700);transition:background 0.3s ease;}
-button:hover{background:linear-gradient(135deg,#6ba700,#3e6b00);}
-form{display:none;flex-direction:column;text-align:left;position:relative;z-index:2;}
-input{padding:15px 20px;margin-bottom:15px;border-radius:8px;border:none;font-size:15px;font-weight:500;background:rgba(238,235,235,0.7);outline:none;color:#222;}
-input:focus{background:#fff;box-shadow:0 0 6px #6ba700;}
-button[type="submit"]{background:linear-gradient(135deg,#4c8c00,#87c300);font-weight:700;margin-top:5px;}
-button[type="submit"]:hover{background:linear-gradient(135deg,#87c300,#4c8c00);}
-.switch-link{text-align:center;margin-top:10px;font-size:14px;}
-.switch-link a{cursor:pointer;text-decoration:underline;color:#1a3a00;font-weight:600;}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Serenity Space</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body,html{height:100%;font-family:'Segoe UI',sans-serif;display:flex;justify-content:center;align-items:center;background:url('image/b3.jpg') no-repeat center/cover;color:#222;}
+        .container{width:400px;background:rgba(197,213,183,0.4);border-radius:25px;padding:30px;box-shadow:0 20px 40px rgba(0,0,0,0.4);backdrop-filter:blur(30px);text-align:center;border:1px solid rgba(255,255,255,0.3);position:relative;}
+        .top-image{width:140px;margin:0 auto 20px;border-radius:20px;box-shadow:0 5px 15px rgba(0,0,0,0.1);}
+        h2{font-weight:700;margin-bottom:12px;font-size:24px;color:#1a3a00;}
+        .highlight{color:#3e6b00;font-weight:900;}
+        p{font-size:14px;margin-bottom:25px;color:#324d00;}
+        .btn-group{display:flex;justify-content:center;gap:15px;margin-bottom:25px;}
+        button{cursor:pointer;padding:12px 25px;border:none;border-radius:12px;font-weight:600;font-size:16px;color:#fff;background:linear-gradient(135deg,#3e6b00,#6ba700);transition:background 0.3s ease;}
+        button:hover{background:linear-gradient(135deg,#6ba700,#3e6b00);}
+        form{display:none;flex-direction:column;text-align:left;position:relative;z-index:2;}
+        input{padding:15px 20px;margin-bottom:15px;border-radius:8px;border:none;font-size:15px;font-weight:500;background:rgba(238,235,235,0.7);outline:none;color:#222;}
+        input:focus{background:#fff;box-shadow:0 0 6px #6ba700;}
+        button[type="submit"]{background:linear-gradient(135deg,#4c8c00,#87c300);font-weight:700;margin-top:5px;}
+        button[type="submit"]:hover{background:linear-gradient(135deg,#87c300,#4c8c00);}
+        .switch-link{text-align:center;margin-top:10px;font-size:14px;}
+        .switch-link a{cursor:pointer;text-decoration:underline;color:#1a3a00;font-weight:600;}
+    </style>
 </head>
 <body>
-<div class="container">
+    <div class="container">
+        <!-- Welcome Screen -->
+        <div id="welcomeScreen">
+            <img src="image/meditation girl.png" class="top-image">
+            <h2>Welcome to the <span class="highlight">space between your thoughts</span></h2>
+            <p>This is your time to pause. Breathe in calm, breathe out stress.</p>
+            <div class="btn-group">
+                <button id="showSignup">Sign Up</button>
+                <button id="showLogin">Log In</button>
+            </div>
+        </div>
 
-<!-- Welcome Screen -->
-<div id="welcomeScreen">
-<img src="image/meditation girl.png" class="top-image">
-<h2>Welcome to the <span class="highlight">space between your thoughts</span></h2>
-<p>This is your time to pause. Breathe in calm, breathe out stress.</p>
-<div class="btn-group">
-<button id="showSignup">Sign Up</button>
-<button id="showLogin">Log In</button>
-</div>
-</div>
+        <!-- Signup Form -->
+        <form id="signupForm">
+            <img src="image/meditation2.png" class="top-image">
+            <h2>Create Account</h2>
+            <input type="text" name="name" placeholder="Full Name" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <input type="password" name="confirmPassword" placeholder="Confirm Password" required>
+            <button type="submit">Sign Up</button>
+            <div class="switch-link">
+                Already have an account? <a id="toLoginFromSignup">Log In</a>
+            </div>
+        </form>
 
-<!-- Signup Form -->
-<form id="signupForm">
-<img src="image/meditation2.png" class="top-image">
-<h2>Create Account</h2>
-<input type="text" name="name" placeholder="Full Name" required>
-<input type="email" name="email" placeholder="Email" required>
-<input type="password" name="password" placeholder="Password" required>
-<input type="password" name="confirmPassword" placeholder="Confirm Password" required>
-<button type="submit">Sign Up</button>
-<div class="switch-link">
-Already have an account? <a id="toLoginFromSignup">Log In</a>
-</div>
-</form>
+        <!-- OTP Form -->
+        <form id="otpForm">
+            <img src="image/lock.png" class="top-image">
+            <h2>Enter OTP</h2>
+            <p style="font-size:13px;color:#324d00;">We sent an OTP to <span id="otpEmailDisplay"></span></p>
+            <input type="text" id="otpInput" placeholder="Enter OTP" required>
+            <button type="submit">Verify OTP</button>
+            <div style="margin-top:10px;text-align:center;">
+                <a id="resendOtp" style="cursor:pointer;color:#1a3a00;text-decoration:underline;">Resend OTP</a>
+            </div>
+        </form>
 
-<!-- OTP Form -->
-<form id="otpForm">
-<img src="image/lock.png" class="top-image">
-<h2>Enter OTP</h2>
-<p style="font-size:13px;color:#324d00;">We sent an OTP to <span id="otpEmailDisplay"></span></p>
-<input type="text" id="otpInput" placeholder="Enter OTP" required>
-<button type="submit">Verify OTP</button>
-<div style="margin-top:10px;text-align:center;">
-<a id="resendOtp" style="cursor:pointer;color:#1a3a00;text-decoration:underline;">Resend OTP</a>
-</div>
-</form>
+        <!-- Login Form -->
+        <form id="loginForm">
+            <img src="image/welcome back login.png" class="top-image">
+            <h2>Welcome back!</h2>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Log In</button>
+            <div class="switch-link">
+                Don't have an account yet? <a id="toSignupFromLogin">Sign Up</a>
+            </div>
+        </form>
+    </div>
 
-<!-- Login Form -->
-<form id="loginForm">
-<img src="image/welcome back login.png" class="top-image">
-<h2>Welcome back!</h2>
-<input type="email" name="email" placeholder="Email" required>
-<input type="password" name="password" placeholder="Password" required>
-<button type="submit">Log In</button>
-<div class="switch-link">
-Don't have an account yet? <a id="toSignupFromLogin">Sign Up</a>
-</div>
-</form>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const welcomeScreen = document.getElementById('welcomeScreen');
+            const signupForm = document.getElementById('signupForm');
+            const loginForm = document.getElementById('loginForm');
+            const otpForm = document.getElementById('otpForm');
+            const otpEmailDisplay = document.getElementById('otpEmailDisplay');
+            const otpInput = document.getElementById('otpInput');
+            const resendOtp = document.getElementById('resendOtp');
 
-</div>
+            const showSignupBtn = document.getElementById('showSignup');
+            const showLoginBtn = document.getElementById('showLogin');
+            const toLoginFromSignup = document.getElementById('toLoginFromSignup');
+            const toSignupFromLogin = document.getElementById('toSignupFromLogin');
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const welcomeScreen = document.getElementById('welcomeScreen');
-  const signupForm = document.getElementById('signupForm');
-  const loginForm = document.getElementById('loginForm');
-  const otpForm = document.getElementById('otpForm');
-  const otpEmailDisplay = document.getElementById('otpEmailDisplay');
-  const otpInput = document.getElementById('otpInput');
-  const resendOtp = document.getElementById('resendOtp');
+            let pendingSignupEmail = "";
 
-  const showSignupBtn = document.getElementById('showSignup');
-  const showLoginBtn = document.getElementById('showLogin');
-  const toLoginFromSignup = document.getElementById('toLoginFromSignup');
-  const toSignupFromLogin = document.getElementById('toSignupFromLogin');
+            // Initial view
+            welcomeScreen.style.display = "block";
+            signupForm.style.display = "none";
+            loginForm.style.display = "none";
+            otpForm.style.display = "none";
 
-  let pendingSignupEmail = "";
+            // Navigation buttons
+            showSignupBtn.addEventListener('click', () => {
+                welcomeScreen.style.display = "none";
+                signupForm.style.display = "flex";
+                loginForm.style.display = "none";
+            });
+            showLoginBtn.addEventListener('click', () => {
+                welcomeScreen.style.display = "none";
+                signupForm.style.display = "none";
+                loginForm.style.display = "flex";
+            });
+            toLoginFromSignup.addEventListener('click', () => {
+                signupForm.style.display = "none";
+                loginForm.style.display = "flex";
+            });
+            toSignupFromLogin.addEventListener('click', () => {
+                loginForm.style.display = "none";
+                signupForm.style.display = "flex";
+            });
 
-  // Initial view
-  welcomeScreen.style.display = "block";
-  signupForm.style.display = "none";
-  loginForm.style.display = "none";
-  otpForm.style.display = "none";
+            // Signup
+            signupForm.addEventListener("submit", async (e) => {
+                e.preventDefault();
+                const name = signupForm.querySelector('input[name="name"]').value;
+                const email = signupForm.querySelector('input[name="email"]').value;
+                const password = signupForm.querySelector('input[name="password"]').value;
+                const confirmPassword = signupForm.querySelector('input[name="confirmPassword"]').value;
 
-  // Navigation buttons
-  showSignupBtn.addEventListener('click', () => {
-    welcomeScreen.style.display = "none";
-    signupForm.style.display = "flex";
-    loginForm.style.display = "none";
-  });
-  showLoginBtn.addEventListener('click', () => {
-    welcomeScreen.style.display = "none";
-    signupForm.style.display = "none";
-    loginForm.style.display = "flex";
-  });
-  toLoginFromSignup.addEventListener('click', () => {
-    signupForm.style.display = "none";
-    loginForm.style.display = "flex";
-  });
-  toSignupFromLogin.addEventListener('click', () => {
-    loginForm.style.display = "none";
-    signupForm.style.display = "flex";
-  });
+                if (password !== confirmPassword) {
+                    alert("Passwords do not match!");
+                    return;
+                }
 
-  // ---------- Signup ----------
-  signupForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const name = signupForm.querySelector('input[name="name"]').value;
-    const email = signupForm.querySelector('input[name="email"]').value;
-    const password = signupForm.querySelector('input[name="password"]').value;
-    const confirmPassword = signupForm.querySelector('input[name="confirmPassword"]').value;
+                try {
+                    const response = await fetch('http://localhost:5000/signup-request', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ name, email, password })
+                    });
+                    const result = await response.json();
 
-    if(password !== confirmPassword){
-      alert("Passwords do not match!");
-      return;
-    }
+                    if (response.ok) {
+                        pendingSignupEmail = email;
+                        otpEmailDisplay.textContent = email;
+                        signupForm.style.display = "none";
+                        otpForm.style.display = "flex";
+                        alert(result.message + (result.otp_debug ? ` (Debug OTP: ${result.otp_debug})` : ''));
+                    } else {
+                        alert(result.message);
+                    }
+                } catch (error) {
+                    console.error('Signup error:', error);
+                    alert("Server error during signup. Check if the backend is running.");
+                }
+            });
 
-    const payload = { name, email, password };
+            // OTP Verification
+            otpForm.addEventListener("submit", async (e) => {
+                e.preventDefault();
+                const otp = otpInput.value.trim();
 
-    try {
-      const res = await fetch("http://127.0.0.1:5000/signup-request", {
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body: JSON.stringify(payload)
-      });
-      const data = await res.json();
-      if(res.ok){
-        pendingSignupEmail = email;
-        otpEmailDisplay.textContent = pendingSignupEmail;
-        signupForm.style.display = "none";
-        otpForm.style.display = "flex";
-        alert("OTP sent! Check console if dev.");
-      } else {
-        alert("Error: " + data.message);
-      }
-    } catch(err){
-      console.error(err);
-      alert("Server error");
-    }
-  });
+                try {
+                    const response = await fetch('http://localhost:5000/verify-otp', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email: pendingSignupEmail, otp })
+                    });
+                    const result = await response.json();
 
-  // ---------- OTP ----------
-  otpForm.addEventListener("submit", async (e)=>{
-    e.preventDefault();
-    const otp = otpInput.value.trim();
-    if(!otp){alert("Enter OTP"); return;}
-    try{
-      const res = await fetch("http://127.0.0.1:5000/verify-otp", {
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body: JSON.stringify({email:pendingSignupEmail, otp})
-      });
-      const data = await res.json();
-      if(res.ok){
-        alert("Signup complete!");
-        localStorage.setItem("userId", data.user._id);
-        window.location.href="avatar.html";
-      } else {
-        alert("Error: "+data.message);
-      }
-    } catch(err){ console.error(err); alert("Server error"); }
-  });
+                    if (response.ok) {
+                        alert("Signup complete!");
+                        window.location.href = "avatar.html";
+                    } else {
+                        alert(result.message);
+                    }
+                } catch (error) {
+                    console.error('OTP verification error:', error);
+                    alert("Server error during OTP verification.");
+                }
+            });
 
-  // ---------- Resend OTP ----------
-  resendOtp.addEventListener("click", async ()=>{
-    if(!pendingSignupEmail){alert("No pending signup."); return;}
-    try{
-      const res = await fetch("http://127.0.0.1:5000/resend-otp", {
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body: JSON.stringify({email:pendingSignupEmail})
-      });
-      const data = await res.json();
-      if(res.ok){ alert("OTP resent!"); }
-      else{ alert("Error: "+data.message); }
-    } catch(err){ console.error(err); alert("Server error"); }
-  });
+            // Resend OTP
+            resendOtp.addEventListener("click", async () => {
+                if (!pendingSignupEmail) {
+                    alert("No pending signup.");
+                    return;
+                }
 
-  // ---------- Login ----------
-  loginForm.addEventListener("submit", async (e)=>{
-    e.preventDefault();
-    const email = loginForm.querySelector('input[name="email"]').value;
-    const password = loginForm.querySelector('input[name="password"]').value;
+                try {
+                    const response = await fetch('http://localhost:5000/resend-otp', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email: pendingSignupEmail })
+                    });
+                    const result = await response.json();
 
-    const payload = { email, password };
-    try{
-      const res = await fetch("http://127.0.0.1:5000/login", {
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body: JSON.stringify(payload)
-      });
-      const data = await res.json();
-      if(res.ok){
-        alert("Login successful!");
-        localStorage.setItem("userId", data.user._id);
-        window.location.href="avatar.html";
-      } else { alert("Error: "+data.message); }
-    } catch(err){ console.error(err); alert("Server error"); }
-  });
+                    if (response.ok) {
+                        alert(result.message + (result.otp_debug ? ` (Debug OTP: ${result.otp_debug})` : ''));
+                    } else {
+                        alert(result.message);
+                    }
+                } catch (error) {
+                    console.error('Resend OTP error:', error);
+                    alert("Server error during OTP resend.");
+                }
+            });
 
-});
-</script>
+            // Login
+            loginForm.addEventListener("submit", async (e) => {
+                e.preventDefault();
+                const email = loginForm.querySelector('input[name="email"]').value;
+                const password = loginForm.querySelector('input[name="password"]').value;
+
+                try {
+                    const response = await fetch('http://localhost:5000/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email, password })
+                    });
+                    const result = await response.json();
+
+                    if (response.ok) {
+                        alert("Login successful!");
+                        window.location.href = "avatar.html";
+                    } else {
+                        alert(result.message);
+                    }
+                } catch (error) {
+                    console.error('Login error:', error);
+                    alert("Server error during login.");
+                }
+            });
+        });
+    </script>
 </body>
 </html>
