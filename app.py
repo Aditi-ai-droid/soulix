@@ -1,96 +1,209 @@
+import os
+import random
+from datetime import datetime, timedelta
 from flask import Flask, request, jsonify
-from flask_pymongo import PyMongo
 from flask_cors import CORS
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
+from pymongo import MongoClient
+import smtplib
+from email.mime.text import MIMEText
 from bson.objectid import ObjectId
 
 app = Flask(__name__)
 CORS(app)
 
-# MongoDB connection (fixed URL encoding)
-app.config["MONGO_URI"] = "mongodb+srv://aditisundaram35_db_user:Aditi2005%23%23@soulix.hq20ejt.mongodb.net/SoulixDB"
-mongo = PyMongo(app)
+# ---------- MongoDB Config ----------
+MONGO_URI = os.getenv(
+    "MONGO_URI",
+    "mongodb+srv://aditisundaram35_db_user:Aditi2005%23%23@soulix.hq20ejt.mongodb.net/SoulixDB?retryWrites=true&w=majority&tls=true"
+)
 
-# Test route
+client = MongoClient(MONGO_URI, tls=True, serverSelectionTimeoutMS=5000)
+try:
+    client.admin.command("ping")
+    print("✅ MongoDB Connected")
+except Exception as e:
+    print("❌ MongoDB Connection Failed:", e)
+
+db = client["SoulixDB"]
+
+# ---------- OTP Settings ----------
+OTP_LENGTH = 6
+OTP_TTL_SECONDS = 300  # 5 minutes
+OTP_MAX_ATTEMPTS = 5
+OTP_RESEND_LIMIT = 3
+OTP_RESEND_COOLDOWN = 30  # seconds
+
+# ---------- SMTP Config ----------
+SMTP_HOST = os.getenv("SMTP_HOST")
+SMTP_PORT = int(os.getenv("SMTP_PORT", "587"))
+SMTP_USER = os.getenv("SMTP_USER")
+SMTP_PASS = os.getenv("SMTP_PASS")
+
+# ---------- Helper Functions ----------
+def gen_otp(n=OTP_LENGTH):
+    return "".join(str(random.randint(0, 9)) for _ in range(n))
+
+def send_email_otp(to_email, otp):
+    subject = "Your Serenity Space OTP"
+    body = f"Your OTP is: {otp} (expires in {OTP_TTL_SECONDS//60} mins)"
+    if SMTP_HOST and SMTP_USER and SMTP_PASS:
+        try:
+            msg = MIMEText(body)
+            msg["Subject"] = subject
+            msg["From"] = SMTP_USER
+            msg["To"] = to_email
+
+            server = smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=10)
+            server.starttls()
+            server.login(SMTP_USER, SMTP_PASS)
+            server.sendmail(SMTP_USER, [to_email], msg.as_string())
+            server.quit()
+            return True
+        except Exception as e:
+            print("SMTP error:", e)
+            return False
+    else:
+        print(f"[DEV OTP] {to_email}: {otp}")  # Fallback for dev
+        return True
+
+def serialize_user(user):
+    """Convert MongoDB user doc into JSON-safe dict"""
+    return {
+        "_id": str(user["_id"]),
+        "name": user["name"],
+        "email": user["email"],
+        "avatar": user.get("avatar", ""),
+        "created_at": user["created_at"].isoformat() if "created_at" in user else ""
+    }
+
+# ---------- Routes ----------
+
 @app.route("/test")
 def test():
-    return "Server is running!"
+    return jsonify({"message": "Server running"})
 
-# Signup
-@app.route("/signup", methods=["POST"])
-def signup():
-    data = request.get_json()
-    name = data.get("name")
-    email = data.get("email")
-    password = data.get("password")
+# Signup request (generate OTP)
+@app.route("/signup-request", methods=["POST"])
+def signup_request():
+    try:
+        data = request.get_json() or {}
+        name, email, password = data.get("name"), data.get("email"), data.get("password")
+        if not name or not email or not password:
+            return jsonify({"message": "Name, email, password required"}), 400
 
-    if not name or not email or not password:
-        return jsonify({"message": "All fields are required!"}), 400
+        if db.users.find_one({"email": email}):
+            return jsonify({"message": "User exists"}), 400
 
-    if mongo.db.users.find_one({"email": email}):
-        return jsonify({"message": "User already exists!"}), 400
+        existing = db.temp_users.find_one({"email": email})
+        now = datetime.utcnow()
+        if existing:
+            last_sent = existing.get("last_sent_at", now - timedelta(seconds=9999))
+            if (now - last_sent).total_seconds() < OTP_RESEND_COOLDOWN:
+                wait = OTP_RESEND_COOLDOWN - int((now - last_sent).total_seconds())
+                return jsonify({"message": f"Try again after {wait}s"}), 429
 
-    hashed_password = generate_password_hash(password)
-    user_id = mongo.db.users.insert_one({
-        "name": name,
-        "email": email,
-        "password": hashed_password
-    }).inserted_id
+        otp = gen_otp()
+        otp_hash = generate_password_hash(otp)
+        expires_at = now + timedelta(seconds=OTP_TTL_SECONDS)
 
-    user = mongo.db.users.find_one({"_id": user_id})
-    return jsonify({
-        "message": "User created successfully!",
-        "user": {"_id": str(user["_id"]), "name": user["name"], "email": user["email"]}
-    }), 201
+        temp_doc = {
+            "name": name,
+            "email": email,
+            "password_hash": generate_password_hash(password),
+            "otp_hash": otp_hash,
+            "expires_at": expires_at,
+            "attempts": 0,
+            "resend_count": (existing.get("resend_count", 0) + 1) if existing else 1,
+            "last_sent_at": now
+        }
 
-# All users (DEV)
-@app.route("/all-users", methods=["GET"])
-def all_users():
-    users = mongo.db.users.find({}, {"password": 0})
-    output = []
-    for user in users:
-        output.append({
-            "_id": str(user["_id"]),
-            "name": user["name"],
-            "email": user["email"],
-            "avatar": user.get("avatar", "")
-        })
-    return jsonify({"users": output})
+        db.temp_users.replace_one({"email": email}, temp_doc, upsert=True)
+        send_email_otp(email, otp)
+        return jsonify({"message": "OTP sent", "email": email}), 200
+    except Exception as e:
+        print("signup-request error:", e)
+        return jsonify({"message": "Server error"}), 500
 
-# Generate avatar
-@app.route("/generate-avatar", methods=["POST"])
-def generate_avatar():
-    data = request.get_json()
-    user_id = data.get("user_id")
-    avatar_url = f"https://via.placeholder.com/256.png?text=Avatar+{user_id}"
-    mongo.db.users.update_one(
-        {"_id": ObjectId(user_id)},
-        {"$set": {"avatar": avatar_url}}
-    )
-    return jsonify({"message": "Avatar generated!", "avatar_url": avatar_url})
+# Verify OTP and create account
+@app.route("/verify-otp", methods=["POST"])
+def verify_otp():
+    try:
+        data = request.get_json() or {}
+        email, otp = data.get("email"), data.get("otp")
+        if not email or not otp:
+            return jsonify({"message": "Email and OTP required"}), 400
 
-if __name__ == "__main__":
-    app.run(debug=True)
-@app.route('/')
-def dashboard():
-    return render_template('index.html')
+        temp = db.temp_users.find_one({"email": email})
+        if not temp:
+            return jsonify({"message": "No OTP requested"}), 400
 
-@app.route('/api/dashboard-data')
-def get_data():
-    # Fetch from MongoDB - example data
-    users_count = db.users.count_documents({})
-    # Add more queries as needed
-    return jsonify({
-        'metric1': '10,25/3',  # Replace with real data
-        'metric2': '19%/3',
-        'activities': 200,
-        'teens_helped': 5000,
-        'experts': 120,
-        'support': '24/7',
-        # Chart data examples
-        'barChartData': [10, 20, 30, 25, 15, 10],  # For bars
-        'lineChartData': [5, 15, 10, 25, 20, 30]  # For line graph
-    })
+        now = datetime.utcnow()
+        if now > temp["expires_at"]:
+            db.temp_users.delete_one({"email": email})
+            return jsonify({"message": "OTP expired"}), 400
 
-if __name__ == '__main__':
-    app.run(debug=True)
+        if temp["attempts"] >= OTP_MAX_ATTEMPTS:
+            db.temp_users.delete_one({"email": email})
+            return jsonify({"message": "Max attempts exceeded"}), 403
+
+        if not check_password_hash(temp["otp_hash"], otp):
+            db.temp_users.update_one({"email": email}, {"$inc": {"attempts": 1}})
+            return jsonify({"message": "Invalid OTP"}), 401
+
+        # OTP correct → create user
+        if db.users.find_one({"email": email}):
+            db.temp_users.delete_one({"email": email})
+            return jsonify({"message": "User exists"}), 400
+
+        user_id = db.users.insert_one({
+            "name": temp["name"],
+            "email": email,
+            "password": temp["password_hash"],
+            "created_at": now,
+            "avatar": ""
+        }).inserted_id
+
+        db.temp_users.delete_one({"email": email})
+        user = db.users.find_one({"_id": user_id})
+        return jsonify({"message": "User created", "user": serialize_user(user)}), 201
+    except Exception as e:
+        print("verify-otp error:", e)
+        return jsonify({"message": "Server error"}), 500
+
+# Resend OTP
+@app.route("/resend-otp", methods=["POST"])
+def resend_otp():
+    try:
+        data = request.get_json() or {}
+        email = data.get("email")
+        if not email:
+            return jsonify({"message": "Email required"}), 400
+
+        temp = db.temp_users.find_one({"email": email})
+        if not temp:
+            return jsonify({"message": "No pending OTP"}), 400
+
+        now = datetime.utcnow()
+        last_sent = temp.get("last_sent_at", now - timedelta(seconds=9999))
+        if (now - last_sent).total_seconds() < OTP_RESEND_COOLDOWN:
+            return jsonify({"message": "Wait before resending"}), 429
+
+        if temp.get("resend_count", 0) >= OTP_RESEND_LIMIT:
+            return jsonify({"message": "Resend limit reached"}), 429
+
+        otp = gen_otp()
+        otp_hash = generate_password_hash(otp)
+        expires_at = now + timedelta(seconds=OTP_TTL_SECONDS)
+
+        db.temp_users.update_one({"email": email}, {"$set": {
+            "otp_hash": otp_hash,
+            "expires_at": expires_at,
+            "last_sent_at": now,
+            "attempts": 0,
+            "resend_count": temp.get("resend_count", 0) + 1
+        }})
+
+        send_email_otp(email, otp)
+        return jsonify({"message": "OTP resent"}), 200
+    except Exception as e:
