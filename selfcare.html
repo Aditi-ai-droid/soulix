@@ -1,0 +1,121 @@
+<!-- Self-Care Section -->
+<section id="self-care-section">
+  <h2 class="section-title">Self-Care for Your Mind & Soul</h2>
+
+  <div class="self-care-grid">
+    <!-- Card 1 -->
+    <div class="care-card fade-in">
+      <a href="#breathe-section"> <!-- Internal page section or external link -->
+        <img src="https://cdn-icons-png.flaticon.com/512/4333/4333609.png" alt="Breathe" />
+      </a>
+      <h3>Take Deep Breaths</h3>
+      <p>Just 60 seconds of mindful breathing can calm anxiety and bring clarity.</p>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="care-card fade-in">
+      <a href="#sleep-section">
+        <img src="https://cdn-icons-png.flaticon.com/512/3917/3917032.png" alt="Sleep" />
+      </a>
+      <h3>Protect Your Sleep</h3>
+      <p>A well-rested mind heals better. Aim for 7–8 hours of peaceful sleep.</p>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="care-card fade-in">
+      <a href="#journal-section">
+        <img src="https://cdn-icons-png.flaticon.com/512/4359/4359759.png" alt="Journal" />
+      </a>
+      <h3>Write It Out</h3>
+      <p>Journaling helps process emotions. Even one sentence a day makes a difference.</p>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="care-card fade-in">
+      <a href="#digital-detox-section">
+        <img src="https://cdn-icons-png.flaticon.com/512/3176/3176293.png" alt="Digital Detox" />
+      </a>
+      <h3>Digital Detox</h3>
+      <p>Give your mind space. Unplug for 30 minutes a day and just be.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Styling -->
+<style>
+  #self-care-section {
+    background: linear-gradient(135deg, #fce7f3, #e0f2fe);
+    padding: 80px 20px;
+    text-align: center;
+  }
+
+  .section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 40px;
+    color: #333;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .self-care-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .care-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
+    padding: 30px 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .care-card a img {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+    cursor: pointer; /* show pointer on hover */
+  }
+
+  .care-card a img:hover {
+    transform: scale(1.1);
+  }
+
+  .care-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: #444;
+  }
+
+  .care-card p {
+    font-size: 0.95rem;
+    color: #666;
+    line-height: 1.5;
+  }
+
+  .care-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 25px 35px rgba(0, 0, 0, 0.12);
+  }
+
+  /* Animation */
+  .fade-in {
+    animation: fadeInUp 1s ease forwards;
+    opacity: 0;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>

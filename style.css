@@ -183,34 +183,49 @@ body {
   margin-right: 15px;
 }
 
+/* Common Button Base */
+.button a {
+  display: inline-block;
+  padding: 10px 22px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.3s ease; /* smooth movement */
+  transform: translateY(0);  /* base transform added */
+  will-change: transform;   /* boosts performance */
+}
+
 /* Join Us button */
 .button a:first-child {
   background: #e63946; /* red tone */
   font-family: 'Clash Display', sans-serif;
-  font-weight: 15px;
+  font-size: 15px;
   color: #fff;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
 }
 
 .button a:first-child:hover {
-  background: #b91c1c; /* darker red on hover */
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(1, 0, 0, 0.4);
+  background: #b91c1c;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(185, 28, 28, 0.5);
 }
 
 /* See More button */
-.button a:last-child {
-  background: #1d3557; /* dark blue tone */
+.button a:nth-child(2) {
+  background: #1d3557;
   font-family: 'Clash Display', sans-serif;
   font-size: 15px;
   color: #fff;
+  margin-left: 10px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  transform: translateY(0);
+  transition: all 0.3s ease;
 }
 
-.button a:last-child:hover {
-  background: #0f172a; /* darker blue */
-  transform: translateY(-2px);
-  box-shadow: 0 12px 12px rgba(2, 169, 181, 0.4);
+.button a:nth-child(2):hover {
+  background: #0f172a;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(47, 89, 205, 0.4);
 }
-
 
 .hero-img {
   text-align: center;

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soulix — Explore More</title>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #d7f0f0, #f2caca);
+      animation: bgShift 12s ease-in-out infinite alternate;
+      overflow: hidden;
+    }
+
+    /* Glass Container */
+    .container {
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(14px);
+      border-radius: 18px;
+      padding: 35px 25px;
+      width: 320px;
+      text-align: center;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      animation: fadeIn 1.2s ease;
+    }
+
+    h2 {
+      font-size: 26px;
+      color: #1d3557;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 14px;
+      color: #324358;
+      margin-bottom: 25px;
+      line-height: 1.4;
+    }
+
+    /* Buttons */
+    .popupOption {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 12px;
+      font-size: 15px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      background: linear-gradient(135deg, #1d3557, #457b9d);
+      color: #fff;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+      transition: all 0.4s ease;
+      animation: floatSoft 3.8s ease-in-out infinite;
+      text-decoration: none;
+    }
+
+    .popupOption:hover {
+      background: linear-gradient(135deg, #457b9d, #1d3557);
+      transform: translateY(-4px);
+      box-shadow: 0 6px 15px rgba(47, 89, 205, 0.4);
+    }
+
+    /* Floating Animation */
+    @keyframes floatSoft {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-4px); }
+      100% { transform: translateY(0px); }
+    }
+
+    /* Background gentle gradient animation */
+    @keyframes bgShift {
+      0% { background: linear-gradient(135deg, #d7f0f0, #f2caca); }
+      50% { background: linear-gradient(135deg, #f3e6e6, #cfecec); }
+      100% { background: linear-gradient(135deg, #e6f4f1, #f5dede); }
+    }
+
+    /* Container fade */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Subtle floating particles for depth */
+    .particle {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      animation: particleFloat 10s infinite ease-in-out;
+    }
+
+    @keyframes particleFloat {
+      0% { transform: translateY(0); opacity: 0.6; }
+      50% { transform: translateY(-25px); opacity: 1; }
+      100% { transform: translateY(0); opacity: 0.6; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Light particles -->
+  <span class="particle" style="width:10px;height:10px;top:20%;left:25%;animation-delay:0s;"></span>
+  <span class="particle" style="width:8px;height:8px;top:60%;left:70%;animation-delay:2s;"></span>
+  <span class="particle" style="width:12px;height:12px;top:80%;left:40%;animation-delay:4s;"></span>
+  <span class="particle" style="width:6px;height:6px;top:35%;left:85%;animation-delay:1s;"></span>
+
+  <!-- Main Content -->
+  <div class="container">
+    <h2>Explore Soulix 💙</h2>
+    <p>Discover peace through mindful reflections and gentle inspiration 🌙</p>
+
+    <!-- 🔗 Buttons linked to real pages -->
+    <a href="quotes.html" class="popupOption">💬 Motivational Quotes</a>
+    <a href="selfcare.html" class="popupOption">🌿 Self-Care Tips</a>
+    <a href="expert.html" class="popupOption">🧠 Expert Advice</a>
+    <a href="stories.html" class="popupOption">💌 Teen Stories</a>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Soulix Stories - Full Blog Popup</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to bottom, #1a1a2e, #16213e);
+      padding: 40px 20px;
+      color: #fff;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 2.4rem;
+      color: #fff;
+      margin-bottom: 40px;
+    }
+
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      max-width: 1100px;
+      margin: 0 auto;
+      justify-content: center;
+    }
+
+    .story-card {
+      background-color: #0f0f1a;
+      width: 320px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .story-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 30px rgba(0, 140, 255, 0.3);
+    }
+
+    .story-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .story-card .card-body {
+      padding: 18px;
+    }
+
+    .story-card h3 {
+      font-size: 20px;
+      margin: 0 0 10px;
+      color: #ffffff;
+    }
+
+    .story-card p {
+      font-size: 15px;
+      color: #aaa;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+      background: rgba(0, 0, 0, 0.9);
+      padding: 40px 20px;
+    }
+
+    .modal-content {
+      background-color: #1e1e2f;
+      margin: auto;
+      padding: 25px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 750px;
+      position: relative;
+      animation: fadeIn 0.4s ease-in-out;
+      color: #eee;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+    }
+
+    .modal-content img {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    .modal-content h3 {
+      margin-top: 0;
+      font-size: 26px;
+      color: #0af;
+    }
+
+    .modal-content p {
+      font-size: 17px;
+      line-height: 1.8;
+      color: #ccc;
+      margin-bottom: 15px;
+    }
+
+    .close {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 32px;
+      font-weight: bold;
+      color: #aaa;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .close:hover {
+      color: #0af;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    @media (max-width: 768px) {
+      .card-container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .modal-content {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<h2>🌌 Discover Soulix Stories</h2>
+
+<div class="card-container">
+  <!-- Card 1 -->
+  <div class="story-card" onclick="openModal('modal1')">
+    <img src="B2.jpg" alt="Train">
+    <div class="card-body">
+      <h3>Echoes of the Midnight Train</h3>
+      <p>A mysterious journey through forgotten memories...</p>
+    </div>
+  </div>
+
+  <!-- Card 2 -->
+  <div class="story-card" onclick="openModal('modal2')">
+    <img src="B1.jpg" alt="Locksmith">
+    <div class="card-body">
+      <h3>The Locksmith's Journal</h3>
+      <p>Unlocking emotions in a world of silence...</p>
+    </div>
+  </div>
+
+  <!-- Card 3 -->
+  <div class="story-card" onclick="openModal('modal3')">
+    <img src="B3.jpg" alt="Letters Forest">
+    <div class="card-body">
+      <h3>Where the Wild Letters Grow</h3>
+      <p>Planting stories in a world without words...</p>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 1 -->
+<div id="modal1" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('modal1')">&times;</span>
+    <img src="https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=800&q=80" alt="Train">
+    <h3>Echoes of the Midnight Train</h3>
+    <p>
+      Every night at exactly 12:04 AM, the city’s abandoned station lights up faintly — as if remembering something. No people, no trains — except for a mysterious, silent one that glides in, invisible to most. Zara, a young woman chasing echoes of her father’s past, is the only one who sees it.
+    </p>
+    <p>
+      One night, she steps aboard. The inside isn’t just a train. It’s a living archive. Each carriage opens into a memory — not hers, but of strangers. Some are vivid, others fading. One shows a child waiting endlessly. Another, a woman letting go of a lover who never returned. As she walks further, the memories get personal — stories of her father, choices he never told her about, sacrifices made in silence.
+    </p>
+    <p>
+      The final door? Her own future. One choice. One stop. And she must decide whether to return… or become a part of the memory train forever.
+    </p>
+  </div>
+</div>
+
+<!-- Modal 2 -->
+<div id="modal2" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('modal2')">&times;</span>
+    <img src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=800&q=80" alt="Locksmith">
+    <h3>The Locksmith's Journal</h3>
+    <p>
+      In a futuristic city where people wear emotional locks around their chests, Kian is the last emotional locksmith — someone who can unlock hearts, not doors. His clients don’t speak. They just sit, silently placing their palm on a glowing journal.
+    </p>
+    <p>
+      Every page holds a soul’s hidden weight: a son grieving a mother he never knew; a dancer stuck in time after a tragic fall; a poet who burned all her poems to forget her love. Kian listens without judgment. He doesn’t fix. He reflects.
+    </p>
+    <p>
+      One day, a woman arrives. Her lock is golden, ancient. The journal doesn't glow. She doesn't speak. She just stares. Kian tries, but nothing works. For the first time, he must unlock not just her heart… but confront his own.
+    </p>
+    <p>
+      Because hidden in the last page of his journal is a story he wrote — and forgot — about

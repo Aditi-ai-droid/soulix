@@ -1,0 +1,167 @@
+<!-- Motivational Quotes Section -->
+<section id="motivational-quotes" style="margin-top:50px;">
+  <div class="quote-container">
+    <img src="A1.jpg" alt="Motivational" class="quote-image" />
+    <div class="quote-content">
+      <p class="quote-text">"Healing takes time, and that's okay. Your journey is unique, and Soulix is here with you every step."</p>
+      <span class="quote-author">- Soulix</span>
+    </div>
+  </div>
+
+  <div class="quote-container">
+    <img src="A2.jpg" alt="Motivational" class="quote-image" />
+    <div class="quote-content">
+      <p class="quote-text">"You are not alone — Soulix empowers you to share, learn, and grow with a supportive community."</p>
+      <span class="quote-author">- Soulix</span>
+    </div>
+  </div>
+
+  <div class="quote-container">
+    <img src="A5.jpg" alt="Motivational" class="quote-image" />
+    <div class="quote-content">
+      <p class="quote-text">"Every small step towards self-care is a victory. At Soulix, we celebrate your progress."</p>
+      <span class="quote-author">- Soulix</span>
+    </div>
+  </div>
+
+  <div class="quote-container">
+    <img src="A6.jpg" alt="Motivational" class="quote-image" />
+    <div class="quote-content">
+      <p class="quote-text">"Don't watch the clock; do what it does keep going "</p>
+      <span class="quote-author">- Soulix</span>
+    </div>
+  </div>
+
+  <div class="quote-container">
+    <img src="A3.jpg" alt="Motivational" class="quote-image" />
+    <div class="quote-content">
+      <p class="quote-text">"Mental health is a journey, not a destination. Trust Soulix to walk alongside you."</p>
+      <span class="quote-author">- Soulix</span>
+    </div>
+  </div>
+   <div class="quote-container">
+    <img src="A7.jpg" alt="Motivational" class="quote-image" />
+    <div class="quote-content">
+      <p class="quote-text">"Success is not for the lazy."</p>
+      <span class="quote-author">- Soulix</span>
+    </div>
+  </div>
+
+  <div class="quote-container">
+    <img src="A4.jpg" alt="Motivational" class="quote-image" />
+    <div class="quote-content">
+      <p class="quote-text">"You are not alone — Soulix empowers you to share, learn, and grow with a supportive community."</p>
+      <span class="quote-author">- Soulix</span>
+    </div>
+  </div>
+
+  <div class="quote-container">
+    <img src="A8.jpg" alt="Motivational" class="quote-image" />
+    <div class="quote-content">
+      <p class="quote-text">"Difficult road often lead to beutiful destination."</p>
+      <span class="quote-author">- Soulix</span>
+    </div>
+  </div>
+
+  
+</section>
+
+<style>
+  #motivational-quotes {
+    max-width: 720px;
+    margin: 50px auto;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .quote-container {
+    display: flex;
+    align-items: center;
+    background: #d1e8f4e3;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 1.2s ease;
+  }
+
+  .quote-container.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .quote-image {
+    width: 40%;
+    height: auto;
+    object-fit: cover;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    filter: brightness(0.85);
+  }
+
+  .quote-content {
+    padding: 30px 40px;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .quote-text {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #222;
+    margin: 0 0 15px 0;
+    line-height: 1.4;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .quote-author {
+    font-size: 1rem;
+    font-style: italic;
+    color: #666;
+    letter-spacing: 1px;
+  }
+
+  @media (max-width: 768px) {
+    .quote-container {
+      flex-direction: column;
+    }
+    .quote-image {
+      width: 100%;
+      border-radius: 20px 20px 0 0;
+      height: 200px;
+    }
+    .quote-content {
+      width: 100%;
+      padding: 20px 25px;
+    }
+    .quote-text {
+      font-size: 1.3rem;
+    }
+  }
+</style>
+
+<script>
+  // 🔹 Scroll animation: fade-in when visible
+  const quotes = document.querySelectorAll('.quote-container');
+
+  const appearOnScroll = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.2 } // triggers when 20% of element is visible
+  );
+
+  quotes.forEach(quote => {
+    appearOnScroll.observe(quote);
+  });
+</script>
