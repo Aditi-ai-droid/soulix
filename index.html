@@ -142,43 +142,230 @@
     }
   });
 </script>
-<!-- Chatbot Window -->
-  <!-- ✅ Chatbot with tooltip -->
-<div class="chatbot-wrapper" onclick="toggleChat()">
-  <div class="chatbot-icon">
-    <img src="image/chat bot.png" alt="Chatbot Icon">
-    <span class="chatbot-tooltip">Need Help? Chat with us!</span>
+<!-- ✅ Chatbot Icon -->
+    <div class="chatbot-wrapper" onclick="toggleSupport()">
+    <div class="chatbot-icon" title="Support">
+      <img src="image/chat bot.png" alt="Support">
+    </div>
+    <div class="chatbot-tooltip">Talk to Support</div>
   </div>
-</div>
 
+  <!-- Support window -->
+  <div id="supportWindow" class="support-window" role="dialog" aria-label="Support chat">
+    <div class="sw-header">
+      <div class="title"><i class="fa-solid fa-headset"></i>&nbsp; Support</div>
+      <div class="close" onclick="toggleSupport()">✕</div>
+    </div>
 
-  <script>
-    function toggleChat() {
-      let chatWindow = document.getElementById("chatWindow");
-      chatWindow.style.display = (chatWindow.style.display === "flex") ? "none" : "flex";
+    <div id="swBody" class="sw-body">
+      <!-- quick chips -->
+      <div class="chips" id="chipsContainer">
+        <div class="chip" data-key="breathe">Breathe</div>
+        <div class="chip" data-key="talk">Talk to someone</div>
+        <div class="chip" data-key="music">Calm music</div>
+        <div class="chip" data-key="tips">Stress tips</div>
+      </div>
+
+      <!-- messages -->
+      <div id="messages" class="chat-messages" aria-live="polite">
+        <div class="bubble bot">Hey 👋 I am Support. You can type, speak, or pick a quick suggestion below.</div>
+      </div>
+    </div>
+
+    <div class="sw-input">
+      <div class="controls">
+        <button id="micBtn" class="micro" title="Speak"><i class="fa-solid fa-microphone"></i></button>
+        <button id="emojiBtn" class="emoji-btn" title="Emoji">😊</button>
+      </div>
+
+      <div class="text-input">
+        <input id="userInput" placeholder="Type a message or press mic..." aria-label="Message input"/>
+      </div>
+
+      <button id="sendBtn" class="send" title="Send">➤</button>
+
+      <!-- emoji popup -->
+      <div id="emojiMenu" class="emoji-menu" aria-hidden="true">
+        <button class="emoji">😊</button><button class="emoji">👍</button><button class="emoji">😟</button>
+        <button class="emoji">😌</button><button class="emoji">❤️</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+/* ---------- UI controls ---------- */
+const supportWindow = document.getElementById('supportWindow');
+const messages = document.getElementById('messages');
+const userInput = document.getElementById('userInput');
+const sendBtn = document.getElementById('sendBtn');
+const micBtn = document.getElementById('micBtn');
+const emojiBtn = document.getElementById('emojiBtn');
+const emojiMenu = document.getElementById('emojiMenu');
+const chips = document.getElementById('chipsContainer');
+
+let open = false;
+function toggleSupport(){
+  open = !open;
+  supportWindow.style.display = open ? 'flex' : 'none';
+  if(open) userInput.focus();
+}
+
+/* add bubble */
+function addBubble(text, who='bot'){
+  const el = document.createElement('div');
+  el.className = 'bubble ' + (who === 'user' ? 'user' : 'bot');
+  el.textContent = text;
+  messages.appendChild(el);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+/* show typing animation, returns element to remove later */
+function showTyping(){
+  const t = document.createElement('div');
+  t.className = 'typing';
+  t.innerHTML = '<span class="dot"></span><span class="dot"></span><span class="dot"></span>';
+  messages.appendChild(t);
+  messages.scrollTop = messages.scrollHeight;
+  return t;
+}
+
+/* chips click -> send keyword */
+chips.addEventListener('click', e => {
+  const chip = e.target.closest('.chip');
+  if(!chip) return;
+  const key = chip.dataset.key;
+  userSend(key);
+});
+
+/* emoji handling */
+emojiBtn.addEventListener('click', e=>{
+  emojiMenu.style.display = emojiMenu.style.display === 'block' ? 'none' : 'block';
+});
+emojiMenu.addEventListener('click', e=>{
+  const emoji = e.target.textContent;
+  if(!emoji) return;
+  userInput.value += emoji;
+  emojiMenu.style.display = 'none';
+  userInput.focus();
+});
+
+/* send button / enter key */
+sendBtn.addEventListener('click', ()=> userSend(userInput.value || ''));
+userInput.addEventListener('keydown', e => { if(e.key === 'Enter'){ userSend(userInput.value || ''); } });
+
+/* ---------- Voice recognition (SpeechRecognition) ---------- */
+let recognition = null;
+let listening = false;
+if('webkitSpeechRecognition' in window || 'SpeechRecognition' in window){
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  recognition = new SR();
+  recognition.lang = 'en-US';
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
+
+  recognition.onresult = function(evt){
+    const text = evt.results[0][0].transcript;
+    userInput.value = text;
+    userSend(text);
+  };
+  recognition.onend = function(){ listening=false; micBtn.innerHTML = '<i class="fa-solid fa-microphone"></i>'; }
+  recognition.onerror = function(e){ console.error('speech error', e); listening=false; micBtn.innerHTML = '<i class="fa-solid fa-microphone"></i>'; }
+} else {
+  micBtn.title = 'Voice not supported';
+  micBtn.style.opacity = 0.8;
+}
+
+/* mic button toggles recognition */
+micBtn.addEventListener('click', ()=>{
+  if(!recognition) return alert('Voice not supported in this browser');
+  if(!listening){
+    recognition.start();
+    listening=true;
+    micBtn.innerHTML = '<i class="fa-solid fa-microphone-lines"></i>';
+  } else {
+    recognition.stop();
+    listening=false;
+    micBtn.innerHTML = '<i class="fa-solid fa-microphone"></i>';
+  }
+});
+
+/* ---------- Speech synthesis (bot voice) ---------- */
+function speakText(text){
+  if(!('speechSynthesis' in window)) return;
+  const utter = new SpeechSynthesisUtterance(text);
+  // Prefer a calm female voice if available
+  const voices = speechSynthesis.getVoices();
+  let chosen = voices.find(v => /female|woman|FEMALE|female/i.test(v.name)) || voices.find(v=> /en-?us/i.test(v.lang)) || voices[0];
+  if(chosen) utter.voice = chosen;
+  utter.rate = 0.95;
+  utter.pitch = 1.0;
+  speechSynthesis.cancel();
+  speechSynthesis.speak(utter);
+}
+
+/* ---------- Chat send flow ---------- */
+let pendingTypingEl = null;
+async function userSend(raw){
+  const text = (raw||'').toString().trim();
+  if(!text) return;
+  // show user bubble
+  addBubble(text, 'user');
+  userInput.value = '';
+  // show typing
+  const typingEl = showTyping();
+
+  try {
+    // call server /chat
+    const res = await fetch('http://127.0.0.1:5000/chat', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        message: text,
+        // if user logged in, you can put email here
+        email: localStorage.getItem('soulix_user_email') || 'guest@soulix.com'
+      })
+    });
+
+    const json = await res.json();
+    typingEl.remove();
+    // server returns { reply: "...", suggestions: [...], emoji: "😊" }
+    const reply = (json.reply || "Sorry, I couldn't process that. Try again.");
+    addBubble(reply, 'bot');
+
+    // optional: show server suggestions as chips
+    if(Array.isArray(json.suggestions) && json.suggestions.length){
+      // replace chips area
+      const ctn = document.getElementById('chipsContainer');
+      ctn.innerHTML = '';
+      json.suggestions.slice(0,6).forEach(s => {
+        const d = document.createElement('div'); d.className='chip'; d.textContent = s; d.dataset.key = s;
+        ctn.appendChild(d);
+      });
     }
 
-    function sendMessage() {
-      let input = document.getElementById("userInput");
-      let messages = document.getElementById("chatMessages");
-
-      if (input.value.trim() !== "") {
-        // User message
-        let userMsg = document.createElement("p");
-        userMsg.innerHTML = "<b>You:</b> " + input.value;
-        messages.appendChild(userMsg);
-
-        // Bot reply
-        let botMsg = document.createElement("p");
-        botMsg.innerHTML = "<b>Bot:</b> This is a sample reply.";
-        messages.appendChild(botMsg);
-
-        messages.scrollTop = messages.scrollHeight;
-        input.value = "";
-      }
+    // optional emoji reaction
+    if(json.emoji){
+      const e = document.createElement('div'); e.className='bubble bot'; e.textContent = json.emoji; messages.appendChild(e);
     }
-  </script>
 
+    // speak
+    try{ speakText(reply); } catch(e){ /* ignore */ }
+
+  } catch (err){
+    typingEl.remove();
+    addBubble("⚠️ Unable to reach server. Check connection.", 'bot');
+    console.error(err);
+  }
+}
+
+/* nice: close emoji menu when clicking outside */
+document.addEventListener('click', e=>{
+  if(!emojiMenu.contains(e.target) && !emojiBtn.contains(e.target)) emojiMenu.style.display='none';
+});
+
+/* open the support window initially collapsed (icon only) */
+supportWindow.style.display = 'none';
+</script>
  <!-- Bottom Icons -->
     <div class="bottom-icons">
       <img src="https://img.icons8.com/ios-filled/50/ffffff/headphones.png" alt="Headphones" />

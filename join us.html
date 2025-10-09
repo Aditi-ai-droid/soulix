@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Join Us — Teen Mental Health</title>
 
-<!-- Font Awesome for icons -->
+<!-- Font Awesome -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
 
 <style>
@@ -92,7 +92,6 @@
     margin-bottom: 5px;
   }
 
-  /* Soft blue buttons for cards */
   .card .card-btn {
     margin-top: auto;
     display: inline-block;
@@ -112,7 +111,6 @@
     transform: scale(1.05);
   }
 
-  /* Main CTA button soft blue */
   .main-btn {
     display: inline-block;
     background: linear-gradient(135deg,#5794ae,#95a9b4);
@@ -142,6 +140,7 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    transition: opacity 0.3s ease;
   }
 
   .modal-content {
@@ -154,6 +153,12 @@
     position: relative;
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
     color: #fff;
+    animation: fadeIn 0.4s ease;
+  }
+
+  @keyframes fadeIn {
+    from {opacity: 0; transform: translateY(20px);}
+    to {opacity: 1; transform: translateY(0);}
   }
 
   .close {
@@ -171,7 +176,7 @@
     border-radius:8px;
     border:1px solid rgba(255,255,255,0.5);
     background: rgba(255,255,255,0.6);
-    color: #76a299;
+    color: #444;
     font-size:14px;
   }
 
@@ -179,7 +184,6 @@
     color: #556677;
   }
 
-  /* Modal submit button soft blue */
   button.submit {
     background: linear-gradient(135deg,#66a88d,#8bbcd4);
     color: #fff;
@@ -201,20 +205,18 @@
   #successMsg {
     display: none;
     text-align: center;
-    margin-top: 10px;
+    margin-top: 15px;
     color: #56c89e;
+    font-weight: bold;
+    font-size: 1rem;
   }
 
   @media(max-width: 900px) {
-    .card-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
+    .card-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
   @media(max-width: 600px) {
-    .card-grid {
-      grid-template-columns: 1fr;
-    }
+    .card-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -297,7 +299,7 @@
       <input type="text" name="role" id="roleField" readonly style="background:#f0f0f0;">
       <button type="submit" class="submit">Submit</button>
     </form>
-    <p id="successMsg">Thank you! Your response has been recorded.</p>
+    <p id="successMsg">✅ Thank you! Your response has been recorded.</p>
   </div>
 </div>
 
@@ -314,10 +316,41 @@ function closeModal(){
   document.getElementById('successMsg').style.display = 'none';
 }
 
-document.getElementById('volunteerForm').addEventListener('submit', function(e){
+document.getElementById('volunteerForm').addEventListener('submit', async function(e){
   e.preventDefault();
-  document.getElementById('successMsg').style.display = 'block';
-  setTimeout(closeModal, 2000);
+
+  const formData = {
+    name: this.name.value,
+    email: this.email.value,
+    phone: this.phone.value,
+    reason: this.reason.value,
+    availability: this.availability.value,
+    role: this.role.value
+  };
+
+  try {
+    const res = await fetch("http://127.0.0.1:5000/join-us", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData)
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      document.getElementById('successMsg').style.display = 'block';
+      setTimeout(() => {
+        closeModal();
+        alert(data.message);
+      }, 2000);
+    } else {
+      alert(data.message);
+    }
+
+  } catch (err) {
+    console.error("Error:", err);
+    alert("Server error. Please try again later.");
+  }
 });
 
 window.onclick = function(event){
@@ -326,6 +359,5 @@ window.onclick = function(event){
   }
 }
 </script>
-
 </body>
 </html>

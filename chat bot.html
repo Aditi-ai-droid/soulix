@@ -1,67 +1,157 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="C:\Users\Lenovo\Soulix\fontawesome-free-7.0.1-web\fontawesome-free-7.0.1-web/all.min.css">
-
-
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- Font Awesome CDN -->
- <link rel="preconnect" href="https://fonts.googleapis.com">
- <script src="https://unpkg.com/lottie-web@5.7.13/build/player/lottie.min.js"></script>
-
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Great+Vibes&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Imperial+Script&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Libertinus+Serif+Display&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital@0;1&family=Playwrite+ES+Deco+Guides&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Rubik+Vinyl&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap">;
-<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Great+Vibes&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Imperial+Script&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital@0;1&family=Playwrite+ES+Deco+Guides&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Rubik+Vinyl&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Great+Vibes&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Imperial+Script&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital@0;1&family=Playwrite+ES+Deco+Guides&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Rubik+Vinyl&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
-
-
-  <title>Soulix</title>
-  <link rel="stylesheet" href="style.css">
-
-</head>
-<body>
-<div class="chatbot-wrapper" onclick="toggleChat()">
-  <div class="chatbot-icon">
-    <img src="chat bot.png" alt="Chatbot Icon">
-    <span class="chatbot-tooltip">Need Help? Chat with us!</span>
+<!-- 🟢 Mini Floating Chat Window -->
+<div id="chatWindow" class="mini-chat-window">
+  <div class="chat-header">
+    <span>Serenity 💙</span>
+    <span class="close-btn" onclick="toggleChat()">×</span>
+  </div>
+  <div id="chatMessages" class="chat-messages">
+    <div class="msg bot">Hey 🌿 I’m Serenity! How are you feeling today?</div>
+  </div>
+  <div class="chat-input">
+    <input type="text" id="chatInput" placeholder="Type...">
+    <button onclick="sendMessage()">➤</button>
   </div>
 </div>
 
+<style>
+/* 🧠 MINI CHATBOT STYLE */
+.mini-chat-window {
+  position: fixed;
+  bottom: 90px;
+  right: 35px;
+  width: 260px;
+  height: 330px;
+  background: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 1000;
+  animation: slideUp 0.3s ease;
+  border: 1px solid #d3e6d0;
+}
 
-  <script>
-    function toggleChat() {
-      let chatWindow = document.getElementById("chatWindow");
-      chatWindow.style.display = (chatWindow.style.display === "flex") ? "none" : "flex";
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.chat-header {
+  background: linear-gradient(135deg, #68a37e, #4c8055);
+  color: white;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-messages {
+  flex: 1;
+  padding: 8px;
+  overflow-y: auto;
+  background: #f4f8f4;
+  font-size: 13px;
+}
+
+.msg {
+  padding: 6px 10px;
+  border-radius: 10px;
+  margin: 4px 0;
+  max-width: 80%;
+  word-wrap: break-word;
+}
+
+.bot {
+  align-self: flex-start;
+  background: #e7f5eb;
+  color: #184b29;
+}
+
+.user {
+  align-self: flex-end;
+  background: #bfe3c2;
+  color: #12381e;
+}
+
+.chat-input {
+  display: flex;
+  padding: 6px;
+  border-top: 1px solid #ddd;
+  background: white;
+}
+
+.chat-input input {
+  flex: 1;
+  border: none;
+  padding: 6px;
+  font-size: 13px;
+  border-radius: 8px;
+  background: #f2f7f2;
+  outline: none;
+}
+
+.chat-input button {
+  background: #4b8055;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  margin-left: 5px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.close-btn {
+  cursor: pointer;
+  font-size: 16px;
+}
+
+
+</style>
+<script>
+  const chatWindow = document.getElementById('chatWindow');
+  const chatMessages = document.getElementById('chatMessages');
+  const chatInput = document.getElementById('chatInput');
+  let chatVisible = false;
+
+  function toggleChat() {
+    chatVisible = !chatVisible;
+    chatWindow.style.display = chatVisible ? 'flex' : 'none';
+  }
+
+  function addMessage(text, cls) {
+    const msg = document.createElement('div');
+    msg.className = 'msg ' + cls;
+    msg.textContent = text;
+    chatMessages.appendChild(msg);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  async function sendMessage() {
+    const text = chatInput.value.trim();
+    if (!text) return;
+    addMessage(text, 'user');
+    chatInput.value = '';
+    addMessage('Typing...', 'bot');
+
+    try {
+      const userEmail = localStorage.getItem("soulix_user_email") || "guest@soulix.com";
+      const res = await fetch('http://127.0.0.1:5000/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: text, email: userEmail })
+      });
+      const data = await res.json();
+      document.querySelector('.bot:last-child').textContent = data.reply || "Hmm... I didn’t get that.";
+    } catch (err) {
+      document.querySelector('.bot:last-child').textContent = "Error connecting to server.";
     }
+  }
 
-    function sendMessage() {
-      let input = document.getElementById("userInput");
-      let messages = document.getElementById("chatMessages");
-
-      if (input.value.trim() !== "") {
-        // User message
-        let userMsg = document.createElement("p");
-        userMsg.innerHTML = "<b>You:</b> " + input.value;
-        messages.appendChild(userMsg);
-
-        // Bot reply
-        let botMsg = document.createElement("p");
-        botMsg.innerHTML = "<b>Bot:</b> This is a sample reply.";
-        messages.appendChild(botMsg);
-
-        messages.scrollTop = messages.scrollHeight;
-        input.value = "";
-      }
-    }
-  </script>
-</body>
-</html>
-
- 
+  chatInput.addEventListener("keydown", e => {
+    if (e.key === "Enter") sendMessage();
+  });
+</script>

@@ -6,22 +6,81 @@
     <title>Serenity Space</title>
     <style>
         *{margin:0;padding:0;box-sizing:border-box;}
-        body,html{height:100%;font-family:'Segoe UI',sans-serif;display:flex;justify-content:center;align-items:center;background:url('image/b3.jpg') no-repeat center/cover;color:#222;}
-        .container{width:400px;background:rgba(197,213,183,0.4);border-radius:25px;padding:30px;box-shadow:0 20px 40px rgba(0,0,0,0.4);backdrop-filter:blur(30px);text-align:center;border:1px solid rgba(255,255,255,0.3);position:relative;}
-        .top-image{width:140px;margin:0 auto 20px;border-radius:20px;box-shadow:0 5px 15px rgba(0,0,0,0.1);}
+        body,html{
+            height:100%;
+            font-family:'Segoe UI',sans-serif;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            background:url('image/b3.jpg') no-repeat center/cover;
+            color:#222;
+        }
+        .container{
+            width:400px;
+            background:rgba(197,213,183,0.4);
+            border-radius:25px;
+            padding:30px;
+            box-shadow:0 20px 40px rgba(0,0,0,0.4);
+            backdrop-filter:blur(30px);
+            text-align:center;
+            border:1px solid rgba(255,255,255,0.3);
+            position:relative;
+        }
+        .top-image{
+            width:140px;
+            margin:0 auto 20px;
+            border-radius:20px;
+            box-shadow:0 5px 15px rgba(0,0,0,0.1);
+        }
         h2{font-weight:700;margin-bottom:12px;font-size:24px;color:#1a3a00;}
         .highlight{color:#3e6b00;font-weight:900;}
         p{font-size:14px;margin-bottom:25px;color:#324d00;}
         .btn-group{display:flex;justify-content:center;gap:15px;margin-bottom:25px;}
-        button{cursor:pointer;padding:12px 25px;border:none;border-radius:12px;font-weight:600;font-size:16px;color:#fff;background:linear-gradient(135deg,#3e6b00,#6ba700);transition:background 0.3s ease;}
-        button:hover{background:linear-gradient(135deg,#6ba700,#3e6b00);}
+        button{
+            cursor:pointer;padding:12px 25px;border:none;border-radius:12px;
+            font-weight:600;font-size:16px;color:#fff;
+            background:linear-gradient(135deg,#3e6b00,#6ba700);
+            transition:all 0.3s ease;
+        }
+        button:hover{
+            background:linear-gradient(135deg,#6ba700,#3e6b00);
+            transform:translateY(-2px);
+        }
         form{display:none;flex-direction:column;text-align:left;position:relative;z-index:2;}
-        input{padding:15px 20px;margin-bottom:15px;border-radius:8px;border:none;font-size:15px;font-weight:500;background:rgba(238,235,235,0.7);outline:none;color:#222;}
+        input{
+            padding:15px 20px;margin-bottom:15px;border-radius:8px;
+            border:none;font-size:15px;font-weight:500;
+            background:rgba(238,235,235,0.7);outline:none;color:#222;
+        }
         input:focus{background:#fff;box-shadow:0 0 6px #6ba700;}
-        button[type="submit"]{background:linear-gradient(135deg,#4c8c00,#87c300);font-weight:700;margin-top:5px;}
-        button[type="submit"]:hover{background:linear-gradient(135deg,#87c300,#4c8c00);}
+        button[type="submit"]{
+            background:linear-gradient(135deg,#4c8c00,#87c300);
+            font-weight:700;margin-top:5px;
+        }
+        button[type="submit"]:hover{
+            background:linear-gradient(135deg,#87c300,#4c8c00);
+        }
         .switch-link{text-align:center;margin-top:10px;font-size:14px;}
         .switch-link a{cursor:pointer;text-decoration:underline;color:#1a3a00;font-weight:600;}
+
+        /* Password Strength Bar */
+        #strengthBar{
+            height:6px;
+            border-radius:5px;
+            background:#ccc;
+            margin-bottom:10px;
+            transition:all 0.4s ease;
+        }
+
+        /* Caps Lock Warning */
+        #capsWarning{
+            display:none;
+            color:#b91c1c;
+            font-size:13px;
+            margin-top:-8px;
+            margin-bottom:10px;
+            text-align:left;
+        }
     </style>
 </head>
 <body>
@@ -44,6 +103,8 @@
             <input type="text" name="name" placeholder="Full Name" required>
             <input type="email" name="email" placeholder="Email" required>
             <input type="password" name="password" placeholder="Password" required>
+            <div id="strengthBar"></div>
+            <small id="capsWarning">⚠️ Caps Lock is ON</small>
             <input type="password" name="confirmPassword" placeholder="Confirm Password" required>
             <button type="submit">Sign Up</button>
             <div class="switch-link">
@@ -85,18 +146,20 @@
             const otpEmailDisplay = document.getElementById('otpEmailDisplay');
             const otpInput = document.getElementById('otpInput');
             const resendOtp = document.getElementById('resendOtp');
-
             const showSignupBtn = document.getElementById('showSignup');
             const showLoginBtn = document.getElementById('showLogin');
             const toLoginFromSignup = document.getElementById('toLoginFromSignup');
             const toSignupFromLogin = document.getElementById('toSignupFromLogin');
-
+            const passwordField = signupForm.querySelector('input[name="password"]');
+            const confirmField = signupForm.querySelector('input[name="confirmPassword"]');
+            const strengthBar = document.getElementById('strengthBar');
+            const capsWarning = document.getElementById('capsWarning');
             let pendingSignupEmail = "";
 
-            // default
+            // Initial
             welcomeScreen.style.display = "block";
 
-            // navigation
+            // Navigation
             showSignupBtn.onclick = () => {
                 welcomeScreen.style.display = "none";
                 signupForm.style.display = "flex";
@@ -114,15 +177,45 @@
                 signupForm.style.display = "flex";
             };
 
-            // signup
+            // 🔐 Password strength meter
+            passwordField.addEventListener("input", () => {
+                const val = passwordField.value;
+                let strength = 0;
+                if (val.match(/[a-z]/)) strength++;
+                if (val.match(/[A-Z]/)) strength++;
+                if (val.match(/[0-9]/)) strength++;
+                if (val.match(/[@$!%*?&]/)) strength++;
+                if (val.length >= 8) strength++;
+
+                const colors = ["#ff4d4d","#ff914d","#ffd54f","#a5d6a7","#4caf50"];
+                strengthBar.style.width = (strength * 20) + "%";
+                strengthBar.style.background = colors[strength - 1] || "#ccc";
+                strengthBar.style.boxShadow = `0 0 8px ${colors[strength - 1] || "#ccc"}`;
+            });
+
+            // ⚠️ Caps Lock warning
+            passwordField.addEventListener("keyup", (e) => {
+                const caps = e.getModifierState && e.getModifierState("CapsLock");
+                capsWarning.style.display = caps ? "block" : "none";
+            });
+
+            // ✅ Signup process
             signupForm.onsubmit = async (e) => {
                 e.preventDefault();
                 const name = signupForm.name.value;
                 const email = signupForm.email.value;
-                const password = signupForm.password.value;
-                const confirmPassword = signupForm.confirmPassword.value;
+                const password = passwordField.value;
+                const confirmPassword = confirmField.value;
 
-                if (password !== confirmPassword) return alert("Passwords do not match!");
+                if (password !== confirmPassword)
+                    return alert("Passwords do not match!");
+
+                // Strong password validation
+                const strongPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+                if (!strongPassword.test(password)) {
+                    alert("⚠️ Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.");
+                    return;
+                }
 
                 try {
                     const res = await fetch('http://127.0.0.1:5000/signup-request', {
@@ -141,12 +234,11 @@
                         alert(data.message);
                     } else alert(data.message);
                 } catch (err) {
-                    console.error(err);
                     alert("Server error during signup.");
                 }
             };
 
-            // verify otp
+            // 🔑 Verify OTP
             otpForm.onsubmit = async (e) => {
                 e.preventDefault();
                 const otp = otpInput.value.trim();
@@ -167,11 +259,11 @@
                 }
             };
 
-            // resend OTP
+            // 🔁 Resend OTP
             resendOtp.onclick = async () => {
                 if (!pendingSignupEmail) return alert("No pending signup.");
                 try {
-                    const res = await fetch('http://127.0.0.1:5000/signup-request', {
+                    const res = await fetch('http://127.0.0.1:5000/resend-otp', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ email: pendingSignupEmail })
@@ -183,7 +275,7 @@
                 }
             };
 
-            // login
+            // 🔓 Login
             loginForm.onsubmit = async (e) => {
                 e.preventDefault();
                 const email = loginForm.email.value;
