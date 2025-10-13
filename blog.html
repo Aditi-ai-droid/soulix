@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teen Mental Health Blog</title>
+
+<!-- Google Fonts & Font Awesome -->
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&family=Dancing+Script&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#f0f7f4;
+  --card:#fffaf0;
+  --accent:#4fb0a6;
+  --muted:#333333;
+  --shadow:rgba(0,0,0,0.08);
+}
+body{
+  margin:0;
+  font-family:'Nunito',sans-serif;
+  background:var(--bg);
+  color:var(--muted);
+}
+header{
+  text-align:center;
+  padding:50px 20px 30px;
+}
+header h1{
+  margin:0;
+  font-size:44px;
+  color:var(--accent);
+  font-family:'Dancing Script', cursive;
+}
+header p{
+  font-size:18px;
+  color:var(--muted);
+  margin-top:8px;
+}
+
+/* Blog Grid */
+.blog-grid{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:30px;
+  max-width:1200px;
+  margin:0 auto;
+  padding:20px;
+}
+
+/* Cards */
+.card{
+  background:var(--card);
+  border-radius:16px;
+  overflow:hidden;
+  width:320px;
+  box-shadow:0 12px 28px var(--shadow);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:20px;
+  text-align:center;
+  transform: translateY(0);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  cursor:pointer;
+}
+.card:hover{
+  transform:translateY(-10px) scale(1.05);
+  box-shadow:0 24px 50px var(--shadow);
+}
+.card i{
+  font-size:80px;
+  color:var(--accent);
+  margin-bottom:15px;
+  animation: glow 2s ease-in-out infinite alternate;
+}
+@keyframes glow {
+  0% { text-shadow: 0 0 5px rgba(79,176,166,0.7); }
+  50% { text-shadow: 0 0 20px rgba(79,176,166,1); }
+  100% { text-shadow: 0 0 5px rgba(79,176,166,0.7); }
+}
+.card-body h3{
+  margin:0;
+  font-size:24px;
+  color:var(--accent);
+  font-family:'Dancing Script', cursive;
+}
+.card-body p{
+  margin:0;
+  color:var(--muted);
+  font-size:15px;
+  line-height:1.6;
+}
+.card-body .read-more{
+  margin-top:auto;
+  text-align:center;
+  font-weight:600;
+  color:var(--accent);
+  cursor:pointer;
+  text-decoration:none;
+  transition:color .3s;
+}
+.card-body .read-more:hover{
+  color:#347c73;
+}
+
+/* Modal Overlay */
+.modal-overlay{
+  position:fixed; inset:0;
+  background:rgba(0,0,0,0.55);
+  display:none; 
+  align-items:center; 
+  justify-content:center;
+  padding:20px; 
+  z-index:9999;
+  opacity:0;
+  transition: opacity 0.4s ease;
+}
+.modal-overlay.open{
+  display:flex;
+  opacity:1;
+}
+
+/* Modal */
+.modal{
+  width:100%; 
+  max-width:900px;
+  max-height:90vh;
+  background:rgba(255,250,240,0.95);
+  border-radius:20px;
+  overflow:auto;
+  padding:30px;
+  position:relative;
+  color:var(--muted);
+  transform: translateY(-50px);
+  opacity:0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+.modal-overlay.open .modal{
+  transform: translateY(0);
+  opacity:1;
+}
+.modal h2{
+  margin-top:0;
+  color:var(--accent);
+  font-family:'Dancing Script', cursive;
+  font-size:32px;
+  text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+}
+.modal p, .modal ul{
+  font-size:16px;
+  line-height:1.8;
+  color:var(--muted);
+}
+.modal ul{
+  padding-left:20px;
+  margin-top:0;
+}
+.close-btn{
+  position:absolute;
+  top:15px; right:20px;
+  background:transparent;
+  border:none;
+  font-size:32px;
+  cursor:pointer;
+  color:var(--muted);
+  transition:color .3s;
+}
+.close-btn:hover{color:#000;}
+.print-btn{
+  position:absolute;
+  top:15px; right:70px;
+  background:var(--accent);
+  border:none;
+  color:#fff;
+  font-size:16px;
+  font-weight:600;
+  padding:8px 16px;
+  border-radius:8px;
+  cursor:pointer;
+  transition:background .3s;
+}
+.print-btn:hover{
+  background:#347c73;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Teen Mental Health Blog</h1>
+  <p>Click any topic to explore detailed advice & support</p>
+</header>
+
+<div class="blog-grid" id="allTopics"></div>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <button class="close-btn" id="modalClose">&times;</button>
+    <button class="print-btn" id="printBtn">Print</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<script>
+const allTopicsData = [
+  {
+    icon:'fas fa-brain', title:'Mental Wellness', desc:'Mindfulness, journaling, and self-awareness.', 
+    content:`<h2>Mental Wellness</h2>
+    <p>Mental wellness is crucial during the teen years. It involves managing emotions, coping with stress, and building self-awareness.</p>
+    <p>Activities like journaling, meditation, and mindfulness exercises support emotional balance, improve focus, and reduce anxiety. Teens should develop coping strategies for academic, social, and personal challenges.</p>
+    <p>Regular mental wellness practices enhance resilience, confidence, and healthy relationships.</p>
+    <ul>
+      <li>Practice mindfulness or meditation daily (10–20 minutes).</li>
+      <li>Keep a journal to reflect on thoughts and feelings.</li>
+      <li>Engage in creative activities for mental relaxation.</li>
+      <li>Take breaks from screens and academics to recharge.</li>
+      <li>Seek support from friends, family, or professionals when needed.</li>
+    </ul>`
+  },
+  {
+    icon:'fas fa-dumbbell', title:'Exercise & Fitness', desc:'Stay active to boost mood and health.',
+    content:`<h2>Exercise & Fitness</h2>
+    <p>Physical activity is essential for both physical and mental health. Exercise helps release endorphins, reduces stress, and improves sleep.</p>
+    <p>Teens should aim for a mix of cardio, strength, and flexibility exercises. Even simple daily routines like walking, jogging, or yoga can make a significant difference.</p>
+    <ul>
+      <li>Engage in 30–60 minutes of activity daily.</li>
+      <li>Combine cardio, strength, and stretching exercises.</li>
+      <li>Participate in sports or group activities for social benefits.</li>
+      <li>Set realistic fitness goals and track progress.</li>
+      <li>Rest adequately to prevent fatigue or injury.</li>
+    </ul>`
+  },
+  {
+    icon:'fas fa-apple-alt', title:'Nutrition & Diet', desc:'Healthy food for energy and focus.',
+    content:`<h2>Nutrition & Diet</h2>
+    <p>Eating a balanced diet supports physical growth, mental focus, and emotional stability.</p>
+    <p>Include fruits, vegetables, whole grains, and lean proteins. Avoid excessive sugar, processed foods, and unhealthy fats. Hydration is also crucial for concentration and mood.</p>
+    <ul>
+      <li>Eat at least 5 servings of fruits and vegetables daily.</li>
+      <li>Include whole grains like oats, rice, and quinoa.</li>
+      <li>Choose lean protein sources: chicken, fish, tofu, legumes.</li>
+      <li>Limit sugary drinks and snacks.</li>
+      <li>Stay hydrated throughout the day.</li>
+    </ul>`
+  },
+  {
+    icon:'fas fa-users', title:'Social Connections', desc:'Build supportive friendships.',
+    content:`<h2>Social Connections</h2>
+    <p>Positive social interactions help teens feel supported, reduce stress, and build self-esteem.</p>
+    <p>Maintaining friendships, family bonds, and community engagement promotes emotional health and a sense of belonging.</p>
+    <ul>
+      <li>Spend quality time with friends and family.</li>
+      <li>Practice empathy and active listening.</li>
+      <li>Join clubs, groups, or community events.</li>
+      <li>Participate in volunteering or team activities.</li>
+      <li>Balance online and offline social interactions.</li>
+    </ul>`
+  },
+  {
+    icon:'fas fa-water', title:'Hydration & Sleep', desc:'Drink water and rest well.',
+    content:`<h2>Hydration & Sleep</h2>
+    <p>Proper hydration and sleep are fundamental for teen health. Water aids concentration, digestion, and energy levels, while sleep restores the body and mind.</p>
+    <ul>
+      <li>Drink 8–10 glasses of water daily.</li>
+      <li>Maintain a regular sleep schedule of 8–10 hours.</li>
+      <li>Limit caffeine and sugary drinks.</li>
+      <li>Keep electronic devices away before bedtime.</li>
+      <li>Practice relaxing bedtime routines.</li>
+    </ul>`
+  },
+  {
+    icon:'fas fa-heart', title:'Emotional Resilience', desc:'Build coping skills for stress and challenges.',
+    content:`<h2>Emotional Resilience</h2>
+    <p>Teens encounter many challenges; emotional resilience helps navigate them effectively.</p>
+    <p>Resilience involves self-awareness, problem-solving, and adaptive coping strategies. Support from family, friends, and mentors strengthens resilience.</p>
+    <ul>
+      <li>Develop problem-solving and coping strategies.</li>
+      <li>Practice mindfulness and stress-reduction techniques.</li>
+      <li>Engage in hobbies or creative outlets.</li>
+      <li>Maintain a support system of trusted individuals.</li>
+      <li>Learn from setbacks and focus on personal growth.</li>
+    </ul>`
+  }
+];
+
+const allTopics = document.getElementById('allTopics');
+const modal = document.getElementById('modalOverlay');
+const modalContent = document.getElementById('modalContent');
+const modalClose = document.getElementById('modalClose');
+const printBtn = document.getElementById('printBtn');
+
+allTopicsData.forEach(topic=>{
+  const div = document.createElement('div');
+  div.className = 'card';
+  div.innerHTML = `<i class="${topic.icon}"></i>
+                   <div class="card-body">
+                     <h3>${topic.title}</h3>
+                     <p>${topic.desc}</p>
+                     <a class="read-more">Read More</a>
+                   </div>`;
+  allTopics.appendChild(div);
+
+  div.querySelector('.read-more').addEventListener('click',()=>{
+    modalContent.innerHTML = topic.content;
+    modal.classList.add('open');
+  });
+});
+
+modalClose.addEventListener('click',()=>modal.classList.remove('open'));
+
+printBtn.addEventListener('click', ()=>{
+  const printWindow = window.open('', '', 'height=700,width=900');
+  printWindow.document.write('<html><head><title>Print Blog</title>');
+  printWindow.document.write('<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&family=Dancing+Script&display=swap" rel="stylesheet">');
+  printWindow.document.write('<style>body{font-family:Nunito,sans-serif; padding:30px; background:#f0f7f4;} h2{font-family:"Dancing Script",cursive; color:#4fb0a6;} p, ul{color:#333;} ul{padding-left:20px; margin-top:0;}</style>');
+  printWindow.document.write('</head><body>');
+  printWindow.document.write(modalContent.innerHTML);
+  printWindow.document.write('</body></html>');
+  printWindow.document.close();
+  printWindow.print();
+});
+</script>
+
+</body>
+</html>
