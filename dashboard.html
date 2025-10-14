@@ -1,208 +1,391 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soulix Dashboard</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  <!-- For charts -->
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>  <!-- For map -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Soulix — Final Cinematic 3D Dashboard (Glowing, Fast Motion)</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+<!-- Three.js UMD + examples (non-module so file:// works) -->
+<script src="https://unpkg.com/three@0.152.2/build/three.min.js"></script>
+<script src="https://unpkg.com/three@0.152.2/examples/js/controls/OrbitControls.js"></script>
+<script src="https://unpkg.com/three@0.152.2/examples/js/postprocessing/EffectComposer.js"></script>
+<script src="https://unpkg.com/three@0.152.2/examples/js/postprocessing/RenderPass.js"></script>
+<script src="https://unpkg.com/three@0.152.2/examples/js/postprocessing/ShaderPass.js"></script>
+<script src="https://unpkg.com/three@0.152.2/examples/js/shaders/CopyShader.js"></script>
+<script src="https://unpkg.com/three@0.152.2/examples/js/postprocessing/UnrealBloomPass.js"></script>
+<script src="https://unpkg.com/three@0.152.2/examples/js/shaders/FXAAShader.js"></script>
+
+<style>
+:root{
+  --bg:#050708;
+  --muted:#95a9b4;
+  --warm:#ffb47f;
+  --cyan:#35c1d3;
+  --cardRadius:14px;
+  --maxw:1920px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);font-family:'Outfit',system-ui,Segoe UI,Roboto,Arial;color:#e6f6fb}
+.top-controls{position:fixed;left:14px;top:10px;z-index:300;display:flex;gap:8px}
+.top-controls button{background:linear-gradient(90deg,var(--warm),#f6c77e);border:none;padding:8px 12px;border-radius:18px;font-weight:700;cursor:pointer;color:#051018;box-shadow:0 10px 26px rgba(255,160,60,0.12)}
+.app{max-width:var(--maxw);margin:18px auto;padding:12px;display:grid;grid-template-columns:160px 1fr 420px;gap:18px;min-height:84vh;align-items:stretch}
+.left-strip{
+  background:linear-gradient(180deg,#fff,#f6f6f6);border-radius:18px;padding:18px;box-shadow:0 40px 80px rgba(0,0,0,0.45), inset 0 0 60px rgba(255,255,255,0.06);
+  color:#111;height:calc(84vh - 24px);display:flex;flex-direction:column;gap:16px;align-items:flex-start;overflow:auto;
+}
+.left-strip h3{margin:0;color:#111;font-weight:700}
+.left-rad{width:110px;height:110px;border-radius:999px;background:conic-gradient(var(--warm) 0% 30%, #ececec 30% 100%);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px}
+.center{
+  position:relative;border-radius:18px;overflow:hidden;background:linear-gradient(180deg,rgba(255,255,255,0.01),rgba(0,0,0,0.02));border:1px solid rgba(255,255,255,0.02);
+  box-shadow:0 28px 90px rgba(0,0,0,0.72); min-height:720px;
+}
+canvas#three-canvas{width:100%;height:100%;display:block}
+.overlay-top{position:absolute;left:22px;top:22px;display:flex;gap:12px;z-index:120}
+.metric{background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.04));padding:10px 14px;border-radius:12px;border:1px solid rgba(255,255,255,0.02);box-shadow:0 10px 26px rgba(0,0,0,0.5)}
+.metric .big{font-weight:800;color:var(--cyan);font-size:18px}
+.metric .small{color:var(--muted);font-size:12px}
+.overlay-right{position:absolute;right:22px;top:22px;display:flex;flex-direction:column;gap:12px;z-index:120}
+.overlay-right .panel{width:260px}
+.bottom-panels{position:absolute;left:22px;right:22px;bottom:22px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;z-index:120}
+.mini{background:linear-gradient(180deg,rgba(255,255,255,0.01),rgba(0,0,0,0.03));padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02);color:var(--muted)}
+.rightcol{display:flex;flex-direction:column;gap:18px}
+.panel{background:linear-gradient(180deg,rgba(255,255,255,0.01),rgba(0,0,0,0.03));padding:14px;border-radius:14px;border:1px solid rgba(255,255,255,0.02);box-shadow:0 12px 36px rgba(0,0,0,0.5);min-height:140px}
+.panel h4{margin:0 0 8px 0;font-size:13px;color:#dbeef9}
+.vignette{position:absolute;inset:0;pointer-events:none;mix-blend-mode:multiply;background:radial-gradient(60% 50% at 45% 50%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.2) 55%, rgba(0,0,0,0.52) 100%);z-index:160}
+canvas#grain{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;mix-blend-mode:overlay;opacity:0.06;z-index:170}
+.top-right-controls{position:absolute;right:18px;top:10px;z-index:180}
+.small-btn{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(0,0,0,0.06));border:1px solid rgba(255,255,255,0.02);padding:8px 10px;border-radius:12px;color:var(--muted);cursor:pointer}
+@media(max-width:1200px){.app{grid-template-columns:120px 1fr}.rightcol{display:none}.overlay-right{display:none}}
+</style>
 </head>
 <body>
-    <div class="dashboard">
-        <header class="header">
-            <div class="logo">
-                <img src="assets/logo.png" alt="Soulix Logo">  <!-- Add your logo -->
-                <h1>Soulix Dashboard</h1>
-            </div>
-            <nav>
-                <input type="text" placeholder="Search..." class="search">
-                <button>Settings</button>
-                <button>Profile</button>
-            </nav>
-        </header>
-        <aside class="sidebar">
-            <!-- Side menu icons -->
-            <ul>
-                <li>🏠 Home</li>
-                <li>📊 Analytics</li>
-                <li>👥 Users</li>
-                <li>⚙️ Settings</li>
-            </ul>
-        </aside>
-        <main class="main-grid">
-            <!-- Panel 1: Circular Metric -->
-            <div class="panel circular-metric">
-                <div class="circle" id="metric1">10,25/3</div>
-                <p>Key Metric</p>
-            </div>
-            <!-- Panel 2: Bar Chart -->
-            <div class="panel bar-chart">
-                <canvas id="barChart"></canvas>
-            </div>
-            <!-- Panel 3: World Map -->
-            <div class="panel map">
-                <div id="map"></div>
-            </div>
-            <!-- Panel 4: Line Graph -->
-            <div class="panel line-graph">
-                <canvas id="lineChart"></canvas>
-            </div>
-            <!-- Panel 5: Table/List -->
-            <div class="panel list">
-                <ul>
-                    <li>Item 1: Value</li>
-                    <li>Item 2: Value</li>
-                    <!-- Dynamically populate -->
-                </ul>
-            </div>
-            <!-- Panel 6: Circular Progress -->
-            <div class="panel progress">
-                <div class="circle" id="progress">3,33,29</div>
-                <p>Progress</p>
-            </div>
-            <!-- Add more panels as per image -->
-        </main>
+
+<div class="top-controls">
+  <button id="perfToggle">Performance</button>
+  <button id="paletteToggle">Alt Palette</button>
+</div>
+
+<div class="app">
+  <aside class="left-strip">
+    <h3>Overview</h3>
+    <div style="display:flex;align-items:center;gap:12px">
+      <div class="left-rad">13%</div>
+      <div>
+        <div style="font-weight:800">13%</div>
+        <div style="color:#677">Monthly engagement</div>
+      </div>
     </div>
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-    fetch('/api/dashboard-data')
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('keyMetric').textContent = data.keyMetric;
-            document.getElementById('progress').textContent = data.progress;
-            const list = document.querySelector('.list ul');
-            list.innerHTML = data.listItems.map(item => `<li>${item}</li>`).join('');
-        })
-        .catch(error => console.error('Error fetching data:', error));
-});
-    </script>
-    <style>
-      body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #1a1a1a;
-    color: #fff;
-}
 
-.dashboard {
-    display: grid;
-    grid-template-columns: 200px 1fr;
-    height: 100vh;
-}
+    <div style="margin-top:16px">
+      <div style="font-weight:700">1. Sessions</div>
+      <div style="color:#666">5 today</div>
+    </div>
 
-header {
-    grid-column: span 2;
-    background: #2a2a2a;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #333;
-}
+    <div style="margin-top:12px">
+      <div style="font-weight:700">2. Mentors</div>
+      <div style="color:#666">4 active</div>
+    </div>
 
-.logo {
-    display: flex;
-    align-items: center;
-}
+    <div style="flex:1"></div>
+    <div style="font-size:12px;color:#666">Soulix • Kid & teen mental health</div>
+  </aside>
 
-.logo img {
-    margin-right: 10px;
-}
+  <main class="center" id="center">
+    <div class="overlay-top">
+      <div class="metric"><div class="big">15°</div><div class="small">Avg Mood</div></div>
+      <div class="metric"><div class="big">4.2k</div><div class="small">Active</div></div>
+      <div class="metric"><div class="big" style="color:var(--warm)">78%</div><div class="small">Focus</div></div>
+    </div>
 
-.logo h1 {
-    margin: 0;
-    font-size: 24px;
-}
+    <div class="overlay-right">
+      <div class="panel"><h4>Realtime Index</h4><div style="height:68px;display:flex;align-items:center;justify-content:center;color:var(--muted)">—</div></div>
+      <div class="panel"><h4>Mini Stats</h4><div style="height:68px;display:flex;align-items:center;justify-content:center;color:var(--muted)">—</div></div>
+    </div>
 
-.header-right {
-    display: flex;
-    align-items: center;
-}
+    <canvas id="three-canvas"></canvas>
+    <canvas id="grain"></canvas>
+    <div class="vignette"></div>
 
-.search {
-    background: #333;
-    border: none;
-    padding: 5px 10px;
-    color: #fff;
-    margin-right: 10px;
-}
+    <div class="bottom-panels">
+      <div class="mini">KPI 1</div>
+      <div class="mini">KPI 2</div>
+      <div class="mini">KPI 3</div>
+    </div>
+  </main>
 
-button {
-    background: #333;
-    border: none;
-    color: #fff;
-    padding: 5px 10px;
-    cursor: pointer;
-}
+  <aside class="rightcol">
+    <div class="panel">
+      <h4>Top Activities</h4>
+      <canvas id="barChart" style="height:140px"></canvas>
+    </div>
 
-.sidebar {
-    background: #1a1a1a;
-    padding: 20px 10px;
-    border-right: 1px solid #333;
-}
+    <div class="panel">
+      <h4>Engagement</h4>
+      <canvas id="donutChart" style="height:120px"></canvas>
+    </div>
 
-.sidebar ul {
-    list-style: none;
-    padding: 0;
-}
+    <div class="panel">
+      <h4>Community</h4>
+      <div style="height:120px;display:flex;align-items:center;justify-content:center;color:var(--muted)">Map</div>
+    </div>
+  </aside>
+</div>
 
-.sidebar li {
-    padding: 10px;
-    cursor: pointer;
-}
+<script>
+(function(){
+  if(typeof THREE === 'undefined'){ alert('Three.js failed to load — check internet'); return; }
 
-.sidebar li:hover {
-    background: #333;
-}
+  // create renderer, scene, camera
+  const canvas = document.getElementById('three-canvas');
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.0;
 
-.main-content {
-    padding: 20px;
-}
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x050608);
+  // reduced fog so mountain isn't hidden
+  scene.fog = new THREE.FogExp2(0x050608, 0.0012);
 
-.grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    height: calc(100vh - 70px); /* Adjust based on header height */
-}
+  const camera = new THREE.PerspectiveCamera(45, 16/9, 0.1, 3000);
+  camera.position.set(0, 60, 180);
 
-.panel {
-    background: #2a2a2a;
-    border: 1px solid #333;
-    padding: 20px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
+  // lights
+  const ambient = new THREE.AmbientLight(0x88cfe6, 0.44);
+  scene.add(ambient);
+  const key = new THREE.PointLight(0xffd7a8, 1.25, 1200);
+  key.position.set(-220, 140, 120); scene.add(key);
+  const rim = new THREE.PointLight(0x8ad8ff, 0.88, 1200);
+  rim.position.set(200, 90, -220); scene.add(rim);
 
-.circle {
-    width: 100px;
-    height: 100px;
-    background: radial-gradient(circle, #ffd700, #d4af37);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #000;
-    box-shadow: 0 0 20px #ffd700;
-    margin-bottom: 10px;
-}
+  // controls
+  const controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls.enablePan = false; controls.enableDamping = true; controls.dampingFactor = 0.06;
+  controls.minDistance = 120; controls.maxDistance = 480;
 
-.placeholder {
-    background: #333;
-}
+  // composer + bloom + fxaa
+  const composer = new THREE.EffectComposer(renderer);
+  const renderPass = new THREE.RenderPass(scene, camera); composer.addPass(renderPass);
+  const bloomPass = new THREE.UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 0.9, 0.6, 0.1);
+  bloomPass.threshold = 0.11; bloomPass.strength = 0.9; bloomPass.radius = 0.8; composer.addPass(bloomPass);
+  const fxaa = new THREE.ShaderPass(THREE.FXAAShader); fxaa.uniforms['resolution'].value.set(1/window.innerWidth, 1/window.innerHeight); composer.addPass(fxaa);
 
-.list ul {
-    list-style: none;
-    padding: 0;
-    text-align: left;
-}
-    </style>
+  // performance detection: if device has low max texture size, auto lower segments later
+  const maxTextureSize = renderer.capabilities.maxTextureSize || 4096;
+  let highDetail = maxTextureSize >= 4096;
+
+  // geometry: using math waves (reliable on file://)
+  // detail counts adjusted for performance
+  const segX = highDetail ? 360 : 220;
+  const segZ = highDetail ? 180 : 120;
+  const planeW = 740, planeH = 340;
+  const geo = new THREE.PlaneGeometry(planeW, planeH, segX, segZ);
+  geo.rotateX(-Math.PI/2);
+
+  // initial layered math displacement (peaks + ripples)
+  for(let i=0;i<geo.attributes.position.count;i++){
+    const x = geo.attributes.position.getX(i);
+    const z = geo.attributes.position.getZ(i);
+    let y = 0;
+    // base large waves
+    y += Math.sin(x*0.025 + z*0.011) * 16;
+    y += Math.cos(z*0.018 - x*0.013) * 10;
+    // mid ripples
+    y += Math.sin(x*0.04)*3.5 + Math.cos(z*0.04)*3.5;
+    // peak boost near center
+    const d = Math.sqrt(x*x + z*z);
+    y += Math.max(0, 14 - (d*0.018));
+    geo.attributes.position.setY(i, y);
+  }
+  geo.computeVertexNormals();
+
+  // layered meshes to create stacked ridge look
+  function makeLayer(colorHex, emissiveHex, yOffset, roughness){
+    const mat = new THREE.MeshStandardMaterial({
+      color: colorHex, emissive: emissiveHex, metalness: 0.06, roughness: roughness,
+      transparent:true, opacity:1, side: THREE.DoubleSide
+    });
+    const mesh = new THREE.Mesh(geo.clone(), mat);
+    mesh.position.y = yOffset;
+    return mesh;
+  }
+
+  const layerBack = makeLayer(0x0b2430, 0x001722, -4, 0.78);
+  const layerMid = makeLayer(0x172f38, 0x002a2f, -0.5, 0.62);
+  const layerFront = makeLayer(0x2b3b3d, 0x00363a, 3.0, 0.48);
+  scene.add(layerBack, layerMid, layerFront);
+
+  // warm ridge effect (thin translucent overlay plane)
+  const ridgeMat = new THREE.MeshBasicMaterial({ color:0xffb47f, transparent:true, opacity:0.06 });
+  const ridge = new THREE.Mesh(geo.clone(), ridgeMat); ridge.position.y = 5; scene.add(ridge);
+
+  // valley glow plane
+  const glowGeo = new THREE.PlaneGeometry(920, 480);
+  const glowMat = new THREE.MeshBasicMaterial({ color:0xffb47f, transparent:true, opacity:0.02, blending:THREE.AdditiveBlending });
+  const glowPlane = new THREE.Mesh(glowGeo, glowMat);
+  glowPlane.rotation.x = -Math.PI/2; glowPlane.position.y = -30; scene.add(glowPlane);
+
+  // clustered trees (cones) on right
+  const treeGroup = new THREE.Group();
+  const treeMat = new THREE.MeshStandardMaterial({ color:0x091119, emissive:0x071b1b, roughness:0.75, metalness:0.02 });
+  function addTree(x,z,s){
+    const trunkGeo = new THREE.CylinderGeometry(0.7*s,0.9*s,4*s,6);
+    const trunk = new THREE.Mesh(trunkGeo, new THREE.MeshStandardMaterial({color:0x2b1b12,roughness:1}));
+    trunk.position.set(x,-14 + s*2, z);
+    const coneGeo = new THREE.ConeGeometry(6*s, 18*s, 10);
+    const cone = new THREE.Mesh(coneGeo, treeMat);
+    cone.position.set(x, -4 + s*5, z);
+    treeGroup.add(trunk); treeGroup.add(cone);
+  }
+  for(let i=0;i<12;i++){
+    const rx = 220 + Math.random()*120; const rz = 80 + Math.random()*90; const sc = 0.6 + Math.random()*1.4;
+    addTree(rx, rz, sc);
+  }
+  treeGroup.rotation.y = -0.18; scene.add(treeGroup);
+
+  // particles/points
+  const pCount = highDetail ? 260 : 160;
+  const pPos = new Float32Array(pCount*3);
+  for(let i=0;i<pCount;i++){
+    pPos[i*3] = (Math.random()-0.5)*900;
+    pPos[i*3+1] = Math.random()*160 + 30;
+    pPos[i*3+2] = (Math.random()-0.5)*700;
+  }
+  const pGeo = new THREE.BufferGeometry();
+  pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+  const pMat = new THREE.PointsMaterial({ color:0xaef6ff, size: highDetail ? 0.8 : 0.5, transparent:true, opacity:0.9 });
+  const points = new THREE.Points(pGeo, pMat);
+  scene.add(points);
+
+  // film grain canvas
+  const grain = document.getElementById('grain');
+  function resizeGrain(){ grain.width = grain.clientWidth; grain.height = grain.clientHeight; }
+  resizeGrain();
+  const gctx = grain.getContext('2d');
+  function drawGrain(){
+    const w = grain.width, h = grain.height;
+    const img = gctx.createImageData(w,h);
+    for(let i=0;i<img.data.length;i+=4){
+      const v = (Math.random()*255)|0;
+      img.data[i]=img.data[i+1]=img.data[i+2]=v; img.data[i+3]=12;
+    }
+    gctx.putImageData(img,0,0);
+  }
+  setInterval(drawGrain,1200);
+
+  // resize helper and set renderer size (center area fraction)
+  function sizeRenderer(){
+    const parent = canvas.parentElement;
+    const w = Math.max(300, Math.floor(parent.clientWidth * 1.0));
+    const h = Math.max(240, Math.floor(parent.clientHeight * 1.0));
+    renderer.setSize(w, h);
+    composer.setSize(w, h);
+    camera.aspect = w / h; camera.updateProjectionMatrix();
+    fxaa.uniforms['resolution'].value.set(1/w, 1/h);
+    resizeGrain();
+  }
+
+  window.addEventListener('resize', sizeRenderer);
+
+  // composer size (initial)
+  composer.setSize(window.innerWidth, window.innerHeight);
+
+  // faster dynamic motion (user chose option 2)
+  let t = 0;
+  let animateOn = true;
+  function animate(){
+    if(animateOn) t += 0.0065; // faster motion
+    // small dynamic vertex oscillations (cheap)
+    const posAttr = geo.attributes.position;
+    for(let i=0;i<posAttr.count;i++){
+      const base = posAttr.getY(i);
+      // additive fast wobble for a more "dynamic" look
+      const wob = Math.sin(i*0.015 + t*6.2) * 0.08 + Math.cos(i*0.009 + t*4.1) * 0.06;
+      posAttr.setY(i, base + wob);
+    }
+    posAttr.needsUpdate = true;
+
+    // parallax & camera bob
+    layerFront.rotation.y = Math.sin(t*0.18) * 0.018;
+    layerMid.rotation.y = Math.sin(t*0.08) * 0.01;
+    camera.position.x = Math.sin(t*0.09) * 10;
+    camera.position.y = 86 + Math.sin(t*0.04) * 2.2;
+    camera.lookAt(0, 8, 0);
+
+    controls.update();
+    composer.render();
+    requestAnimationFrame(animate);
+  }
+
+  // initial size and start
+  sizeRenderer();
+  animate();
+
+  // auto-fallback: if WebGL context lost or low GPU, reduce particles & bloom
+  let perfMode = false;
+  const perfBtn = document.getElementById('perfToggle');
+  perfBtn.addEventListener('click', ()=> {
+    perfMode = !perfMode;
+    if(perfMode){
+      bloomPass.strength = 0.18; points.material.size = 0.4; points.material.opacity = 0.6;
+      // optionally reduce layers
+      layerBack.visible = true; layerMid.visible = true; layerFront.visible = true;
+    } else {
+      bloomPass.strength = 0.9; points.material.size = highDetail ? 0.8 : 0.5; points.material.opacity = 0.9;
+    }
+  });
+
+  // palette toggle (swap warm/cyan emphasis)
+  document.getElementById('paletteToggle').addEventListener('click', ()=>{
+    if(key.color.getHexString() === 'ffd7a8'){
+      key.color.setHex(0x8a5cf6); key.intensity = 1.0;
+      rim.color.setHex(0xffb47f); rim.intensity = 0.9;
+      renderer.toneMappingExposure = 1.06;
+    } else {
+      key.color.setHex(0xffd7a8); key.intensity = 1.25;
+      rim.color.setHex(0x8ad8ff); rim.intensity = 0.88;
+      renderer.toneMappingExposure = 1.0;
+    }
+  });
+
+  // safety: if device fails to present scene (rare), detect and show message
+  try {
+    const gl = renderer.getContext();
+    if(!gl) console.warn('WebGL context not available.');
+  } catch(e){
+    console.warn('WebGL init error', e);
+  }
+
+  // enable orbit interactions (subtle)
+  canvas.addEventListener('dblclick', () => { // double-click to pause/play motion
+    animateOn = !animateOn;
+  });
+
+})();
+</script>
+
+<!-- Chart.js overlays (right column) -->
+<script>
+  const barCtx = document.getElementById('barChart').getContext('2d');
+  const bar = new Chart(barCtx, {
+    type:'bar',
+    data:{ labels:['Breathing','Music','Walk','Journal'], datasets:[{ data:[24,22,16,18], backgroundColor:['#35c1d3','#8a5cf6','#35c1d3','#ffb47f'] }] },
+    options:{ plugins:{legend:{display:false}}, maintainAspectRatio:false, scales:{ y:{ display:false }, x:{ ticks:{ color:'#9fb0c0' }, grid:{ display:false } } }
+  });
+
+  const donutCtx = document.getElementById('donutChart').getContext('2d');
+  const donut = new Chart(donutCtx, {
+    type:'doughnut',
+    data:{ labels:['Calm','Active','Sleep'], datasets:[{ data:[58,26,16], backgroundColor:['#35c1d3','#8a5cf6','#ffb47f'] }] },
+    options:{ cutout:'64%', plugins:{legend:{display:false}}, maintainAspectRatio:false }
+  });
+
+  // subtle live updates for motion
+  setInterval(()=>{ for(let i=0;i<bar.data.datasets[0].data.length;i++) bar.data.datasets[0].data[i] = Math.max(6, Math.round(bar.data.datasets[0].data[i] + (Math.random()-0.5)*2)); bar.update('none'); }, 3000);
+</script>
+
 </body>
 </html>

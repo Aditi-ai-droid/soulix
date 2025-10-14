@@ -1,58 +1,47 @@
-// Bar Chart
-const barCtx = document.getElementById('barChart').getContext('2d');
-new Chart(barCtx, {
-  type: 'bar',
-  data: {
-    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-    datasets: [{
-      label: 'Users',
-      data: [120, 190, 300, 500, 200, 300],
-      backgroundColor: '#f5b041'
-    }]
-  },
-  options: {
-    responsive: true,
-    scales: {
-      y: {
-        ticks: { color: '#fff' },
-        grid: { color: '#333' }
-      },
-      x: {
-        ticks: { color: '#fff' },
-        grid: { color: '#333' }
-      }
-    },
-    plugins: {
-      legend: {
-        labels: { color: '#fff' }
-      }
-    }
-  }
-});
+const canvas = document.getElementById("cloudCanvas");
+const ctx = canvas.getContext("2d");
 
-// Pie Chart
-const pieCtx = document.getElementById('pieChart').getContext('2d');
-new Chart(pieCtx, {
-  type: 'doughnut',
-  data: {
-    labels: ['Active', 'Inactive'],
-    datasets: [{
-      label: 'User Status',
-      data: [70, 30],
-      backgroundColor: ['#f5b041', '#444']
-    }]
-  },
-  options: {
-    responsive: true,
-    plugins: {
-      legend: {
-        labels: { color: '#fff' }
-      }
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
+
+// create particles (soft clouds)
+const clouds = [];
+for (let i = 0; i < 60; i++) {
+  clouds.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height - canvas.height,
+    size: 100 + Math.random() * 250,
+    speed: 0.2 + Math.random() * 0.4,
+    opacity: 0.05 + Math.random() * 0.1,
+  });
+}
+
+function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  clouds.forEach((c) => {
+    const gradient = ctx.createRadialGradient(c.x, c.y, 0, c.x, c.y, c.size);
+    gradient.addColorStop(0, `rgba(255,255,255,${c.opacity})`);
+    gradient.addColorStop(0.5, `rgba(220,240,230,${c.opacity * 0.7})`);
+    gradient.addColorStop(1, "transparent");
+
+    ctx.fillStyle = gradient;
+    ctx.beginPath();
+    ctx.arc(c.x, c.y, c.size, 0, Math.PI * 2);
+    ctx.fill();
+
+    c.y += c.speed;
+    c.x += Math.sin(c.y / 200) * 0.3;
+
+    if (c.y > canvas.height + 200) {
+      c.y = -200;
+      c.x = Math.random() * canvas.width;
     }
-  }
-});
-const res = await fetch("http://localhost:5000/chat", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ message: msg })
-});
+  });
+  requestAnimationFrame(draw);
+}
+
+draw();

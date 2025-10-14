@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Soulix — Play Calm Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-1:#07080a;
+    --bg-2:#0e1113;
+    --glass: rgba(255,255,255,0.03);
+    --glass-2: rgba(255,255,255,0.02);
+    --accent: #63f3d2; /* mint-green accent */
+    --muted: rgba(255,255,255,0.55);
+    --card-radius:16px;
+    --soft-shadow: 0 12px 40px rgba(2,4,8,0.7);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;color:#fff;background:
+    radial-gradient(800px 300px at 10% 10%, rgba(99,243,210,0.03), transparent 6%),
+    linear-gradient(180deg,var(--bg-1),var(--bg-2)); -webkit-font-smoothing:antialiased; overflow:hidden;}
+
+  /* Top-level layout: left nav | center | right library */
+  .app{height:100vh;display:grid;grid-template-columns:84px 1fr 360px;gap:20px;padding:20px}
+
+  /* LEFT NAV (glass) */
+  .nav{
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.04));
+    border-radius:20px;padding:14px;border:1px solid var(--glass);box-shadow:var(--soft-shadow);display:flex;flex-direction:column;align-items:center;
+  }
+  .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,#dfeee8,#c9f8ef);color:#0b2a28;font-weight:800;display:grid;place-items:center}
+  .nav-icons{margin-top:12px;display:flex;flex-direction:column;gap:12px}
+  .nav-btn{width:56px;height:56px;border-radius:10px;background:transparent;border:1px solid transparent;display:grid;place-items:center;cursor:pointer;opacity:0.9}
+  .nav-btn:hover{border-color:rgba(255,255,255,0.03); transform:translateY(-3px)}
+  .nav-btn.active{background:linear-gradient(90deg, rgba(99,243,210,0.06), rgba(255,255,255,0.01));outline:1px solid rgba(99,243,210,0.08); box-shadow:0 14px 40px rgba(99,243,210,0.03) inset}
+
+  .nav-footer{margin-top:auto;font-size:12px;color:var(--muted);text-align:center;padding:8px}
+
+  /* CENTER */
+  .center{display:flex;flex-direction:column;gap:18px;height:100%}
+  .topbar{display:flex;align-items:center;gap:18px}
+  .brand{font-family:Montserrat,serif;font-weight:700;font-size:20px;color:var(--accent)}
+  .search{flex:1;display:flex;justify-content:center}
+  .search input{width:72%;padding:10px 14px;border-radius:999px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.02);color:#fff;outline:none}
+
+  /* stage area */
+  .stage{display:grid;grid-template-columns:1fr 420px;gap:18px;flex:1;overflow:hidden}
+  .panel{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:var(--card-radius);padding:16px;border:1px solid var(--glass-2);box-shadow:var(--soft-shadow);overflow:auto}
+
+  /* HERO (big left banner) */
+  .hero{
+    height:360px;border-radius:14px;padding:22px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.12)),
+      url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat;
+    border:1px solid rgba(255,255,255,0.02)
+  }
+  .hero h1{margin:0;font-size:30px;letter-spacing:0.2px}
+  .hero p{margin:8px 0 14px 0;color:var(--muted);max-width:640px}
+  .hero .play{padding:10px 16px;border-radius:12px;background:linear-gradient(90deg,var(--accent),#33e6c7);border:none;color:#042a28;font-weight:800;cursor:pointer;box-shadow:0 14px 40px rgba(99,243,210,0.06)}
+
+  /* carousels (discover / trending) horizontal scroll with translucent cards */
+  .carousel{margin-top:12px}
+  .carousel-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+  .cards{display:flex;gap:12px;overflow:auto;padding-bottom:8px}
+  .card{
+    min-width:220px;border-radius:12px;padding:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.04));
+    border:1px solid rgba(255,255,255,0.02);display:flex;flex-direction:column;gap:8px;cursor:pointer;transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .card:hover{transform:translateY(-6px);box-shadow:0 30px 80px rgba(2,4,8,0.6)}
+  .card img{width:100%;height:120px;object-fit:cover;border-radius:10px}
+  .card .ctitle{font-weight:700}
+  .card .cdesc{font-size:13px;color:var(--muted)}
+
+  /* right column library (vertical list) */
+  .library{display:flex;flex-direction:column;gap:12px;height:100%}
+  .libSearch{display:flex;gap:8px;align-items:center}
+  .libList{overflow:auto;display:flex;flex-direction:column;gap:10px;padding-right:6px}
+  .lib-item{display:flex;gap:12px;align-items:center;padding:10px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border:1px solid rgba(255,255,255,0.02)}
+  .lib-item img{width:64px;height:64px;border-radius:10px;object-fit:cover}
+  .lib-meta{flex:1}
+  .lib-meta .title{font-weight:700}
+  .lib-meta .muted{font-size:13px;color:var(--muted)}
+  .lib-get{padding:8px 12px;border-radius:10px;background:linear-gradient(90deg,var(--accent),#33e6c7);border:none;color:#042a28;font-weight:700;cursor:pointer}
+
+  /* BOTTOM PLAYER (glass) */
+  .player{
+    position:fixed;left:120px;right:420px;bottom:22px;height:72px;border-radius:14px;padding:12px 18px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06));border:1px solid rgba(255,255,255,0.02);display:flex;align-items:center;gap:16px;box-shadow:0 30px 80px rgba(0,0,0,0.7);
+  }
+  .player .cover{width:52px;height:52px;border-radius:10px;overflow:hidden}
+  .player .info{flex:1}
+  .player .title{font-weight:700}
+  .player .controls{display:flex;gap:10px;align-items:center}
+  .play-toggle{width:48px;height:48px;border-radius:12px;border:none;background:linear-gradient(90deg,var(--accent),#33e6c7);display:grid;place-items:center;color:#042a28;font-weight:800;cursor:pointer}
+
+  /* small scrollbar styling for cards and lists */
+  .cards::-webkit-scrollbar, .libList::-webkit-scrollbar, .panel::-webkit-scrollbar {height:10px;width:10px}
+  .cards::-webkit-scrollbar-thumb, .libList::-webkit-scrollbar-thumb, .panel::-webkit-scrollbar-thumb {background:rgba(255,255,255,0.04);border-radius:999px;border:2px solid transparent;background-clip:padding-box}
+
+  /* responsive */
+  @media(max-width:1100px){ .app{grid-template-columns:72px 1fr} .player{left:92px;right:20px} .library{display:none} }
+  @media(max-width:700px){ .app{grid-template-columns:56px 1fr;padding:12px} .player{display:none} .hero{height:220px} .cards .card{min-width:180px} }
+</style>
+</head>
+<body>
+<div class="app" role="application" aria-label="Soulix Play Calm Dashboard">
+
+  <!-- LEFT NAV -->
+  <aside class="nav" aria-label="Main Navigation">
+    <div class="logo">SX</div>
+    <nav class="nav-icons" aria-hidden>
+      <div class="nav-btn active" title="Home">🏠</div>
+      <div class="nav-btn" title="Discover">🔎</div>
+      <div class="nav-btn" title="Games">🎮</div>
+      <div class="nav-btn" title="Music">🎵</div>
+      <div class="nav-btn" title="Library">📚</div>
+      <div class="nav-btn" title="Profile">👤</div>
+    </nav>
+    <div class="nav-footer">Soulix · Relax Hub</div>
+  </aside>
+
+  <!-- CENTER -->
+  <main class="center" aria-label="Main Content">
+    <div class="topbar">
+      <div class="brand">Soulix — Play Calm</div>
+      <div class="search"><input id="globalSearch" placeholder="Search calming games, meditations..." aria-label="Search"></div>
+      <div style="width:120px"></div>
+    </div>
+
+    <div class="stage" role="region" aria-label="Main stage">
+
+      <!-- LEFT PANEL (featured + carousels) -->
+      <section class="panel" aria-label="Featured and Discover">
+        <div class="hero" id="hero">
+          <div>
+            <h1>Zen Garden — Live</h1>
+            <p>Shape sand, place stones and listen to ambient waves. Calm flow and gentle interactions.</p>
+          </div>
+          <div style="display:flex;gap:12px;justify-content:flex-end">
+            <button class="hero-play play" id="heroPlay">Play</button>
+          </div>
+        </div>
+
+        <!-- Discover Carousel -->
+        <div class="carousel" aria-label="Discover">
+          <div class="carousel-title"><div style="font-weight:800">Discover</div><div class="muted">Curated calm experiences</div></div>
+          <div class="cards" id="discoverCards" tabindex="0" aria-roledescription="carousel"></div>
+        </div>
+
+        <!-- Trending Carousel -->
+        <div class="carousel" aria-label="Trending">
+          <div class="carousel-title"><div style="font-weight:800">Trending</div><div class="muted">Most popular calm apps</div></div>
+          <div class="cards" id="trendingCards" tabindex="0"></div>
+        </div>
+      </section>
+
+      <!-- RIGHT SIDE -->
+      <aside style="display:flex;flex-direction:column;gap:12px;height:100%">
+
+        <!-- Now Playing / Details -->
+        <div class="panel" style="height:180px">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start">
+            <div style="font-weight:800">Now Featured</div>
+            <div class="muted">Mood: Gentle</div>
+          </div>
+          <div style="margin-top:14px;display:flex;gap:12px;align-items:center">
+            <img id="featuredThumb" src="" alt="" style="width:120px;height:90px;border-radius:10px;object-fit:cover">
+            <div style="flex:1">
+              <div id="featuredTitle" style="font-weight:800">Zen Garden Simulator</div>
+              <div id="featuredDesc" class="muted" style="margin-top:6px">Interactive sand and stones with ambient waves.</div>
+            </div>
+            <div><button class="lib-get" id="featuredPlay">Play</button></div>
+          </div>
+        </div>
+
+        <!-- LIBRARY SHORT -->
+        <div class="panel library" aria-label="Library">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div style="font-weight:800">Your Library</div>
+            <div class="muted">Play Store links</div>
+          </div>
+          <div class="libList" id="libraryList"></div>
+        </div>
+
+      </aside>
+
+    </div>
+  </main>
+
+  <!-- RIGHT LIBRARY COLUMN (full) -->
+  <aside class="panel" aria-label="Library Column" style="height:100%;overflow:auto">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div style="font-weight:800">Explore</div>
+      <div class="muted">Top calm apps</div>
+    </div>
+    <div style="margin-top:12px" id="exploreList"></div>
+  </aside>
+</div>
+
+<!-- glassy bottom player -->
+<div class="player" role="region" aria-label="Player">
+  <div class="cover"><img id="playerThumb" src="" alt="" style="width:100%;height:100%;object-fit:cover"></div>
+  <div class="info">
+    <div class="title" id="playerTitle">Zen Garden — Ambient Mix</div>
+    <div class="muted" id="playerArtist">Relax • 10–20 min</div>
+  </div>
+  <div class="controls">
+    <input id="audioFile" type="file" accept="audio/*" style="display:none">
+    <button class="play-toggle" id="playToggle">▶</button>
+    <button id="uploadBtn" style="padding:8px 10px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:var(--muted);cursor:pointer">Load audio</button>
+  </div>
+</div>
+
+<!-- modal not required; Play Store opens in new tab -->
+
+<script>
+/* DATA: game list (thumbnails are Unsplash placeholders, pkgSearch used for Play Store search)
+   You can replace pkgSearch with exact package name later for direct Play Store links.
+*/
+const GAMES = [
+  {id:'zen-garden', title:'Zen Garden', desc:'Sand, stones, ambient waves', thumb:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop', pkgSearch:'Zen%20Garden'},
+  {id:'silk', title:'Silk — Interactive Art', desc:'Draw flowing symmetric art', thumb:'https://images.unsplash.com/photo-1503602642458-232111445657?q=80&w=1200&auto=format&fit=crop', pkgSearch:'Silk%20interactive%20art'},
+  {id:'this-is-sand', title:'This Is Sand', desc:'Create flowing sand art', thumb:'https://images.unsplash.com/photo-1502082553048-f009c37129b9?q=80&w=1200&auto=format&fit=crop', pkgSearch:'This%20Is%20Sand'},
+  {id:'my-oasis', title:'My Oasis', desc:'Relaxing island garden', thumb:'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1200&auto=format&fit=crop', pkgSearch:'My%20Oasis'},
+  {id:'zen-koi', title:'Zen Koi 2', desc:'Peaceful koi pond', thumb:'https://images.unsplash.com/photo-1470770903676-69b98201ea1c?q=80&w=1200&auto=format&fit=crop', pkgSearch:'Zen%20Koi%202'},
+  {id:'a-dark-room', title:'A Dark Room', desc:'Slow ambient narrative', thumb:'https://images.unsplash.com/photo-1482192505345-5655af888cc4?q=80&w=1200&auto=format&fit=crop', pkgSearch:'A%20Dark%20Room'},
+  {id:'orba', title:'Orbia', desc:'Simple timing puzzles', thumb:'https://images.unsplash.com/photo-1509255929942-44b7c3d0f1b2?q=80&w=1200&auto=format&fit=crop', pkgSearch:'Orbia'},
+  {id:'patatap', title:'Patatap', desc:'Sound visuals — press & play', thumb:'https://images.unsplash.com/photo-1533227268428-f9ed0900fb3b?q=80&w=1200&auto=format&fit=crop', pkgSearch:'Patatap'},
+];
+
+/* DOM refs */
+const discover = document.getElementById('discoverCards');
+const trending  = document.getElementById('trendingCards');
+const libraryList = document.getElementById('libraryList');
+const exploreList = document.getElementById('exploreList');
+const featuredThumb = document.getElementById('featuredThumb');
+const featuredTitle = document.getElementById('featuredTitle');
+const featuredDesc = document.getElementById('featuredDesc');
+const featuredPlay = document.getElementById('featuredPlay');
+const heroPlay = document.getElementById('heroPlay');
+const playerThumb = document.getElementById('playerThumb');
+const playerTitle = document.getElementById('playerTitle');
+const playToggle = document.getElementById('playToggle');
+const uploadBtn = document.getElementById('uploadBtn');
+const audioFile = document.getElementById('audioFile');
+const globalSearch = document.getElementById('globalSearch');
+
+/* audio element */
+const audio = new Audio();
+audio.loop = true;
+let isPlaying = false;
+
+/* helper: open Play Store search in new tab */
+function playStoreLink(q){
+  return `https://play.google.com/store/search?q=${encodeURIComponent(q)}&c=apps`;
+}
+
+/* render helper for cards */
+function makeCard(game){
+  const c = document.createElement('div');
+  c.className = 'card';
+  c.innerHTML = `
+    <img src="${game.thumb}" alt="${game.title}">
+    <div class="ctitle">${game.title}</div>
+    <div class="cdesc">${game.desc}</div>
+    <div style="margin-top:auto;display:flex;justify-content:space-between;align-items:center">
+      <div class="muted">★ 4.5</div>
+      <div style="display:flex;gap:8px">
+        <button class="playBtn" data-id="${game.id}" style="padding:8px 10px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:var(--muted);cursor:pointer">Play</button>
+        <button class="getBtn" data-id="${game.id}" style="padding:8px 10px;border-radius:10px;background:linear-gradient(90deg,var(--accent),#33e6c7);border:none;color:#042a28;font-weight:700;cursor:pointer">Get</button>
+      </div>
+    </div>
+  `;
+  // events
+  c.querySelector('.playBtn').onclick = () => openGame(game);
+  c.querySelector('.getBtn').onclick = () => window.open(playStoreLink(game.pkgSearch),'_blank');
+  return c;
+}
+
+/* open game: update featured and optionally open modal/new tab */
+function openGame(game){
+  featuredThumb.src = game.thumb;
+  featuredTitle.textContent = game.title;
+  featuredDesc.textContent = game.desc;
+  playerThumb.src = game.thumb;
+  playerTitle.textContent = game.title + ' — Ambient';
+  // open Play Store search in new tab when user chooses Play (hero & featuredPlay)
+  featuredPlay.onclick = ()=> window.open(playStoreLink(game.pkgSearch),'_blank');
+  heroPlay.onclick = ()=> window.open(playStoreLink(game.pkgSearch),'_blank');
+}
+
+/* populate UI */
+function populate(){
+  discover.innerHTML = '';
+  trending.innerHTML = '';
+  libraryList.innerHTML = '';
+  exploreList.innerHTML = '';
+
+  // discover: first 6
+  GAMES.slice(0,6).forEach(g => discover.appendChild(makeCard(g)));
+  // trending: all but in different order
+  GAMES.slice().reverse().forEach(g => trending.appendChild(makeCard(g)));
+  // library: simple list
+  GAMES.forEach(g=>{
+    const li = document.createElement('div');
+    li.className = 'lib-item';
+    li.innerHTML = `<img src="${g.thumb}" alt="${g.title}"><div class="lib-meta"><div class="title">${g.title}</div><div class="muted">${g.desc}</div></div><div><button class="lib-get" data-id="${g.id}">Get</button></div>`;
+    libraryList.appendChild(li);
+  });
+  // explore: vertical list
+  GAMES.forEach(g=>{
+    const node = document.createElement('div');
+    node.style.display='flex'; node.style.gap='12px'; node.style.alignItems='center'; node.style.padding='12px';
+    node.style.borderRadius='12px'; node.style.marginBottom='8px'; node.style.background='linear-gradient(180deg, rgba(255,255,255,0.01), transparent)';
+    node.innerHTML = `<img src="${g.thumb}" alt="${g.title}" style="width:104px;height:64px;object-fit:cover;border-radius:8px"><div style="flex:1"><div style="font-weight:700">${g.title}</div><div class="muted">${g.desc}</div></div><div><button class="lib-get" data-id="${g.id}">Get</button></div>`;
+    exploreList.appendChild(node);
+  });
+
+  // attach lib-get listeners
+  document.querySelectorAll('.lib-get').forEach(b=>{
+    b.addEventListener('click', (e)=>{
+      const id = e.currentTarget.dataset.id;
+      const g = GAMES.find(x=>x.id===id);
+      if(g) window.open(playStoreLink(g.pkgSearch),'_blank');
+    });
+  });
+
+  // default open first
+  openGame(GAMES[0]);
+}
+populate();
+
+/* search filter (client-side) */
+globalSearch.addEventListener('input', (e)=>{
+  const q = e.target.value.trim().toLowerCase();
+  const filtered = GAMES.filter(g => (g.title + ' ' + g.desc).toLowerCase().includes(q));
+  // re-render discover/discover & trending
+  discover.innerHTML=''; trending.innerHTML=''; exploreList.innerHTML=''; libraryList.innerHTML='';
+  filtered.slice(0,6).forEach(g=> discover.appendChild(makeCard(g)));
+  filtered.slice().reverse().forEach(g=> trending.appendChild(makeCard(g)));
+  filtered.forEach(g=>{
+    const li = document.createElement('div');
+    li.className = 'lib-item';
+    li.innerHTML = `<img src="${g.thumb}" alt="${g.title}"><div class="lib-meta"><div class="title">${g.title}</div><div class="muted">${g.desc}</div></div><div><button class="lib-get" data-id="${g.id}">Get</button></div>`;
+    libraryList.appendChild(li);
+  });
+  // reattach lib-get
+  document.querySelectorAll('.lib-get').forEach(b=>{
+    b.addEventListener('click', (e)=>{
+      const id = e.currentTarget.dataset.id;
+      const g = GAMES.find(x=>x.id===id);
+      if(g) window.open(playStoreLink(g.pkgSearch),'_blank');
+    });
+  });
+});
+
+/* PLAYER: load local file or toggle play/pause */
+uploadBtn.addEventListener('click', ()=> audioFile.click());
+audioFile.addEventListener('change', (e)=>{
+  const f = e.target.files[0];
+  if(!f) return;
+  const url = URL.createObjectURL(f);
+  audio.src = url;
+  audio.play();
+  isPlaying = true;
+  playToggle.textContent = '❚❚';
+});
+playToggle.addEventListener('click', ()=>{
+  if(!audio.src) { // no source: play default ambient (none included). Use placeholder behaviour.
+    // If you want a default remote ambient track, set audio.src = 'URL HERE'; audio.play();
+    alert('Load an ambient audio file to play (or I can add a remote sample if you want).');
+    return;
+  }
+  if(isPlaying){ audio.pause(); playToggle.textContent='▶'; isPlaying=false; }
+  else { audio.play(); playToggle.textContent='❚❚'; isPlaying=true; }
+});
+
+/* quick keyboard: space toggles player */
+window.addEventListener('keydown', (e)=> { if(e.code === 'Space'){ e.preventDefault(); playToggle.click(); } });
+
+/* small: clicking card also opens Play Store in new tab when user holds Ctrl (or middle click) */
+document.body.addEventListener('click', (e)=>{
+  const target = e.target.closest('.card');
+  if(!target) return;
+  const pid = target.querySelector('.playBtn')?.dataset.id;
+  const game = GAMES.find(g=>g.id===pid);
+  if(!game) return;
+  // if ctrlKey or metaKey -> open Play Store; else open featured
+  if(e.ctrlKey || e.metaKey || e.button === 1) {
+    window.open(playStoreLink(game.pkgSearch),'_blank');
+  } else {
+    openGame(game);
+  }
+});
+
+</script>
+</body>
+</html>

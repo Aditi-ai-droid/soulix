@@ -359,5 +359,14 @@ window.onclick = function(event){
   }
 }
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const userEmail = localStorage.getItem("soulix_user_email");
+  if (!userEmail) {
+    alert("Please sign up or log in before joining us 🤝");
+    window.location.href = "register.html";  // redirect to signup
+  }
+});
+</script>
 </body>
 </html>

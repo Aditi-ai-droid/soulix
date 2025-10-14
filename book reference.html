@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Soulix Library 🌿</title>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background: #f8f5ee;
+      margin: 0;
+      color: #333;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 40px;
+      background: #f1ede5;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+      position: sticky; top: 0;
+    }
+    header h1 { color: #2c2b28; font-size: 22px; margin: 0; }
+    .btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .btn-primary { background: #2c2b28; color: #fff; }
+    .btn-light { background: #fff; border: 1px solid #ccc; }
+
+    .library {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 28px;
+      padding: 40px;
+    }
+
+    .book-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      overflow: hidden;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .book-card:hover { transform: translateY(-4px); }
+    .book-cover {
+      height: 220px;
+      background-size: cover;
+      background-position: center;
+    }
+    .book-info { padding: 10px 14px; }
+    .book-info h3 { margin: 0; font-size: 15px; }
+    .book-info p { margin: 4px 0 0; color: #666; font-size: 13px; }
+
+    /* Reader modal */
+    .modal-backdrop {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.4);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+    .modal {
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(12px);
+      width: 80%;
+      height: 80%;
+      border-radius: 14px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 22px;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+    .modal-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 30px;
+      line-height: 1.7;
+      font-size: 15px;
+    }
+    .modal-footer {
+      padding: 10px 20px;
+      border-top: 1px solid rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .progress {
+      height: 6px; background: #ddd; border-radius: 4px; overflow: hidden; width: 200px;
+    }
+    .progress i { display:block; height:100%; background:#2c2b28; width:0%; }
+
+    .auth-box {
+      width: 320px; margin: 100px auto; background: #fff; padding: 25px;
+      border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+    input {
+      width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #ccc;
+      margin: 6px 0 10px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🌿 Soulix Library</h1>
+    <div>
+      <button class="btn btn-light" onclick="showLogin()">Login</button>
+      <button class="btn btn-primary" onclick="showSignup()">Signup</button>
+    </div>
+  </header>
+
+  <main id="content"></main>
+
+  <!-- Reader Modal -->
+  <div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="readerTitle">Book Title</h2>
+        <div>
+          <button class="btn btn-light" onclick="prevPage()">⟵</button>
+          <button class="btn btn-light" onclick="nextPage()">⟶</button>
+          <button class="btn btn-primary" onclick="closeReader()">✕ Close</button>
+        </div>
+      </div>
+      <div class="modal-body" id="readerContent"></div>
+      <div class="modal-footer">
+        <div class="progress"><i id="progressFill"></i></div>
+        <small id="pageIndicator"></small>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  const API = "http://127.0.0.1:5000";
+  let currentBook = null, currentPage = 0, totalPages = 0;
+
+  // ===== AUTH =====
+  function showSignup() {
+    document.getElementById("content").innerHTML = `
+      <div class='auth-box'>
+        <h2>Signup</h2>
+        <input id='sname' placeholder='Name'>
+        <input id='semail' placeholder='Email'>
+        <input id='spass' type='password' placeholder='Password'>
+        <button class='btn btn-primary' onclick='signup()'>Send OTP</button>
+      </div>`;
+  }
+
+  async function signup(){
+    const name = sname.value, email = semail.value, password = spass.value;
+    const res = await fetch(API+"/signup-request",{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,email,password})});
+    const data = await res.json(); alert(data.message);
+    if(res.ok){
+      document.getElementById("content").innerHTML = `
+        <div class='auth-box'>
+          <h2>Verify OTP</h2>
+          <input id='vemail' value='${email}' readonly>
+          <input id='votp' placeholder='Enter OTP'>
+          <button class='btn btn-primary' onclick='verifyOTP()'>Verify</button>
+        </div>`;
+    }
+  }
+
+  async function verifyOTP(){
+    const email = votp.previousElementSibling.value;
+    const otp = votp.value;
+    const res = await fetch(API+"/verify-otp",{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,otp})});
+    const data = await res.json(); alert(data.message);
+    if(res.ok) loadLibrary();
+  }
+
+  function showLogin() {
+    document.getElementById("content").innerHTML = `
+      <div class='auth-box'>
+        <h2>Login</h2>
+        <input id='lemail' placeholder='Email'>
+        <input id='lpass' type='password' placeholder='Password'>
+        <button class='btn btn-primary' onclick='login()'>Login</button>
+      </div>`;
+  }
+
+  async function login(){
+    const email = lemail.value, password = lpass.value;
+    const res = await fetch(API+"/login",{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password}),credentials:'include'});
+    const data = await res.json(); alert(data.message);
+    if(res.ok) loadLibrary();
+  }
+
+  // ===== LIBRARY =====
+  async function loadLibrary(){
+    const res = await fetch(API+"/books");
+    const data = await res.json();
+    document.getElementById("content").innerHTML = `
+      <div class='library'>
+        ${data.books.map(b=>`
+          <div class='book-card' onclick='openReader("${b._id}")'>
+            <div class='book-cover' style='background-image:url(${b.cover_url||\"https://via.placeholder.com/200x300\"})'></div>
+            <div class='book-info'><h3>${b.title}</h3><p>${b.author}</p></div>
+          </div>`).join('')}
+      </div>`;
+  }
+
+  // ===== READER =====
+  async function openReader(bookId){
+    currentBook = bookId; currentPage = 0;
+    const res = await fetch(`${API}/books/${bookId}/pages?start=0&limit=1`,{credentials:'include'});
+    const data = await res.json();
+    totalPages = data.total_pages || 0;
+    readerContent.innerHTML = data.pages[0].content;
+    readerTitle.textContent = "Reading...";
+    modalBackdrop.style.display = 'flex';
+    updateProgress();
+    saveProgress();
+  }
+
+  function closeReader(){ modalBackdrop.style.display='none'; }
+
+  async function nextPage(){
+    if(currentPage+1 >= totalPages) return;
+    currentPage++;
+    const res = await fetch(`${API}/books/${currentBook}/pages?start=${currentPage}&limit=1`,{credentials:'include'});
+    const data = await res.json();
+    readerContent.innerHTML = data.pages[0].content;
+    updateProgress(); saveProgress();
+  }
+
+  async function prevPage(){
+    if(currentPage<=0) return;
+    currentPage--;
+    const res = await fetch(`${API}/books/${currentBook}/pages?start=${currentPage}&limit=1`,{credentials:'include'});
+    const data = await res.json();
+    readerContent.innerHTML = data.pages[0].content;
+    updateProgress(); saveProgress();
+  }
+
+  async function saveProgress(){
+    await fetch(API+"/progress",{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({book_id:currentBook,page_index:currentPage}),credentials:'include'});
+  }
+
+  function updateProgress(){
+    const pct = totalPages? Math.round((currentPage/(totalPages-1))*100):0;
+    progressFill.style.width = pct+'%';
+    pageIndicator.textContent = `Page ${currentPage+1}/${totalPages}`;
+  }
+
+  // start view
+  showLogin();
+  </script>
+</body>
+</html>

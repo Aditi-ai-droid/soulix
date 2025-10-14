@@ -18,6 +18,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Great+Vibes&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Imperial+Script&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital@0;1&family=Playwrite+ES+Deco+Guides&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Rubik+Vinyl&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Great+Vibes&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Imperial+Script&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital@0;1&family=Playwrite+ES+Deco+Guides&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Rubik+Vinyl&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
 
 
@@ -71,20 +74,21 @@
 
 
     <!-- ✅ HERO SECTION -->
-<section id="home" class="hero">
-  <div class="hero-text">
-    <h1>Soulix</h1>
-    <p>You don't have to struggle in silence!</p>
-    <div class="button">
-      <a href="join us.html"><i class="fa fa-play"></i> Join Us</a>
-      <a href="see-more.html"><i class="fa fa-plus"></i> See More</a>
-    </div>
-  </div>
+   <section id="home" class="hero">
+      <div class="hero-text">
+        <h1>Soulix</h1>
+        <p>You don't have to struggle in silence!</p>
+        <div class="button">
+          <a href="join us.html"><i class="fa fa-play"></i> Join Us</a>
+          <a href="see-more.html"><i class="fa fa-plus"></i> See More</a>
+        </div>
+      </div>
 
-  <div class="hero-img">
-    <img src="image/home page.png" alt="Soulix">
-  </div>
+      <div class="hero-img">
+        <img src="image/home page.png" alt="Soulix">
+      </div>
 
+  
   <!-- ✅ Stats Section (inside hero) -->
   <div class="stats-section">
     <div class="stat stats-card">
@@ -101,17 +105,71 @@
     </div>
   </div>
 </section>
+</div>
 
+<!-- Now Reference Section outside -->
+<section class="reference-body-full">
+  <div class="reference-left">
+    <p class="ref-kicker">Featured Insight</p>
+    <h2 class="ref-title">The Tale of Healing</h2>
+    <p class="ref-desc">
+      Every story begins with pain, but within those pages, healing unfolds.  
+      Discover how mindfulness and creative journaling can help teens express  
+      emotions and rebuild confidence — one page at a time.
+    </p>
+    <div class="ref-buttons">
+      <button class="ref-btn primary">Explore Stories</button>
+      <a href="join us.html"></a>
+      <button class="ref-btn outline">Learn More</button>
+    </div>
+  </div>
+
+  <div class="reference-right">
+    <img src="image/Book1.png" alt="Open Book Art" class="ref-book">
+  </div>
+</section>
+<!-- 🧘‍♀️ Meditation Section (Soulix Mint Theme) -->
 
 <!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-<!-- Floating food items for effect -->
-    <div class="floating-food food1">
+<section class="meditation-section">
+    <!-- ☁️ Cloud Animation Canvas -->
+    <canvas id="cloudCanvas"></canvas>
+
+    <!-- 🌿 Meditation Left Text -->
+    <div class="meditation-left">
+      <span class="med-tag">• meditation</span>
+      <h1 class="med-title">
+        Healing is not a race <span class="divider">|</span>
+        <span class="accent">it’s a rhythm</span><br>
+      </h1>
+      <p class="med-desc">
+       Everyone blooms in their own season. Don’t rush your growth; let it unfold with kindness. The moments you call slow are the moments shaping your peace.
+      </p>
+
+      <div class="med-icons">
+        <i class="fa-solid fa-leaf"></i>
+        <i class="fa-solid fa-heart"></i>
+        <i class="fa-solid fa-spa"></i>
+      </div>
+
+     <div class="med-buttons">
+  <a href="#library" class="btn primary">Get started</a>
+  <a href="#explore" class="btn ghost">Explore</a>
+</div>
+</div>
+
+    <!-- 🧘‍♀️ Meditation Image -->
+    <div class="meditation-center">
+      <div class="med-shape">
+        <img src="image/meditation1.jpg" alt="Meditation Pose" class="med-img" />
+      </div>
     </div>
-    <div class="floating-food food2"></div>
-    <div class="floating-food food3"></div>
-    <div class="floating-food food4"></div>
+  </section>
+
+  <script src="script.js"></script>
+</section>
     <div class="floating-food food4"></div>
     <div class="floating-food food5"></div>
     <div class="floating-food food6"></div>
@@ -142,85 +200,120 @@
     }
   });
 </script>
-<!-- ✅ Chatbot Icon -->
-    <div class="chatbot-wrapper" onclick="toggleSupport()">
-    <div class="chatbot-icon" title="Support">
-      <img src="image/chat bot.png" alt="Support">
-    </div>
-    <div class="chatbot-tooltip">Talk to Support</div>
+
+<!-- Chatbot Icon -->
+<div class="chatbot-wrapper" style="z-index:3000">
+  <div class="chatbot-icon" onclick="toggleSupport()" title="Support">
+    <img src="image/chat bot.png" alt="Support">
+  </div>
+  <div class="chatbot-tooltip">Talk to Support</div>
+</div>
+
+<!-- Support window -->
+<div id="supportWindow" class="support-window" role="dialog" aria-label="Support chat">
+  <div class="sw-header">
+    <div class="title"><i class="fa-solid fa-headset"></i>&nbsp; Support</div>
+    
+    <!-- 📜 Chat History Button (inside header) -->
+    
+
+
+    <div class="close" onclick="toggleSupport()">✕</div>
   </div>
 
-  <!-- Support window -->
-  <div id="supportWindow" class="support-window" role="dialog" aria-label="Support chat">
-    <div class="sw-header">
-      <div class="title"><i class="fa-solid fa-headset"></i>&nbsp; Support</div>
-      <div class="close" onclick="toggleSupport()">✕</div>
-    </div>
+  <div id="swBody" class="sw-body">
+<div class="chip-container">
+  <div class="chip meditate"><i class="fas fa-spa"></i> Meditate</div>
+  <div class="chip walk"><i class="fas fa-shoe-prints"></i> Go for a walk</div>
+  <div class="chip hydrate"><i class="fas fa-tint"></i> Drink water</div>
+  <div class="chip journal"><i class="fas fa-pen-nib"></i> Write your thoughts</div>
+  <div class="chip laugh"><i class="fas fa-laugh-beam"></i> Watch something funny</div>
+  <div class="chip sleep"><i class="fas fa-moon"></i> Take a nap</div>
+  <div class="chip breathe"><i class="fas fa-wind"></i> Take deep breaths</div>
+  <div class="chip stretch"><i class="fas fa-child"></i> Do a light stretch</div>
+  <div class="chip music"><i class="fas fa-music"></i> Listen to music</div>
+  <div class="chip nature"><i class="fas fa-leaf"></i> Step into nature</div>
+  <div class="chip text"><i class="fas fa-comment-dots"></i> Text a friend</div>
+  <div class="chip gratitude"><i class="fas fa-heart"></i> Gratitude list</div>
+  <div class="chip art"><i class="fas fa-paint-brush"></i> Draw or doodle</div>
+  <div class="chip affirm"><i class="fas fa-sun"></i> Say an affirmation</div>
+  <div class="chip disconnect"><i class="fas fa-power-off"></i> Take a digital break</div>
+  <div class="chip read"><i class="fas fa-book-open"></i> Read a few pages</div>
+  <div class="chip selfcare"><i class="fas fa-hand-holding-heart"></i> Self-care act</div>
+  <div class="chip smile"><i class="fas fa-smile"></i> Smile a little</div>
+  <div class="chip plan"><i class="fas fa-calendar-check"></i> Plan something nice</div>
+  <div class="chip hug"><i class="fas fa-hands"></i> Give yourself a hug 🤍</div>
+</div>
 
-    <div id="swBody" class="sw-body">
-      <!-- quick chips -->
-      <div class="chips" id="chipsContainer">
-        <div class="chip" data-key="breathe">Breathe</div>
-        <div class="chip" data-key="talk">Talk to someone</div>
-        <div class="chip" data-key="music">Calm music</div>
-        <div class="chip" data-key="tips">Stress tips</div>
-        <div class="chip" data-key="meditate">Meditate</div>
-  <div class="chip" data-key="walk">Go for a walk</div>
-  <div class="chip" data-key="hydrate">Drink water</div>
-  <div class="chip" data-key="journal">Write your thoughts</div>
-  <div class="chip" data-key="laugh">Watch something funny</div>
-  <div class="chip" data-key="sleep">Take a nap</div>
-  <div class="chip" data-key="music">🎵 Calm music</div>
-<div class="chip" data-key="breathe">🌬️ Breathe</div>
 
-      </div>
-
-      <!-- messages -->
-      <div id="messages" class="chat-messages" aria-live="polite">
-        <div class="bubble bot">Hey 👋 I am Support. You can type, speak, or pick a quick suggestion below.</div>
-      </div>
-    </div>
-
-    <div class="sw-input">
-      <div class="controls">
-        <button id="micBtn" class="micro" title="Speak"><i class="fa-solid fa-microphone"></i></button>
-        <button id="emojiBtn" class="emoji-btn" title="Emoji">😊</button>
-      </div>
-
-      <div class="text-input">
-        <input id="userInput" placeholder="Type a message or press mic..." aria-label="Message input"/>
-      </div>
-
-      <button id="sendBtn" class="send" title="Send">➤</button>
-
-      <!-- emoji popup -->
-      <div id="emojiMenu" class="emoji-menu" aria-hidden="true">
-        <button class="emoji">😊</button><button class="emoji">👍</button><button class="emoji">😟</button>
-        <button class="emoji">😌</button><button class="emoji">❤️</button>
-      </div>
+    <div id="messages" class="chat-messages" aria-live="polite">
+      <div class="bubble bot">Hey 👋 I’m Support. You can type, speak, or pick a quick suggestion below.</div>
     </div>
   </div>
 
+  <div class="sw-input" style="position:relative;">
+    <div class="controls">
+      <button id="micBtn" class="micro" title="Speak"><i class="fa-solid fa-microphone"></i></button>
+      <button id="kbdBtn" class="kbd-btn" title="Emoji, GIFs, Stickers">😊</button>
+    </div>
+
+    <div class="text-input">
+      <input id="userInput" placeholder="Type a message or press mic..." aria-label="Message input" />
+    </div>
+
+    <button id="sendBtn" class="send" title="Send">➤</button>
+
+    <!-- keyboard panel -->
+    <div id="keyboardPanel" class="keyboard-panel" aria-hidden="true">
+      <div class="kb-tabs" role="tablist">
+        <button class="tab-btn active" data-tab="emoji" role="tab">Emoji</button>
+        <button class="tab-btn" data-tab="gifs" role="tab">GIFs</button>
+        <button class="tab-btn" data-tab="stickers" role="tab">Stickers</button>
+      </div>
+
+      <div class="kb-search">
+        <input id="kbSearch" placeholder="Search GIFs / Stickers..." />
+        <div style="width:10px"></div>
+      </div>
+
+      <div class="kb-content">
+        <div class="tab-page" data-page="emoji">
+          <div class="recent-row" id="emojiRecentRow" aria-hidden="true"></div>
+          <div class="emoji-grid" id="emojiGrid"></div>
+        </div>
+
+        <div class="tab-page" data-page="gifs" style="display:none">
+          <div class="recent-row" id="gifRecentRow"></div>
+          <div class="media-grid" id="gifGrid"></div>
+        </div>
+
+        <div class="tab-page" data-page="stickers" style="display:none">
+          <div class="recent-row" id="stickerRecentRow"></div>
+          <div class="media-grid" id="stickerGrid"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <script>
-/* ---------- UI controls ---------- */
+/* ---------------- Basic UI & Chat flow ---------------- */
 const supportWindow = document.getElementById('supportWindow');
 const messages = document.getElementById('messages');
 const userInput = document.getElementById('userInput');
 const sendBtn = document.getElementById('sendBtn');
 const micBtn = document.getElementById('micBtn');
-const emojiBtn = document.getElementById('emojiBtn');
-const emojiMenu = document.getElementById('emojiMenu');
 const chips = document.getElementById('chipsContainer');
 
 let open = false;
-function toggleSupport(){
+function toggleSupport() {
   open = !open;
   supportWindow.style.display = open ? 'flex' : 'none';
-  if(open) userInput.focus();
+  if (!open) hideKeyboard();
+  if (open) userInput.focus();
 }
+supportWindow.style.display = 'none';
 
-/* add bubble */
-function addBubble(text, who='bot'){
+function addBubble(text, who = 'bot') {
   const el = document.createElement('div');
   el.className = 'bubble ' + (who === 'user' ? 'user' : 'bot');
   el.textContent = text;
@@ -228,161 +321,456 @@ function addBubble(text, who='bot'){
   messages.scrollTop = messages.scrollHeight;
 }
 
-/* show typing animation, returns element to remove later */
-function showTyping(){
+/* ---------------- Typing Animation ---------------- */
+function showTyping() {
   const t = document.createElement('div');
   t.className = 'typing';
-  t.innerHTML = '<span class="dot"></span><span class="dot"></span><span class="dot"></span>';
+
+  // Typing animation text
+  const textSpan = document.createElement('span');
+  textSpan.className = 'typing-text';
+  textSpan.textContent = "Typing";
+
+  const dots = document.createElement('span');
+  dots.className = 'dots';
+  dots.innerHTML = '<span>.</span><span>.</span><span>.</span>';
+
+  t.appendChild(textSpan);
+  t.appendChild(dots);
   messages.appendChild(t);
   messages.scrollTop = messages.scrollHeight;
+
+  // Rotating messages (Typing → Thinking → Almost ready → Formulating reply)
+  const texts = ["Typing", "Thinking", "Almost ready", "Formulating reply"];
+  let index = 0;
+  const interval = setInterval(() => {
+    index = (index + 1) % texts.length;
+    textSpan.textContent = texts[index];
+  }, 2000);
+
+  // Cleanup when typing stops
+  t.cleanup = () => clearInterval(interval);
+
   return t;
 }
 
-/* chips click -> send keyword */
-chips.addEventListener('click', e => {
-  const chip = e.target.closest('.chip');
-  if(!chip) return;
-  const key = chip.dataset.key;
-  userSend(key);
+/* ---------------- Message Sending ---------------- */
+sendBtn.addEventListener('click', () => userSend(userInput.value || ''));
+userInput.addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    userSend(userInput.value || '');
+  }
 });
 
-/* emoji handling */
-emojiBtn.addEventListener('click', e=>{
-  emojiMenu.style.display = emojiMenu.style.display === 'block' ? 'none' : 'block';
-});
-emojiMenu.addEventListener('click', e=>{
-  const emoji = e.target.textContent;
-  if(!emoji) return;
-  userInput.value += emoji;
-  emojiMenu.style.display = 'none';
-  userInput.focus();
+/* ---------------- Smart Greeting by Name ---------------- */
+window.addEventListener('load', () => {
+  // Clear any hardcoded message
+  const messagesBox = document.getElementById("messages");
+  if (messagesBox) messagesBox.innerHTML = "";
+
+  // Try fetching user's name from storage (added during login/signup)
+  const storedUser = localStorage.getItem("soulix_user_name");
+  const userEmail =
+    localStorage.getItem("soulix_user_email") ||
+    sessionStorage.getItem("user_email");
+
+  if (storedUser) {
+    addBubble(`Welcome back 🌿 ${storedUser}! I'm here if you need me. 💬`, "bot");
+  } else if (userEmail) {
+    const username = userEmail.split("@")[0];
+    addBubble(`Welcome back 🌿 ${username}! I'm here if you need me. 💬`, "bot");
+  } else {
+    addBubble("Hey 👋 I'm Support. You can type, speak, or pick a quick suggestion below.", "bot");
+  }
 });
 
-/* send button / enter key */
-sendBtn.addEventListener('click', ()=> userSend(userInput.value || ''));
-userInput.addEventListener('keydown', e => { if(e.key === 'Enter'){ userSend(userInput.value || ''); } });
+/* ---------------- Send User Message ---------------- */
+async function userSend(raw) {
+  const text = (raw || '').toString().trim();
+  if (!text) return;
 
-/* ---------- Voice recognition (SpeechRecognition) ---------- */
-let recognition = null;
-let listening = false;
-if('webkitSpeechRecognition' in window || 'SpeechRecognition' in window){
+  addBubble(text, 'user');
+  userInput.value = '';
+  hideKeyboard();
+
+  const t = showTyping();
+
+  try {
+    // ✅ Get logged-in user info safely
+    const userName = localStorage.getItem("soulix_user_name") || "Guest";
+    const userEmail =
+      localStorage.getItem("soulix_user_email") ||
+      sessionStorage.getItem("user_email") ||
+      "guest@soulix.com";
+
+    // ✅ Send message to backend
+    const res = await fetch("http://127.0.0.1:5000/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        message: text,
+        email: userEmail,
+        name: userName
+      }),
+      credentials: "include"
+    });
+
+    const data = await res.json();
+    if (t.cleanup) t.cleanup();
+    t.remove();
+
+    const reply = data.reply || "Sorry 😔 I didn’t understand that.";
+    addBubble(reply, 'bot');
+
+    // 🎙️ Voice Reply
+    if ('speechSynthesis' in window) {
+      const u = new SpeechSynthesisUtterance(reply);
+      u.rate = 0.95;
+      u.pitch = 1.0;
+      speechSynthesis.cancel();
+      speechSynthesis.speak(u);
+    }
+
+  } catch (err) {
+    if (t.cleanup) t.cleanup();
+    t.remove();
+    addBubble("⚠️ Connection error — offline mode active.", 'bot');
+    console.error(err);
+  }
+}
+
+
+/* ---------------- Speech Recognition (Mic) ---------------- */
+let recognition = null, listening = false;
+if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   recognition = new SR();
   recognition.lang = 'en-US';
   recognition.interimResults = false;
   recognition.maxAlternatives = 1;
-
-  recognition.onresult = function(evt){
+  recognition.onresult = function (evt) {
     const text = evt.results[0][0].transcript;
     userInput.value = text;
     userSend(text);
   };
-  recognition.onend = function(){ listening=false; micBtn.innerHTML = '<i class="fa-solid fa-microphone"></i>'; }
-  recognition.onerror = function(e){ console.error('speech error', e); listening=false; micBtn.innerHTML = '<i class="fa-solid fa-microphone"></i>'; }
+  recognition.onend = function () {
+    listening = false;
+    micBtn.innerHTML = '<i class="fa-solid fa-microphone"></i>';
+  };
+  recognition.onerror = function (e) {
+    console.error('speech error', e);
+    listening = false;
+    micBtn.innerHTML = '<i class="fa-solid fa-microphone"></i>';
+  };
 } else {
   micBtn.title = 'Voice not supported';
   micBtn.style.opacity = 0.8;
 }
-
-/* mic button toggles recognition */
-micBtn.addEventListener('click', ()=>{
-  if(!recognition) return alert('Voice not supported in this browser');
-  if(!listening){
+micBtn.addEventListener('click', () => {
+  if (!recognition) return alert('Voice not supported in this browser');
+  if (!listening) {
     recognition.start();
-    listening=true;
+    listening = true;
     micBtn.innerHTML = '<i class="fa-solid fa-microphone-lines"></i>';
   } else {
     recognition.stop();
-    listening=false;
+    listening = false;
     micBtn.innerHTML = '<i class="fa-solid fa-microphone"></i>';
   }
 });
-
-/* ---------- Speech synthesis (bot voice) ---------- */
-function speakText(text){
-  if(!('speechSynthesis' in window)) return;
-  const utter = new SpeechSynthesisUtterance(text);
-  // Prefer a calm female voice if available
-  const voices = speechSynthesis.getVoices();
-  let chosen = voices.find(v => /female|woman|FEMALE|female/i.test(v.name)) || voices.find(v=> /en-?us/i.test(v.lang)) || voices[0];
-  if(chosen) utter.voice = chosen;
-  utter.rate = 0.95;
-  utter.pitch = 1.0;
-  speechSynthesis.cancel();
-  speechSynthesis.speak(utter);
-}
-
-/* ---------- Chat send flow ---------- */
-let pendingTypingEl = null;
-async function userSend(raw){
-  const text = (raw||'').toString().trim();
-  if(!text) return;
-  // show user bubble
-  addBubble(text, 'user');
-  userInput.value = '';
-  // show typing
-  const typingEl = showTyping();
-
+/* ---------------- Chat History ---------------- */
+async function loadChatHistory() {
   try {
-    // call server /chat
-    const res = await fetch('http://127.0.0.1:5000/chat', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({
-        message: text,
-        // if user logged in, you can put email here
-        email: localStorage.getItem('soulix_user_email') || 'guest@soulix.com'
-      })
-    });
-
-    const json = await res.json();
-    typingEl.remove();
-    // server returns { reply: "...", suggestions: [...], emoji: "😊" }
-    const reply = (json.reply || "Sorry, I couldn't process that. Try again.");
-    addBubble(reply, 'bot');
-
-    // optional: show server suggestions as chips
-    if(Array.isArray(json.suggestions) && json.suggestions.length){
-      // replace chips area
-      const ctn = document.getElementById('chipsContainer');
-      ctn.innerHTML = '';
-      json.suggestions.slice(0,6).forEach(s => {
-        const d = document.createElement('div'); d.className='chip'; d.textContent = s; d.dataset.key = s;
-        ctn.appendChild(d);
-      });
+    const email = sessionStorage.getItem("user_email");
+    if (!email) {
+      addBubble("⚠️ Please login to view your chat history.", "bot");
+      return;
     }
 
-    // optional emoji reaction
-    if(json.emoji){
-      const e = document.createElement('div'); e.className='bubble bot'; e.textContent = json.emoji; messages.appendChild(e);
+    const res = await fetch(`http://127.0.0.1:5000/chat-history?email=${email}`);
+    const data = await res.json();
+
+    if (!data.history) {
+      addBubble("No chat history found 💬", "bot");
+      return;
     }
 
-    // speak
-    try{ speakText(reply); } catch(e){ /* ignore */ }
+    messages.innerHTML = ""; // clear chat window
 
-  } catch (err){
-    typingEl.remove();
-    addBubble("⚠️ Unable to reach server. Check connection.", 'bot');
-    console.error(err);
+    const sections = ["Today", "Yesterday", "Older"];
+    for (let sec of sections) {
+      if (data.history[sec].length > 0) {
+        const header = document.createElement("div");
+        header.className = "history-header";
+        header.textContent = sec;
+        messages.appendChild(header);
+
+        data.history[sec].forEach(chat => {
+          addBubble(chat.user_message, "user");
+          addBubble(chat.bot_reply, "bot");
+        });
+      }
+    }
+
+    messages.scrollTop = messages.scrollHeight;
+  } catch (err) {
+    console.error("⚠️ History error:", err);
+    addBubble("⚠️ Failed to load chat history.", "bot");
   }
 }
 
-/* nice: close emoji menu when clicking outside */
-document.addEventListener('click', e=>{
-  if(!emojiMenu.contains(e.target) && !emojiBtn.contains(e.target)) emojiMenu.style.display='none';
+/* Button to view history */
+document.getElementById("historyBtn")?.addEventListener("click", loadChatHistory);
+
+/* ---------------- Keyboard Panel Logic ---------------- */
+const kbdBtn = document.getElementById('kbdBtn');
+const keyboardPanel = document.getElementById('keyboardPanel');
+const tabBtns = Array.from(document.querySelectorAll('.tab-btn'));
+const tabPages = Array.from(document.querySelectorAll('.tab-page'));
+const kbSearch = document.getElementById('kbSearch');
+const emojiGrid = document.getElementById('emojiGrid');
+const gifGrid = document.getElementById('gifGrid');
+const stickerGrid = document.getElementById('stickerGrid');
+const emojiRecentRow = document.getElementById('emojiRecentRow');
+const gifRecentRow = document.getElementById('gifRecentRow');
+const stickerRecentRow = document.getElementById('stickerRecentRow');
+
+let activeTab = 'emoji';
+let kbOpen = false;
+
+/* ---------------- Emoji / GIF / Sticker Data ---------------- */
+const EMOJIS = ["🦦","☘","🍂","🌞","🌙","🥲","😀","😃","😄","😁","😆","🥹","😅","😂","😉","🙃","🙂","😇","😊","☺","🤣","😌","😍","🥰","😘","😗","😙","😚","😋","😎","🤓","🧐","🤨","🤪","😜","😝","😛","🥸","🤩","🥳","😏","😒","😞","😔","😩","😟","🥺","😕","😢","🙁","😭","☹","😤","😣","😠","😖","😡","😫","🤬","😰","😨","😱","😶‍🌫","🥶","🥵","😳","🤯","😥","😓","🤗","🤔","🫣","🤭","🫢","🫡","🤫","🫠","🤥","😶","🫥","😐","🫤","😑","😲","😮","😧","😦","😯","🙄","😬","🫨","🥱","🤐","🫩","🥴","😴","🤢","🤤","🤮","😪","🤧","😮‍💨","😷","😵","🤒","😵‍💫","🤕","🤑","🤠","😈","👿","👹","👺","🤡","💩","😺","🎃","🤖","👾","👽","☠","💀","👻","😸","😹","😻","😼","😽","🙀","😿","😾","👎🏻","👍","🤝","👏","🙌","👐🏻","🤲","🫶","👊","✊","🫸","🫷","🤞","✌","🫰","🤟","🤘","👌","🤌","🤏","🫳","🫴","👈","👉","👆","👇","☝","✋","🤚","👋","🤙","🫲","🫱","💪","🦾","✍","🙏","🫵","🦶","🦵","🦿","💄","💋","🫆","👃","🦻","👂","🦷","👄","👣","👁","👀","🫀","🫁","🧠","🗣","👤","🧑","👩","👦","🧒","👧🏻","👶","🫂","👥","👨","👩‍🦳","🧑‍🦳","🧕","💂‍♂","🕵","👩‍⚕","🧑‍⚕","👨‍🎓","👸","🫅","🧜‍♀","🙇‍♀","🙇","🤦‍♂","🤦‍♀","💆‍♂","🧖‍♀","💆‍♀","🧖","💅","💃","🧎‍♀","🏃‍♀","🏃‍♂","👩‍❤️‍👨","👩‍❤️‍👩","🧶","🧵","🪡","🧥","🥼","🦺","👚","👕","👘","👗","👔","👖","🥻","🩴","🥿","👠","👡","👢","👞","👟","🎓","👒","🧢","🎩","🧣","🧤","🧦","🥾","⛑","🪖","🎒","🧳","👑","👓","💍","🕶","🥽","👝","👛","🌂","👜","💼","🐶","🐱","🐻‍❄","🐨","🐭","🐯","🐹","🦁","🐰","🐮","🦊","🐷","🐻","🐽","🐼","🐸","🐵","🙈","🙉","🙊","🐒","🐔","🐧","🐦","🦉","🦅","🐦‍⬛","🦆","🪿","🐥","🐣","🐤","🦇","🐛","🐺","🦋","🐗","🐌","🐴","🐞","🦄","🐜","🫎","🪰","🐝","🪲","🪱","🪳","🦎","🐍","🐢","🦂","🕸","🕷","🦗","🦟","🦖","🐡","🦕","🐠","🐙","🐟","🦑","🐬","🪼","🐳","🦐","🐋","🦞","🦈","🦭","🦀","🐊","🦛","🐅","🦏","🐆","🐪","🦓","🐫","🦍","🦘","🦧","🦣","🦬","🐃","🐘","🐂","🐄","🐐","🦌","🫏","🐕","🐎","🐩","🐖","🦮","🐕‍🦺","🐏","🐑","🦙","🐈‍⬛","🐈","🦢","🦜","🦚","🦤","🦃","🐓","🪽","🪶","🦩","🦥","🕊","🐁","🐇","🐀","🦝","🐿","🦨","🦔","🦡","🐾","🦫","🐉","🐲","🦦","🪵","🪾","🌴","🌳","🌲","🎄","🌵","🐦‍🔥","🌱","🌿","🍂","🍁","☘","🪺","🪹","🍀","🎍","🍄","🪴","🎋","🍃","🪸","🐚","🪷","🪻","🥀","🌹","🌷","💐","🌾","🪨","🌺","🌸","🌼","🌻","🌞","🌝","🌛","🌜","🌚","🌔","🌕","🌙","🌖","🌎","🌗","🌍","🌘","🌏","🌑","🪐","🌒","💫","🌓","⭐","🌈","🌪","🔥","💥","☄","⚡","✨","🌟","☀","🌤","🌩","🌨","⛅","❄","🌥","☃","☁","⛄","🌦","🌬","💨","🌧","⛈","💧","🌫","🌊","☂","☔","🫧","💦","🍏","🍇","🍎","🍓","🍐","🫐","🍊","🍈","🍋","🍒","🍑","🍌","🍉","🍍","🥭","🥥","🥝","🍅","🍆","🥑","🫛","🥦","🥬","🧅","🧄","🫒","🥕","🌽","🫑","🌶","🥒","🥔","🥨","🫜","🧀","🍠","🥚","🫚","🍳","🥐","🧈","🥯","🥞","🍞","🧇","🥖","🥓","🍕","🍟","🍔","🌭","🦴","🍖","🍗","🥩","🫓","🥪","🥙","🧆","🌮","🌯","🫔","🥗","🍛","🍲","🍜","🍝","🫙","🥫","🫕","🥘","🍣","🍱","🥟","🦪","🍤","🍙","🍚","🍘","🍦","🍨","🍧","🍡","🍢","🥮","🥠","🍥","🥧","🧁","🍩","🍿","🍰","🍪","🎂","🌰","🍮","🥜","🍭","🫘","🍬","🍯","🍫","🥛","🧋","🥤","🧃","🍵","☕","🫖","🍼","🫗","🍶","🧉","🍺","🍾","🍻","🧊","🥂","🥄","🍴","🍷","🥃","🥣","🍸","🥡","🍹","🧂","🥢","⚽","🥏","🏀","🎱","🏈","🪀","⚾","🏓","🥎","🏸","🎾","🏒","🏐","🏑","🏉","🥍","🏏","🤿","🪃","🥊","🥅","⛳","🪁","🛝","🏹","🎣","⛸","🛷","🛼","🛹","🎽","🥋","🥊","🤿","🥌","🎿","⛷","🏂","🪂","🤸","🏋‍♀","🏋","🏋‍♂","🤼‍♀","🤼","🤸‍♀","🤸","⛹‍♀","⛹","🤺","🤾‍♀","🧘‍♀","🧘","🏆","🥇","🥉","🏅","🎖","🏵","🎭","🤹‍♂","🤹","🤹‍♀","🎪","🎟","🎫","🎗","🩰","🎨","🫟","🎬","🎤","🎧","🎼","🪕","🎸","🪗","🎺","🎷","🪘","🥁","🪇","🪉","🎻","🪈","🎲","♟","🎯","🎳","🎮","🧩","🎰","🚗","🚒","🚕","🚐","🚙","🛻","🚌","🚚","🚎","🚛","🚜","🏎","🚓","🚑","🦽","🦯","🚜","🚛","🚚","🛻","🚐","🚒","🦼","🩼","🛴","🚲","🛵","🏍","🛺","🛞","🚟","🚠","🚡","🚖","🚘","🚍","🚔","🚨","🚃","🚆","🚋","🚇","🚞","🚊","🚝","🚉","🚄","✈","🚅","🛫","🚈","🛬","🚂","🛩","💺","🛰","🚀","🛸","🚁","🛶","⛵","🚤","⛽","🪝","⚓","🛟","🚢","⛴","🛳","🛥","🚧","🚦","🚥","🚏","🗺","🗿","🗽","🗼","⛱","⛲","🎠","🎢","🎡","🏟","🏯","🏰","🏖","🏝","🏜","🌋","⛰","🏔","🗻","🏕","🏭","🏗","🏚","🏘","🏡","🏠","🛖","⛺","🏢","🏬","🏣","🏤","🏦","🏨","🏪","🏫","🕋","🏩","⛩","💒","🛤","🏛","🛣","⛪","🗾","🕌","🎑","🕍","🏞","🛕","🌅","🌃","🏙","🌆","🎆","🎇","🌠","🌄","🌌","🌉","🌁"];
+const DEMO_GIFS = [
+  "https://media.giphy.com/media/3o6ZsY1f3kqv1u6x0w/giphy.gif",
+  "https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif"
+];
+const DEMO_STICKERS = [
+  "https://cdn.pixabay.com/photo/2023/03/02/10/41/penguin-7828315_1280.png",
+  "https://i.pinimg.com/originals/8a/54/3f/8a543ffdb0533b43c248c5630191db7d.png",
+  "https://i.pinimg.com/originals/f9/0d/3e/f90d3e56cf37da7e76df6a3b05f4ab17.png"
+];
+
+/* ---------------- Show / Hide Keyboard ---------------- */
+function showKeyboard() {
+  keyboardPanel.style.display = 'block';
+  keyboardPanel.setAttribute('aria-hidden', 'false');
+  kbOpen = true;
+}
+function hideKeyboard() {
+  keyboardPanel.style.display = 'none';
+  keyboardPanel.setAttribute('aria-hidden', 'true');
+  kbOpen = false;
+}
+kbdBtn.addEventListener('click', e => {
+  e.stopPropagation();
+  if (kbOpen) hideKeyboard();
+  else { showKeyboard(); setActiveTab('emoji'); loadActiveTab(); }
+});
+document.addEventListener('click', e => {
+  if (!keyboardPanel.contains(e.target) && !kbdBtn.contains(e.target)) hideKeyboard();
 });
 
-/* open the support window initially collapsed (icon only) */
-supportWindow.style.display = 'none';
+/* ---------------- Tab Switching ---------------- */
+tabBtns.forEach(btn => btn.addEventListener('click', () => setActiveTab(btn.dataset.tab)));
+function setActiveTab(t) {
+  activeTab = t;
+  tabBtns.forEach(b => b.classList.toggle('active', b.dataset.tab === t));
+  tabPages.forEach(p => p.style.display = (p.dataset.page === t) ? 'block' : 'none');
+  kbSearch.value = '';
+  loadActiveTab(true);
+}
+
+/* ---------------- Load Tab Content ---------------- */
+async function loadActiveTab(reset = false) {
+  if (activeTab === 'emoji') renderEmojis();
+  else if (activeTab === 'gifs') renderGIFs();
+  else if (activeTab === 'stickers') renderStickers();
+}
+
+/* ---------------- Emojis ---------------- */
+function renderEmojis() {
+  emojiGrid.innerHTML = '';
+  EMOJIS.forEach(e => {
+    const cell = document.createElement('div');
+    cell.className = 'emoji-cell';
+    cell.textContent = e;
+    cell.addEventListener('click', () => {
+      userInput.value += e;
+      hideKeyboard();
+      saveRecent('emoji', e);
+    });
+    emojiGrid.appendChild(cell);
+  });
+}
+
+/* ---------------- GIFs ---------------- */
+function renderGIFs() {
+  gifGrid.innerHTML = '';
+  DEMO_GIFS.forEach(src => {
+    const img = document.createElement('img');
+    img.src = src;
+    img.className = 'gif';
+    img.addEventListener('click', () => { sendMedia(src); saveRecent('gif', { url: src }); });
+    gifGrid.appendChild(img);
+  });
+}
+
+/* ---------------- Stickers ---------------- */
+async function renderStickers() {
+  stickerGrid.innerHTML = '';
+  const q = (kbSearch.value || '').toLowerCase();
+
+  try {
+    const res = await fetch('stickers.json', { cache: 'no-store' });
+    if (res.ok) {
+      const all = await res.json();
+      const list = q ? all.filter(s => (s.url || '').toLowerCase().includes(q)) : all;
+      list.forEach(s => {
+        const img = document.createElement('img');
+        img.src = s.url;
+        img.alt = s.alt || 'sticker';
+        img.style.width = '80px';
+        img.style.height = '80px';
+        img.style.objectFit = 'contain';
+        img.addEventListener('click', () => { sendMedia(s); saveRecent('sticker', s); });
+        stickerGrid.appendChild(img);
+      });
+      return;
+    }
+  } catch (err) {
+    console.warn("⚠️ stickers.json not found, using fallback.");
+  }
+
+  DEMO_STICKERS.forEach(s => {
+    const img = document.createElement('img');
+    img.src = s;
+    img.className = 'sticker';
+    img.addEventListener('click', () => { sendMedia(s); saveRecent('sticker', { url: s }); });
+    stickerGrid.appendChild(img);
+  });
+}
+
+/* ---------------- Search ---------------- */
+kbSearch.addEventListener('input', () => {
+  if (activeTab === 'emoji') renderEmojis();
+  if (activeTab === 'gifs') renderGIFs();
+  if (activeTab === 'stickers') renderStickers();
+});
+
+/* ---------------- Media Sending ---------------- */
+function sendMedia(item) {
+  const url = item.url || item;
+  const div = document.createElement('div');
+  div.className = 'bubble user';
+  const img = document.createElement('img');
+  img.src = url;
+  img.style.width = '140px';
+  img.style.height = '140px';
+  img.style.borderRadius = '10px';
+  img.style.objectFit = 'cover';
+  div.appendChild(img);
+  messages.appendChild(div);
+  messages.scrollTop = messages.scrollHeight;
+  hideKeyboard();
+}
+
+/* ---------------- Save Recent ---------------- */
+function saveRecent(type, item) {
+  const key = 'kb_recent_' + type;
+  let arr = JSON.parse(localStorage.getItem(key) || '[]');
+  if (type === 'emoji') {
+    arr = arr.filter(x => x !== item);
+    arr.unshift(item);
+  } else {
+    const url = item.url || item;
+    arr = arr.filter(x => (x.url || x) !== url);
+    arr.unshift(typeof item === 'string' ? { url: item } : item);
+  }
+  localStorage.setItem(key, JSON.stringify(arr.slice(0, 30)));
+}
+
+/* ---------------- Init ---------------- */
+setActiveTab('emoji');
+keyboardPanel.addEventListener('click', e => e.stopPropagation());
 </script>
- <!-- Bottom Icons -->
-    <div class="bottom-icons">
-      <img src="https://img.icons8.com/ios-filled/50/ffffff/headphones.png" alt="Headphones" />
-      <img src="https://img.icons8.com/ios-filled/50/ffffff/virtual-reality.png" alt="VR" />
+
+
+
+<!-- 🌿 Bottom Floating Icons -->
+<div class="bottom-icons">
+  <a href="#" title="Music Therapy">
+    <img src="https://img.icons8.com/ios-filled/50/ffffff/headphones.png" alt="Headphones" />
+  </a>
+
+  <a href="Game zone." title="Virtual Calm Space">
+    <img src="https://img.icons8.com/ios-filled/50/ffffff/virtual-reality.png" alt="VR" />
+  </a>
+
+  <a href="journal.html" title="My Journal">
+    <img src="https://img.icons8.com/?size=100&id=38390&format=png&color=000000.png" alt="Journal" />
+  </a>
+</div>
+<footer class="pastel-footer">
+  <div class="footer-glass-layer"></div>
+
+  <!-- 🌿 Center Logo with Circle -->
+  <div class="footer-logo-circle">
+    <img src="image/soulix logo.png" alt="Soulix Logo" />
+  </div>
+
+  <div class="footer-links-top">
+    <a href="#about">About Us</a>
+    <a href="#contact">Events</a>
+    <a href="#service">Consultations</a>
+    <a href="#blog">Our Joy Family</a>
+  </div>
+
+  <div class="footer-columns">
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <p>248.876.0833</p>
+      <p>info@soulix.com</p>
+      <p>506 Serenity Street<br />Pune, Maharashtra</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Hours</h4>
+      <p><em>*by appointment only*</em></p>
+      <p>Tues, Thurs, & Fri | 11AM–5PM</p>
+      <p>Wed & Sat | 11AM–7PM</p>
+      <p>Closed Sunday & Monday</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Information</h4>
+      <a href="#contact">Contact Us</a><br />
+      <a href="#collections">Browse Collections</a><br />
+      <a href="#terms">Terms & Conditions</a><br />
+      <a href="#privacy">Privacy Policy</a>
     </div>
   </div>
 
-  
+  <div class="footer-social">
+    <p>Let’s connect</p>
+    <div class="social-icons">
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-pinterest"></i></a>
+    </div>
+  </div>
+
+  <div class="footer-subscribe">
+    <p>Stay in the know with Soulix</p>
+    <div class="subscribe-box">
+      <input type="email" placeholder="Enter your email" />
+      <button>➤</button>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2025 Soulix • Designed with calm & clarity 🌿</p>
+  </div>
+</footer>
 
 </body>
 </html>

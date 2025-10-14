@@ -1,303 +1,337 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Serenity Space</title>
-    <style>
-        *{margin:0;padding:0;box-sizing:border-box;}
-        body,html{
-            height:100%;
-            font-family:'Segoe UI',sans-serif;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            background:url('image/b3.jpg') no-repeat center/cover;
-            color:#222;
-        }
-        .container{
-            width:400px;
-            background:rgba(197,213,183,0.4);
-            border-radius:25px;
-            padding:30px;
-            box-shadow:0 20px 40px rgba(0,0,0,0.4);
-            backdrop-filter:blur(30px);
-            text-align:center;
-            border:1px solid rgba(255,255,255,0.3);
-            position:relative;
-        }
-        .top-image{
-            width:140px;
-            margin:0 auto 20px;
-            border-radius:20px;
-            box-shadow:0 5px 15px rgba(0,0,0,0.1);
-        }
-        h2{font-weight:700;margin-bottom:12px;font-size:24px;color:#1a3a00;}
-        .highlight{color:#3e6b00;font-weight:900;}
-        p{font-size:14px;margin-bottom:25px;color:#324d00;}
-        .btn-group{display:flex;justify-content:center;gap:15px;margin-bottom:25px;}
-        button{
-            cursor:pointer;padding:12px 25px;border:none;border-radius:12px;
-            font-weight:600;font-size:16px;color:#fff;
-            background:linear-gradient(135deg,#3e6b00,#6ba700);
-            transition:all 0.3s ease;
-        }
-        button:hover{
-            background:linear-gradient(135deg,#6ba700,#3e6b00);
-            transform:translateY(-2px);
-        }
-        form{display:none;flex-direction:column;text-align:left;position:relative;z-index:2;}
-        input{
-            padding:15px 20px;margin-bottom:15px;border-radius:8px;
-            border:none;font-size:15px;font-weight:500;
-            background:rgba(238,235,235,0.7);outline:none;color:#222;
-        }
-        input:focus{background:#fff;box-shadow:0 0 6px #6ba700;}
-        button[type="submit"]{
-            background:linear-gradient(135deg,#4c8c00,#87c300);
-            font-weight:700;margin-top:5px;
-        }
-        button[type="submit"]:hover{
-            background:linear-gradient(135deg,#87c300,#4c8c00);
-        }
-        .switch-link{text-align:center;margin-top:10px;font-size:14px;}
-        .switch-link a{cursor:pointer;text-decoration:underline;color:#1a3a00;font-weight:600;}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Serenity Space</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body,html {
+      height:100%;
+      font-family:'Segoe UI',sans-serif;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      background:url('image/b3.jpg') no-repeat center/cover;
+      color:#222;
+    }
 
-        /* Password Strength Bar */
-        #strengthBar{
-            height:6px;
-            border-radius:5px;
-            background:#ccc;
-            margin-bottom:10px;
-            transition:all 0.4s ease;
-        }
+    .container {
+      width:400px;
+      background:rgba(197,213,183,0.4);
+      border-radius:25px;
+      padding:30px;
+      box-shadow:0 20px 40px rgba(0,0,0,0.4);
+      backdrop-filter:blur(30px);
+      text-align:center;
+      border:1px solid rgba(255,255,255,0.3);
+      position:relative;
+      animation: fadeIn 1.2s ease;
+    }
 
-        /* Caps Lock Warning */
-        #capsWarning{
-            display:none;
-            color:#b91c1c;
-            font-size:13px;
-            margin-top:-8px;
-            margin-bottom:10px;
-            text-align:left;
-        }
-    </style>
+    @keyframes fadeIn {
+      from { opacity:0; transform:translateY(15px); }
+      to { opacity:1; transform:translateY(0); }
+    }
+
+    .top-image {
+      width:140px;
+      margin:0 auto 20px;
+      border-radius:20px;
+      box-shadow:0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    h2 { font-weight:700; margin-bottom:12px; font-size:24px; color:#1a3a00; }
+    .highlight { color:#3e6b00; font-weight:900; }
+    p { font-size:14px; margin-bottom:25px; color:#324d00; }
+    .btn-group { display:flex; justify-content:center; gap:15px; margin-bottom:25px; }
+
+    button {
+      cursor:pointer; padding:12px 25px; border:none; border-radius:12px;
+      font-weight:600; font-size:16px; color:#fff;
+      background:linear-gradient(135deg,#3e6b00,#6ba700);
+      transition:all 0.3s ease;
+    }
+
+    button:hover {
+      background:linear-gradient(135deg,#6ba700,#3e6b00);
+      transform:translateY(-2px);
+    }
+
+    form { display:none; flex-direction:column; text-align:left; position:relative; z-index:2; }
+    input {
+      padding:15px 20px; margin-bottom:15px; border-radius:8px;
+      border:none; font-size:15px; font-weight:500;
+      background:rgba(238,235,235,0.7); outline:none; color:#222;
+    }
+
+    input:focus { background:#fff; box-shadow:0 0 6px #6ba700; }
+
+    button[type="submit"] {
+      background:linear-gradient(135deg,#4c8c00,#87c300);
+      font-weight:700; margin-top:5px;
+    }
+
+    button[type="submit"]:hover {
+      background:linear-gradient(135deg,#87c300,#4c8c00);
+    }
+
+    .switch-link { text-align:center; margin-top:10px; font-size:14px; }
+    .switch-link a { cursor:pointer; text-decoration:underline; color:#1a3a00; font-weight:600; }
+
+    /* Password Strength Bar */
+    #strengthBar {
+      height:6px;
+      border-radius:5px;
+      background:#ccc;
+      margin-bottom:10px;
+      transition:all 0.4s ease;
+    }
+
+    /* Caps Lock Warning */
+    #capsWarning {
+      display:none;
+      color:#b91c1c;
+      font-size:13px;
+      margin-top:-8px;
+      margin-bottom:10px;
+      text-align:left;
+    }
+
+    /* 🌿 Logout Button */
+    #logoutBtn {
+      position:absolute;
+      top:25px;
+      right:25px;
+      background:linear-gradient(135deg,#b4d6a1,#8ac46b);
+      color:#1a3a00;
+      font-weight:600;
+      border:none;
+      border-radius:25px;
+      padding:8px 16px;
+      cursor:pointer;
+      font-size:14px;
+      transition:all 0.3s ease;
+      box-shadow:0 3px 6px rgba(0,0,0,0.2);
+      opacity:0;
+      animation: fadeInLogout 1.5s ease forwards;
+      animation-delay:0.5s;
+    }
+
+    @keyframes fadeInLogout {
+      from { opacity:0; transform:translateY(-10px); }
+      to { opacity:1; transform:translateY(0); }
+    }
+
+    #logoutBtn:hover {
+      background:linear-gradient(135deg,#8ac46b,#b4d6a1);
+      transform:scale(1.05);
+    }
+
+  </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Welcome -->
-        <div id="welcomeScreen">
-            <img src="image/meditation girl.png" class="top-image">
-            <h2>Welcome to the <span class="highlight">space between your thoughts</span></h2>
-            <p>This is your time to pause. Breathe in calm, breathe out stress.</p>
-            <div class="btn-group">
-                <button id="showSignup">Sign Up</button>
-                <button id="showLogin">Log In</button>
-            </div>
-        </div>
 
-        <!-- Signup -->
-        <form id="signupForm">
-            <img src="image/meditation2.png" class="top-image">
-            <h2>Create Account</h2>
-            <input type="text" name="name" placeholder="Full Name" required>
-            <input type="email" name="email" placeholder="Email" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <div id="strengthBar"></div>
-            <small id="capsWarning">⚠️ Caps Lock is ON</small>
-            <input type="password" name="confirmPassword" placeholder="Confirm Password" required>
-            <button type="submit">Sign Up</button>
-            <div class="switch-link">
-                Already have an account? <a id="toLoginFromSignup">Log In</a>
-            </div>
-        </form>
+  <!-- 🌿 Logout Button -->
+  <button id="logoutBtn" title="Log out of Serenity Space">🚪 Logout</button>
 
-        <!-- OTP -->
-        <form id="otpForm">
-            <img src="image/lock.png" class="top-image">
-            <h2>Enter OTP</h2>
-            <p style="font-size:13px;color:#324d00;">We sent an OTP to <span id="otpEmailDisplay"></span></p>
-            <input type="text" id="otpInput" placeholder="Enter OTP" required>
-            <button type="submit">Verify OTP</button>
-            <div style="margin-top:10px;text-align:center;">
-                <a id="resendOtp" style="cursor:pointer;color:#1a3a00;text-decoration:underline;">Resend OTP</a>
-            </div>
-        </form>
+  <div class="container">
 
-        <!-- Login -->
-        <form id="loginForm">
-            <img src="image/welcome back login.png" class="top-image">
-            <h2>Welcome back!</h2>
-            <input type="email" name="email" placeholder="Email" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <button type="submit">Log In</button>
-            <div class="switch-link">
-                Don't have an account yet? <a id="toSignupFromLogin">Sign Up</a>
-            </div>
-        </form>
+    <!-- Welcome -->
+    <div id="welcomeScreen">
+      <img src="image/meditation girl.png" class="top-image">
+      <h2>Welcome to the <span class="highlight">space between your thoughts</span></h2>
+      <p>This is your time to pause. Breathe in calm, breathe out stress.</p>
+      <div class="btn-group">
+        <button id="showSignup">Sign Up</button>
+        <button id="showLogin">Log In</button>
+      </div>
     </div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const welcomeScreen = document.getElementById('welcomeScreen');
-            const signupForm = document.getElementById('signupForm');
-            const loginForm = document.getElementById('loginForm');
-            const otpForm = document.getElementById('otpForm');
-            const otpEmailDisplay = document.getElementById('otpEmailDisplay');
-            const otpInput = document.getElementById('otpInput');
-            const resendOtp = document.getElementById('resendOtp');
-            const showSignupBtn = document.getElementById('showSignup');
-            const showLoginBtn = document.getElementById('showLogin');
-            const toLoginFromSignup = document.getElementById('toLoginFromSignup');
-            const toSignupFromLogin = document.getElementById('toSignupFromLogin');
-            const passwordField = signupForm.querySelector('input[name="password"]');
-            const confirmField = signupForm.querySelector('input[name="confirmPassword"]');
-            const strengthBar = document.getElementById('strengthBar');
-            const capsWarning = document.getElementById('capsWarning');
-            let pendingSignupEmail = "";
+    <!-- Signup -->
+    <form id="signupForm">
+      <img src="image/meditation2.png" class="top-image">
+      <h2>Create Account</h2>
+      <input type="text" name="name" placeholder="Full Name" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <div id="strengthBar"></div>
+      <small id="capsWarning">⚠️ Caps Lock is ON</small>
+      <input type="password" name="confirmPassword" placeholder="Confirm Password" required>
+      <button type="submit">Sign Up</button>
+      <div class="switch-link">
+        Already have an account? <a id="toLoginFromSignup">Log In</a>
+      </div>
+    </form>
 
-            // Initial
-            welcomeScreen.style.display = "block";
+    <!-- OTP -->
+    <form id="otpForm">
+      <img src="image/lock.png" class="top-image">
+      <h2>Enter OTP</h2>
+      <p style="font-size:13px;color:#324d00;">We sent an OTP to <span id="otpEmailDisplay"></span></p>
+      <input type="text" id="otpInput" placeholder="Enter OTP" required>
+      <button type="submit">Verify OTP</button>
+      <div style="margin-top:10px;text-align:center;">
+        <a id="resendOtp" style="cursor:pointer;color:#1a3a00;text-decoration:underline;">Resend OTP</a>
+      </div>
+    </form>
 
-            // Navigation
-            showSignupBtn.onclick = () => {
-                welcomeScreen.style.display = "none";
-                signupForm.style.display = "flex";
-            };
-            showLoginBtn.onclick = () => {
-                welcomeScreen.style.display = "none";
-                loginForm.style.display = "flex";
-            };
-            toLoginFromSignup.onclick = () => {
-                signupForm.style.display = "none";
-                loginForm.style.display = "flex";
-            };
-            toSignupFromLogin.onclick = () => {
-                loginForm.style.display = "none";
-                signupForm.style.display = "flex";
-            };
+    <!-- Login -->
+    <form id="loginForm">
+      <img src="image/welcome back login.png" class="top-image">
+      <h2>Welcome back!</h2>
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <button type="submit">Log In</button>
+      <div class="switch-link">
+        Don't have an account yet? <a id="toSignupFromLogin">Sign Up</a>
+      </div>
+    </form>
+  </div>
 
-            // 🔐 Password strength meter
-            passwordField.addEventListener("input", () => {
-                const val = passwordField.value;
-                let strength = 0;
-                if (val.match(/[a-z]/)) strength++;
-                if (val.match(/[A-Z]/)) strength++;
-                if (val.match(/[0-9]/)) strength++;
-                if (val.match(/[@$!%*?&]/)) strength++;
-                if (val.length >= 8) strength++;
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const welcomeScreen = document.getElementById('welcomeScreen');
+      const signupForm = document.getElementById('signupForm');
+      const loginForm = document.getElementById('loginForm');
+      const otpForm = document.getElementById('otpForm');
+      const otpEmailDisplay = document.getElementById('otpEmailDisplay');
+      const otpInput = document.getElementById('otpInput');
+      const resendOtp = document.getElementById('resendOtp');
+      const showSignupBtn = document.getElementById('showSignup');
+      const showLoginBtn = document.getElementById('showLogin');
+      const toLoginFromSignup = document.getElementById('toLoginFromSignup');
+      const toSignupFromLogin = document.getElementById('toSignupFromLogin');
+      const passwordField = signupForm.querySelector('input[name="password"]');
+      const confirmField = signupForm.querySelector('input[name="confirmPassword"]');
+      const strengthBar = document.getElementById('strengthBar');
+      const capsWarning = document.getElementById('capsWarning');
+      const logoutBtn = document.getElementById('logoutBtn');
+      let pendingSignupEmail = "";
 
-                const colors = ["#ff4d4d","#ff914d","#ffd54f","#a5d6a7","#4caf50"];
-                strengthBar.style.width = (strength * 20) + "%";
-                strengthBar.style.background = colors[strength - 1] || "#ccc";
-                strengthBar.style.boxShadow = `0 0 8px ${colors[strength - 1] || "#ccc"}`;
-            });
+      // Show logout only if logged in
+      const currentUser = localStorage.getItem("soulix_user_email");
+      if (!currentUser) logoutBtn.style.display = "none";
 
-            // ⚠️ Caps Lock warning
-            passwordField.addEventListener("keyup", (e) => {
-                const caps = e.getModifierState && e.getModifierState("CapsLock");
-                capsWarning.style.display = caps ? "block" : "none";
-            });
+      // Navigation
+      showSignupBtn.onclick = () => { welcomeScreen.style.display = "none"; signupForm.style.display = "flex"; };
+      showLoginBtn.onclick = () => { welcomeScreen.style.display = "none"; loginForm.style.display = "flex"; };
+      toLoginFromSignup.onclick = () => { signupForm.style.display = "none"; loginForm.style.display = "flex"; };
+      toSignupFromLogin.onclick = () => { loginForm.style.display = "none"; signupForm.style.display = "flex"; };
 
-            // ✅ Signup process
-            signupForm.onsubmit = async (e) => {
-                e.preventDefault();
-                const name = signupForm.name.value;
-                const email = signupForm.email.value;
-                const password = passwordField.value;
-                const confirmPassword = confirmField.value;
+      // Password strength
+      passwordField.addEventListener("input", () => {
+        const val = passwordField.value;
+        let strength = 0;
+        if (val.match(/[a-z]/)) strength++;
+        if (val.match(/[A-Z]/)) strength++;
+        if (val.match(/[0-9]/)) strength++;
+        if (val.match(/[@$!%*?&]/)) strength++;
+        if (val.length >= 8) strength++;
+        const colors = ["#ff4d4d","#ff914d","#ffd54f","#a5d6a7","#4caf50"];
+        strengthBar.style.width = (strength * 20) + "%";
+        strengthBar.style.background = colors[strength - 1] || "#ccc";
+      });
 
-                if (password !== confirmPassword)
-                    return alert("Passwords do not match!");
+      // Caps lock warning
+      passwordField.addEventListener("keyup", (e) => {
+        const caps = e.getModifierState && e.getModifierState("CapsLock");
+        capsWarning.style.display = caps ? "block" : "none";
+      });
 
-                // Strong password validation
-                const strongPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-                if (!strongPassword.test(password)) {
-                    alert("⚠️ Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.");
-                    return;
-                }
+      // Signup
+      signupForm.onsubmit = async (e) => {
+        e.preventDefault();
+        const name = signupForm.name.value;
+        const email = signupForm.email.value;
+        const password = passwordField.value;
+        const confirmPassword = confirmField.value;
+        if (password !== confirmPassword) return alert("Passwords do not match!");
+        const strongPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        if (!strongPassword.test(password)) return alert("⚠️ Password too weak!");
+        try {
+          const res = await fetch('http://127.0.0.1:5000/signup-request', {
+            method: 'POST', headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({ name, email, password }), credentials:"include"
+          });
+          const data = await res.json();
+          if (res.ok) {
+            pendingSignupEmail = email;
+            otpEmailDisplay.textContent = email;
+            localStorage.setItem("pending_user_name", name.trim());
+            signupForm.style.display = "none"; otpForm.style.display = "flex";
+            alert(data.message);
+          } else alert(data.message);
+        } catch { alert("Server error during signup."); }
+      };
 
-                try {
-                    const res = await fetch('http://127.0.0.1:5000/signup-request', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ name, email, password }),
-                        credentials: "include"
-                    });
-                    const data = await res.json();
+      // OTP verification
+      otpForm.onsubmit = async (e) => {
+        e.preventDefault();
+        const otp = otpInput.value.trim();
+        try {
+          const res = await fetch('http://127.0.0.1:5000/verify-otp', {
+            method: 'POST', headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({ email: pendingSignupEmail, otp }), credentials:"include"
+          });
+          const data = await res.json();
+          if (res.ok) {
+            localStorage.setItem("soulix_user_email", pendingSignupEmail.trim().toLowerCase());
+            const pendingName = localStorage.getItem("pending_user_name");
+            if (pendingName) {
+              localStorage.setItem("soulix_user_name", pendingName);
+              localStorage.removeItem("pending_user_name");
+            }
+            alert("Signup complete! Redirecting...");
+            setTimeout(() => window.location.replace("register.html"), 700);
+          } else alert(data.message);
+        } catch { alert("Error verifying OTP."); }
+      };
 
-                    if (res.ok) {
-                        pendingSignupEmail = email;
-                        otpEmailDisplay.textContent = email;
-                        signupForm.style.display = "none";
-                        otpForm.style.display = "flex";
-                        alert(data.message);
-                    } else alert(data.message);
-                } catch (err) {
-                    alert("Server error during signup.");
-                }
-            };
+      // Login
+      loginForm.onsubmit = async (e) => {
+        e.preventDefault();
+        const email = loginForm.email.value;
+        const password = loginForm.password.value;
+        try {
+          const res = await fetch('http://127.0.0.1:5000/login', {
+            method: 'POST', headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({ email, password }), credentials:"include"
+          });
+          const data = await res.json();
+          if (res.ok) {
+            localStorage.setItem("soulix_user_email", email.trim().toLowerCase());
+            const username = email.split("@")[0];
+            localStorage.setItem("soulix_user_name", username);
+            alert("Login successful!");
+            window.location.href = "register.html";
+          } else alert(data.message);
+        } catch { alert("Server error during login."); }
+      };
 
-            // 🔑 Verify OTP
-            otpForm.onsubmit = async (e) => {
-                e.preventDefault();
-                const otp = otpInput.value.trim();
-                try {
-                    const res = await fetch('http://127.0.0.1:5000/verify-otp', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ email: pendingSignupEmail, otp }),
-                        credentials: "include"
-                    });
-                    const data = await res.json();
-                    if (res.ok) {
-                        alert("Signup complete!");
-                        window.location.href = "avatar.html";
-                    } else alert(data.message);
-                } catch (err) {
-                    alert("Error verifying OTP.");
-                }
-            };
-
-            // 🔁 Resend OTP
-            resendOtp.onclick = async () => {
-                if (!pendingSignupEmail) return alert("No pending signup.");
-                try {
-                    const res = await fetch('http://127.0.0.1:5000/resend-otp', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ email: pendingSignupEmail })
-                    });
-                    const data = await res.json();
-                    alert(data.message);
-                } catch (err) {
-                    alert("Error resending OTP.");
-                }
-            };
-
-            // 🔓 Login
-            loginForm.onsubmit = async (e) => {
-                e.preventDefault();
-                const email = loginForm.email.value;
-                const password = loginForm.password.value;
-
-                try {
-                    const res = await fetch('http://127.0.0.1:5000/login', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ email, password }),
-                        credentials: "include"
-                    });
-                    const data = await res.json();
-                    if (res.ok) {
-                        alert("Login successful!");
-                        window.location.href = "dashboard.html";
-                    } else alert(data.message);
-                } catch (err) {
-                    alert("Server error during login.");
-                }
-            };
-        });
-    </script>
+      // 🚪 Logout Logic
+      logoutBtn.addEventListener("click", async () => {
+        const confirmLogout = confirm("Are you sure you want to log out?");
+        if (!confirmLogout) return;
+        try {
+          const res = await fetch("http://127.0.0.1:5000/logout", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include"
+          });
+          const data = await res.json();
+          if (data.message.includes("Logged out")) {
+            localStorage.removeItem("soulix_user_email");
+            localStorage.removeItem("soulix_user_name");
+            alert("You’ve been logged out successfully 💙");
+            window.location.href = "index.html";
+          }
+        } catch (err) {
+          console.error("Logout failed:", err);
+          alert("⚠️ Logout error — please try again.");
+        }
+      });
+    });
+  </script>
 </body>
 </html>

@@ -1,0 +1,282 @@
+[
+  {
+    "keywords": ["hello", "hi", "hey", "heyy", "hii", "yo", "hola", "good morning", "good night", "good evening"],
+    "responses": [
+      "Hey there 👋 I’m here for you 🌿",
+      "Hello! How’s your mood today? 💫",
+      "Good to see you again 🌸"
+    ]
+  },
+  {
+    "keywords": ["how are you", "what's up", "how's it going"],
+    "responses": [
+      "I’m feeling great when I talk to you 💙",
+      "Just floating in calm vibes 🌿 you?",
+      "Always happy to chat with you ☕"
+    ]
+  },
+  {
+    "keywords": ["stress", "anxiety", "pressure", "panic", "overthink", "worry", "tense"],
+    "responses": [
+      "Take a deep breath with me 🌬 Inhale... Hold... Exhale... Good 🌿",
+      "You’re doing better than you think 💛",
+      "Try writing your thoughts down — it really helps 🧘‍♀️"
+    ]
+  },
+  {
+    "keywords": ["sad", "lonely", "depressed", "crying", "upset", "hurt", "down", "emotion", "heartbroken"],
+    "responses": [
+      "You’re not alone 🤗 I’m here with you.",
+      "Sometimes it’s okay to cry — it heals 💧",
+      "Please remember, this feeling will pass 🌈"
+    ]
+  },
+  {
+    "keywords": ["tired", "sleepy", "exhausted", "fatigue", "sleep", "rest", "burnout"],
+    "responses": [
+      "Rest is productive too 😴",
+      "Close your eyes, breathe, and just relax 🌙",
+      "Your body deserves care — pause for a bit 🕊️"
+    ]
+  },
+  {
+    "keywords": ["study", "exam", "college", "focus", "school", "notes", "motivation", "assignment"],
+    "responses": [
+      "You’ve got this! 📚 Take it one topic at a time.",
+      "Focus for 25 mins, then take a 5-min break 💡",
+      "Progress > Perfection 💪 Keep going!"
+    ]
+  },
+  {
+    "keywords": ["angry", "irritated", "rage", "mad", "shout", "annoyed"],
+    "responses": [
+      "Anger means you care deeply — just redirect it 🌊",
+      "Take 10 deep breaths before reacting 🌬",
+      "Let’s cool down together 💙"
+    ]
+  },
+  {
+    "keywords": ["self-care", "mindful", "relax", "calm", "balance", "self love", "healthy"],
+    "responses": [
+      "Self-care isn’t selfish 🌿 it’s strength.",
+      "Drink water, stretch, and give yourself 10 minutes 💧",
+      "You can’t pour from an empty cup ☕ — refill your energy."
+    ]
+  },
+  {
+    "keywords": ["motivation", "inspire", "goal", "success", "focus", "discipline", "dream", "future"],
+    "responses": [
+      "You’re stronger than your excuses 💪",
+      "Small steps daily build huge results 🚀",
+      "Discipline today = freedom tomorrow 🌅"
+    ]
+  },
+  {
+    "keywords": ["music", "song", "listen", "playlist", "calm music"],
+    "responses": [
+      "🎧 Music heals the soul — what are you listening to?",
+      "Soft lo-fi beats always calm the mind 💫",
+      "Let music carry your thoughts away 🌊"
+    ]
+  },
+  {
+    "keywords": ["friend", "relationship", "love", "breakup", "trust", "feelings"],
+    "responses": [
+      "Healthy relationships grow with honesty 🌱",
+      "Love yourself first — it sets the tone 💖",
+      "It’s okay to outgrow people who drain your peace 🌿"
+    ]
+  },
+  {
+    "keywords": ["food", "eat", "hungry", "meal", "snack", "breakfast", "lunch", "dinner"],
+    "responses": [
+      "🍎 Don’t skip meals — your body needs energy!",
+      "Hydrate + eat something nourishing 🌾",
+      "Food is love 💚 have something tasty!"
+    ]
+  },
+  {
+    "keywords": ["morning", "night", "sleep", "routine", "wake", "sunrise"],
+    "responses": [
+      "🌅 Good morning! New day, new energy 🌿",
+      "🌙 Good night — may your mind rest in peace.",
+      "Routines make peace automatic 🌼"
+    ]
+  },
+  {
+    "keywords": ["gratitude", "thankful", "positive", "affirmation", "appreciate"],
+    "responses": [
+      "💫 Gratitude turns what you have into enough.",
+      "You’re doing amazing, even if it doesn’t feel like it 🌻",
+      "Say this: ‘I am enough. I am growing. I am grateful.’ 💛"
+    ]
+  },
+  {
+    "keywords": ["fun", "happy", "joy", "smile", "laugh"],
+    "responses": [
+      "Smile for no reason — that’s pure joy 😄",
+      "Do something silly today 🥳 life’s too short to be serious.",
+      "Happiness looks great on you 🌈"
+    ]
+  },
+  {
+    "keywords": ["breathe", "calm down", "panic", "breathing"],
+    "responses": [
+      "Inhale for 4s... Hold for 4s... Exhale for 4s 🌬️",
+      "You’re safe right now 💙",
+      "Slow breaths = calm thoughts 🕊️"
+    ]
+  },
+  {
+    "keywords": ["creative", "art", "paint", "draw", "design", "write", "craft"],
+    "responses": [
+      "Creativity feeds the soul 🎨",
+      "Don’t aim for perfect — just express 💫",
+      "Art is therapy in color 💛"
+    ]
+  },
+  {
+    "keywords": ["body", "health", "skin", "hair", "wellness"],
+    "responses": [
+      "Take care of your body — it’s your home 🩵",
+      "Skincare + water = glow ✨",
+      "Rest, hydrate, move, and repeat 🌿"
+    ]
+  },
+  {
+    "keywords": ["career", "work", "office", "job", "professional", "interview"],
+    "responses": [
+      "Every small effort builds your career 🌱",
+      "Stay consistent — success compounds 💼",
+      "You’re learning something valuable every day 💡"
+    ]
+  },
+  {
+    "keywords": ["emergency", "help", "suicide", "unsafe", "crisis", "helpline"],
+    "responses": [
+      "🚨 Please reach out right now — you are not alone 💛\nIndia Helplines:\n9152987821 | 1800-599-0019\nOr visit https://findahelpline.com 🌍"
+    ]
+  },
+  {
+    "keywords": ["quote", "daily", "affirmation", "thought"],
+    "responses": [
+      "🌻 ‘One small positive thought can change your whole day.’",
+      "💫 ‘You are becoming everything you’re meant to be.’",
+      "🌈 ‘Even stars need darkness to shine.’"
+    ]
+  },
+  {
+    "keywords": ["exercise", "walk", "gym", "yoga", "movement"],
+    "responses": [
+      "🧘‍♀ Move your body — your mind follows.",
+      "Exercise = instant mood booster 🌿",
+      "A short walk can reset your entire mindset 🌅"
+    ]
+  },
+  {
+    "keywords": ["weather", "rain", "cold", "hot", "sunny"],
+    "responses": [
+      "☀️ Sunny vibes today — perfect for new beginnings.",
+      "🌧 Rainy day? Perfect for calm music and chai ☕",
+      "Cold outside? Stay cozy inside 💙"
+    ]
+  },
+  {
+    "keywords": ["focus", "distraction", "productivity"],
+    "responses": [
+      "✨ 25 minutes of focus = 1 level up.",
+      "Mute distractions — your goals need you 💪",
+      "Stay grounded — your progress matters 🌿"
+    ]
+  },
+  {
+    "keywords": ["fear", "scared", "anxious", "afraid"],
+    "responses": [
+      "It’s okay to feel scared — courage grows in fear 🌱",
+      "Your heart is stronger than your doubts 💛",
+      "Fear fades when you face it gently 💫"
+    ]
+  },
+  {
+    "keywords": ["coffee", "chai", "tea", "drink"],
+    "responses": [
+      "☕ Coffee and calm mornings — perfect combo.",
+      "Tea time = peace time 🌿",
+      "Stay hydrated, even with chai 😄"
+    ]
+  },
+  {
+    "keywords": ["technology", "phone", "social media", "screen time"],
+    "responses": [
+      "Take a digital break 🌙 Your mind deserves quiet.",
+      "Unplug to reconnect with yourself 🌿",
+      "Try 1 hour screen-free — it’s magic 💫"
+    ]
+  },
+  {
+    "keywords": ["travel", "trip", "explore", "adventure", "nature"],
+    "responses": [
+      "The world is waiting 🌍 pack your curiosity.",
+      "Travel = learning with open eyes 🌄",
+      "Adventure heals the tired soul 💙"
+    ]
+  },
+  {
+    "keywords": ["gratitude journal", "writing", "journal", "reflect"],
+    "responses": [
+      "Writing clears the mind 📝",
+      "Journaling = emotional detox 🌸",
+      "Express, don’t suppress 🌿"
+    ]
+  },
+  {
+    "keywords": ["family", "parents", "sister", "brother"],
+    "responses": [
+      "Family is where love begins 💖",
+      "Cherish the small moments — they’re big later 🌷",
+      "Give them a call today 💛 they’ll smile."
+    ]
+  },
+[
+  {
+    "keywords": ["anger", "angry", "mad", "irritated", "rage", "control", "frustrated", "furious"],
+    "responses": [
+      "🔥 Take a deep breath — calm is your superpower. Try a short walk or count to 10 before reacting 🌿",
+      "😤 It’s okay to feel angry — just breathe it out and let it go slowly 💨",
+      "💙 Pause, inhale deeply, and remind yourself you’re in control of your reactions."
+    ]
+  },
+  {
+    "keywords": ["self-care", "relax", "rest", "mindful", "healthy", "balance", "self love", "wellness"],
+    "responses": [
+      "🌿 Take a few minutes just for *you* — breathe, stretch, or sip water 💧",
+      "💖 Self-care isn’t selfish — rest, recharge, and smile a little today 🌸",
+      "🕊️ Slow down, take a break, and give yourself kindness."
+    ]
+  },
+  {
+    "keywords": ["mood", "sad", "down", "tired", "bored", "depressed", "hopeless"],
+    "responses": [
+      "💛 It’s okay to have off days — take it slow and do one thing you enjoy 🌤️",
+      "🌈 You’ve got this — small steps, gentle thoughts, and self-kindness 💫",
+      "☕ Listen to your favorite song or step outside — tiny joys matter 🌿"
+    ]
+  },
+  {
+    "keywords": ["help", "suicide", "crisis", "unsafe", "emergency", "helpline", "support"],
+    "responses": [
+      "🚨 You’re not alone — reach out for help now 💛 India Helpline: 9152987821",
+      "💬 Please talk to someone you trust — you matter and your feelings are valid 💙",
+      "🌱 Stay safe and reach out — support is just one call away 📞"
+    ]
+  },
+  {
+    "keywords": ["gratitude", "positive", "thankful", "appreciate", "affirmation", "good vibe"],
+    "responses": [
+      "🌼 Gratitude makes ordinary moments special — name 3 things you’re thankful for 💫",
+      "💖 A grateful heart turns little things into joy 🌞",
+      "✨ You’re doing better than you think — keep a smile and stay thankful 🌿"
+    ]
+  }
+]
+]

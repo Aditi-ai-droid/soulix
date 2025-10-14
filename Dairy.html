@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Morning Pages — Soulix Journal</title>
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: radial-gradient(circle at top left, #0c0f0d 20%, #111411 80%);
+  color: #eaeaea;
+  font-family: "Inter", sans-serif;
+  overflow-x: hidden;
+  animation: breathe-bg 10s ease-in-out infinite alternate;
+}
+
+/* 🌬️ Background breathing animation */
+@keyframes breathe-bg {
+  0% { background-position: 0% 50%; filter: brightness(1); }
+  100% { background-position: 100% 50%; filter: brightness(1.05); }
+}
+
+/* ---- Cover Section ---- */
+.cover {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  overflow: hidden;
+}
+
+.cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.6);
+  transform: scale(1);
+  animation: zoomIn 25s ease-in-out infinite alternate;
+}
+
+/* 🌄 Cinematic zoom effect */
+@keyframes zoomIn {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.08); }
+}
+
+.cover-text {
+  position: absolute;
+  bottom: 40px;
+  left: 70px;
+  animation: fadeInUp 2s ease-out forwards;
+}
+
+.cover-text h1 {
+  font-size: 45px;
+  color: #e8f5e4;
+  font-weight: 600;
+  text-shadow: 0 0 18px rgba(220, 255, 220, 0.2);
+}
+
+/* ---- Layout ---- */
+.container {
+  display: flex;
+  gap: 40px;
+  width: 90%;
+  max-width: 1300px;
+  margin: 50px auto;
+}
+
+/* ---- Sidebar ---- */
+.sidebar {
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.note-card {
+  background: rgba(27, 31, 27, 0.9);
+  border: 1px solid rgba(76, 90, 76, 0.6);
+  border-radius: 12px;
+  padding: 20px;
+  color: #b5d1b5;
+  box-shadow: 0 0 20px rgba(50, 90, 50, 0.3);
+  transition: 0.3s;
+}
+
+.note-card:hover {
+  box-shadow: 0 0 30px rgba(90, 130, 90, 0.4);
+  transform: translateY(-3px);
+}
+
+/* ---- Journal Area ---- */
+.journal-area {
+  flex: 1;
+  background: rgba(18, 20, 18, 0.95);
+  border-radius: 15px;
+  padding: 25px 30px;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.5);
+  animation: fadeIn 1.5s ease-out forwards;
+}
+
+.page-title {
+  font-size: 30px;
+  color: #dcebd3;
+  font-weight: 600;
+  animation: fadeInUp 1s ease-out;
+}
+
+.subtitle {
+  color: #7fa27f;
+  margin-top: 5px;
+  font-style: italic;
+  opacity: 0.8;
+  animation: fadeInUp 1.8s ease-out;
+}
+
+.divider {
+  height: 2px;
+  background: #355c3b;
+  margin: 15px 0 25px;
+  animation: expand 1.2s ease-out forwards;
+}
+
+/* 🌿 Glow animation for divider */
+@keyframes expand {
+  0% { width: 0; opacity: 0; }
+  100% { width: 100%; opacity: 1; }
+}
+
+/* ---- Gallery ---- */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.day-card {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 150px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease;
+}
+
+/* 🌫️ Fade-in scroll reveal */
+.day-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.day-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.8;
+  transition: all 0.4s ease;
+}
+
+.day-card:hover img {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.day-overlay {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: rgba(20, 35, 20, 0.8);
+  color: #bce3b8;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 15px;
+  border-radius: 0 0 10px 10px;
+}
+
+/* ---- Thoughts ---- */
+.thoughts {
+  margin-top: 40px;
+  background: rgba(20, 22, 20, 0.9);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid rgba(60, 80, 60, 0.5);
+  animation: fadeInUp 1.5s ease-out;
+}
+
+/* 🌿 Expand + Glow textarea */
+.thoughts textarea {
+  width: 100%;
+  height: 120px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  color: #e1e1e1;
+  padding: 10px 14px;
+  resize: none;
+  margin: 10px 0;
+  font-size: 15px;
+  outline: none;
+  transition: all 0.6s ease;
+  box-shadow: 0 0 0 rgba(128, 185, 128, 0);
+}
+
+/* ✨ Expand upward and glow while typing */
+.thoughts textarea:focus,
+.thoughts textarea.typing {
+  height: 240px;
+  border-color: #9fd29f;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 25px rgba(150, 220, 150, 0.15);
+  transform: translateY(-8px);
+}
+
+button {
+  background: linear-gradient(90deg, #507a55, #78a879);
+  color: #dcebd3;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 18px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  box-shadow: 0 0 12px rgba(90, 140, 90, 0.3);
+}
+
+button:hover {
+  background: linear-gradient(90deg, #629b68, #9fd29f);
+  box-shadow: 0 0 18px rgba(130, 190, 130, 0.5);
+  transform: translateY(-2px);
+}
+
+#thoughtList {
+  margin-top: 15px;
+}
+
+.thought {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  animation: fadeIn 0.6s ease-in;
+}
+
+/* 🌟 Animations */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+  </style>
+</head>
+<body>
+  <div class="cover">
+    <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1500&q=80" alt="Morning workspace">
+    <div class="cover-text">
+      <h1>Organize your Life.</h1>
+    </div>
+  </div>
+
+  <main class="container">
+    <!-- Left Sidebar -->
+    <aside class="sidebar">
+      <div class="note-card">
+        <h3>🌿 Note to Self</h3>
+        <p>"The things we love tell us what we are."</p>
+      </div>
+
+      <iframe style="border-radius:12px" 
+        src="journal.png"
+        width="100%" height="380" frameborder="0" allowfullscreen=""
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+      </iframe>
+    </aside>
+
+    <!-- Main Content -->
+    <section class="journal-area">
+      <h1 class="page-title">Morning Pages</h1>
+      <h2 class="subtitle">Writing is screaming in silence 🌿</h2>
+
+      <div class="divider"></div>
+
+      <h3 class="section-title">📓 My Journal</h3>
+      <div class="gallery">
+        <div class="day-card"><img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" alt="Monday"><div class="day-overlay">Monday</div></div>
+        <div class="day-card"><img src="https://images.unsplash.com/photo-1557682224-5b8590cd9ec5?auto=format&fit=crop&w=800&q=80" alt="Tuesday"><div class="day-overlay">Tuesday</div></div>
+        <div class="day-card"><img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80" alt="Wednesday"><div class="day-overlay">Wednesday</div></div>
+        <div class="day-card"><img src="https://images.unsplash.com/photo-1504198458649-3128b932f49b?auto=format&fit=crop&w=800&q=80" alt="Thursday"><div class="day-overlay">Thursday</div></div>
+        <div class="day-card"><img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&fit=crop&w=800&q=80" alt="Friday"><div class="day-overlay">Friday</div></div>
+        <div class="day-card"><img src="https://images.unsplash.com/photo-1519682337058-a94d519337bc?auto=format&fit=crop&w=800&q=80" alt="Saturday"><div class="day-overlay">Saturday</div></div>
+      </div>
+
+      <section class="thoughts">
+        <h3>🕊 My Thoughts</h3>
+        <textarea id="thoughtInput" placeholder="Write your morning thoughts..."></textarea>
+        <button id="saveThought">💾 Save Entry</button>
+        <div id="thoughtList"></div>
+      </section>
+    </section>
+  </main>
+
+  <script>
+  // 🌫️ Fade-in on scroll for gallery
+  const dayCards = document.querySelectorAll('.day-card');
+  function revealOnScroll() {
+    const triggerBottom = window.innerHeight * 0.9;
+    dayCards.forEach(card => {
+      const cardTop = card.getBoundingClientRect().top;
+      if (cardTop < triggerBottom) card.classList.add('visible');
+    });
+  }
+  window.addEventListener('scroll', revealOnScroll);
+  revealOnScroll();
+
+  // 🌿 Expand textarea while typing
+  const textarea = document.getElementById("thoughtInput");
+  textarea.addEventListener("focus", () => textarea.classList.add("typing"));
+  textarea.addEventListener("input", () => {
+    if (textarea.value.trim() !== "") textarea.classList.add("typing");
+  });
+  textarea.addEventListener("blur", () => {
+    if (textarea.value.trim() === "") textarea.classList.remove("typing");
+  });
+  </script>
+</body>
+</html>
